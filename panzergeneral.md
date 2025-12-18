@@ -15,6 +15,21 @@ Panzer General é um jogo de estratégia por turnos operacionais (wargame) onde 
 
 Os diferentes tipos de terreno afetam o movimento e o combate das unidades.
 
+### 3.7 Tabela Oficial de Cores de Terreno (RGB)
+
+| Terreno          | RGB (Dec)       | RGB (Hex) | Notas |
+| :---             | :---            | :---      | :---  |
+| **Campo Aberto** | (144, 238, 144) | #90EE90   | Plains / Clear |
+| **Floresta**     | (0, 100, 0)     | #006400   | Forest |
+| **Cidade**       | (169, 169, 169) | #A9A9A9   | City / Buildings. Diferente de Asfalto. |
+| **Estrada (Asf)**| (105, 105, 105) | #696969   | Asphalt Road |
+| **Estrada (Terra)**| (210, 180, 140)| #D2B48C   | Dirt Road |
+| **Rio**          | (173, 216, 230) | #ADD8E6   | River |
+| **Montanha**     | (139, 69, 19)   | #8B4513   | Mountain |
+| **Pântano**      | (47, 79, 79)    | #2F4F4F   | Swamp |
+| **Deserto**      | (255, 255, 128) | #FFFF80   | Desert |
+| **Neve**         | (255, 250, 250) | #FFFAFA   | Snow |
+
 ### 3.1 Campo Aberto (Clear)
 - Terreno plano e aberto
 - Ideal para unidades mecanizadas

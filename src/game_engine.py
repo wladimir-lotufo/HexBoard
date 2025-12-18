@@ -6,10 +6,16 @@ from PIL import Image
 
 # --- Configuration & Rules ---
 TERRAIN_COLORS = {
-    (0, 0, 255): "Rio",
-    (0, 255, 0): "Floresta",
-    (128, 128, 128): "Cidade",
-    (255, 255, 0): "Estrada",
+    (144, 238, 144): "Campo Aberto",
+    (0, 100, 0):     "Floresta",
+    (169, 169, 169): "Cidade",
+    (105, 105, 105): "Estrada Asfalto",
+    (210, 180, 140): "Estrada Terra",
+    (173, 216, 230): "Rio",
+    (139, 69, 19):   "Montanha",
+    (47, 79, 79):    "Pântano",
+    (255, 255, 128): "Deserto",
+    (255, 250, 250): "Neve"
     # Default: Campo Aberto
 }
 
@@ -19,31 +25,40 @@ TERRAIN_COLORS = {
 # Derived from panzergeneral.md
 TERRAIN_RULES = {
     "INF": {
-        "Campo Aberto": {"speed_factor": 1.0, "cost": 0.5},
-        "Floresta":     {"speed_factor": 0.5, "cost": 1.0}, # 3.8 vs 7.5
-        "Cidade":       {"speed_factor": 1.0, "cost": 0.5},
-        "Montanha":     {"speed_factor": 0.33, "cost": 1.5},
-        "Rio":          {"speed_factor": 0.2, "cost": 2.0}, # Fording
-        "Estrada":      {"speed_factor": 1.1, "cost": 0.4}, # Bonus
-        "Default":      {"speed_factor": 1.0, "cost": 0.5}
+        "Campo Aberto":    {"speed_factor": 1.0, "cost": 0.5},
+        "Floresta":        {"speed_factor": 0.5, "cost": 1.0},
+        "Cidade":          {"speed_factor": 1.0, "cost": 0.5},
+        "Montanha":        {"speed_factor": 0.33, "cost": 1.5},
+        "Rio":             {"speed_factor": 0.2, "cost": 2.0},
+        "Pântano":         {"speed_factor": 0.33, "cost": 2.0},
+        "Estrada Asfalto": {"speed_factor": 1.2, "cost": 0.4},
+        "Estrada Terra":   {"speed_factor": 1.1, "cost": 0.45},
+        "Deserto":         {"speed_factor": 0.8, "cost": 0.6},
+        "Neve":            {"speed_factor": 0.6, "cost": 0.8},
+        "Default":         {"speed_factor": 1.0, "cost": 0.5}
     },
     "TNK": {
-        "Campo Aberto": {"speed_factor": 1.0, "cost": 2.5},
-        "Floresta":     {"speed_factor": 0.5, "cost": 5.0},
-        "Cidade":       {"speed_factor": 1.0, "cost": 2.5}, # Fast in city? Rules say 10km/h.. ok.
-        "Montanha":     {"speed_factor": 0.1, "cost": 10.0}, # Very hard
-        "Rio":          {"speed_factor": 0.0, "cost": 0.0}, # Blocked usually, unless bridge/estrada
-        "Estrada":      {"speed_factor": 1.2, "cost": 1.5}, # Efficiency efficiency
-        "Default":      {"speed_factor": 1.0, "cost": 2.5}
+        "Campo Aberto":    {"speed_factor": 1.0, "cost": 2.5},
+        "Floresta":        {"speed_factor": 0.5, "cost": 5.0},
+        "Cidade":          {"speed_factor": 1.0, "cost": 2.5},
+        "Montanha":        {"speed_factor": 0.1, "cost": 10.0},
+        "Rio":             {"speed_factor": 0.0, "cost": 0.0}, # Blocked
+        "Pântano":         {"speed_factor": 0.33, "cost": 8.0},
+        "Estrada Asfalto": {"speed_factor": 1.3, "cost": 1.5},
+        "Estrada Terra":   {"speed_factor": 1.2, "cost": 1.8},
+        "Deserto":         {"speed_factor": 0.8, "cost": 3.0},
+        "Neve":            {"speed_factor": 0.5, "cost": 3.5},
+        "Default":         {"speed_factor": 1.0, "cost": 2.5}
     },
-    # Default for others (RCN, ART similarly)
     "DEFAULT": {
-        "Campo Aberto": {"speed_factor": 1.0, "cost": 1.0},
-        "Floresta":     {"speed_factor": 0.6, "cost": 1.5},
-        "Cidade":       {"speed_factor": 0.8, "cost": 1.2},
-        "Estrada":      {"speed_factor": 1.2, "cost": 0.8},
-        "Rio":          {"speed_factor": 0.1, "cost": 3.0},
-        "Default":      {"speed_factor": 1.0, "cost": 1.0}
+        "Campo Aberto":    {"speed_factor": 1.0, "cost": 1.0},
+        "Floresta":        {"speed_factor": 0.6, "cost": 1.5},
+        "Cidade":          {"speed_factor": 0.8, "cost": 1.2},
+        "Estrada Asfalto": {"speed_factor": 1.3, "cost": 0.8},
+        "Estrada Terra":   {"speed_factor": 1.1, "cost": 0.9},
+        "Rio":             {"speed_factor": 0.1, "cost": 3.0},
+        "Pântano":         {"speed_factor": 0.4, "cost": 2.0},
+        "Default":         {"speed_factor": 1.0, "cost": 1.0}
     }
 }
 
