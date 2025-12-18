@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HexBoard Map</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none;
+            /* Prevent text selection */
+        }
+
+        #main-map {
+            /* Removing max-width/height to allow JS to force exact pixel dimensions */
+            display: block;
+            pointer-events: none;
+            /* Let clicks pass to container if needed, or handle locally */
+            /* Ensure smooth or pixelated scaling? */
+            image-rendering: pixelated;
+        }
+
+        #ui-container {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1001;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 8px;
+            pointer-events: auto;
+        }
+
+        #map-selector {
+            padding: 5px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #000;
+            border: 1px solid #555;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .instructions {
+            color: white;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        #scale-display {
+            color: #ffeb3b;
+            font-size: 13px;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+
+        /* Tooltip & Unit Card Styles */
+        #tooltip {
+            position: absolute;
+            background-color: rgba(20, 20, 20, 0.95);
+            color: #fff;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 14px;
+            pointer-events: none;
+            display: none;
+            z-index: 9999;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-width: 220px;
+            max-width: 300px;
+            white-space: normal;
+        }
+
+        #tooltip.terrain-mode {
+            min-width: auto;
+            padding: 5px 10px;
+            font-weight: bold;
+            background-color: rgba(0, 0, 0, 0.8);
+            border: 1px solid #fff;
+        }
+
+        /* Action Menu Styles */
+        #action-menu {
+            position: absolute;
+            background-color: rgba(30, 30, 30, 0.95);
+            border: 1px solid #666;
+            border-radius: 6px;
+            padding: 4px;
+            display: none;
+            flex-direction: row;
+            gap: 4px;
+            /* Tighter gap */
+            z-index: 999999;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .action-btn {
+            background: #444;
+            color: #eee;
+            border: 1px solid #555;
+            border-radius: 4px;
+            padding: 2px;
+            /* Smaller padding */
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            /* Fixed small size */
+            height: 22px;
+            transition: background 0.2s, transform 0.1s;
+            position: relative;
+            /* For tooltip positioning */
+        }
+
+        .action-btn:hover {
+            background: #555;
+            border-color: #777;
+            transform: scale(1.05);
+            /* Subtle pop */
+        }
+
+        /* Tooltip for Action Buttons */
+        .action-btn::after {
+            content: attr(data-label);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 6px;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            border: 1px solid #555;
+            z-index: 10001;
+        }
+
+        .action-btn:hover::after {
+            opacity: 1;
+        }
+
+        .action-icon {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        /* Unit Card Internal Components */
+        .card-header {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #444;
+            padding-bottom: 8px;
+            margin-bottom: 8px;
+        }
+
+        .flag-icon {
+            width: 32px;
+            height: 32px;
+            margin-right: 12px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .flag-icon svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.5));
+        }
+
+        .unit-name {
+            font-weight: bold;
+            font-size: 16px;
+            text-align: center;
+            flex-grow: 1;
+            color: #ececec;
+            letter-spacing: 0.5px;
+        }
+
+        .unit-type {
+            text-align: center;
+            color: #aaa;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .stat-row {
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #ccc;
+            margin-bottom: 2px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            background-color: #333;
+            height: 6px;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 2px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: #4caf50;
+            transition: width 0.3s ease;
+        }
+
+        .progress-fill.low {
+            background-color: #ff9800;
+        }
+
+        .progress-fill.critical {
+            background-color: #f44336;
+        }
+
+        .ammo-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2px;
+            margin-top: 4px;
+        }
+
+        .ammo-pip {
+            width: 6px;
+            height: 10px;
+            background-color: #333;
+            border-radius: 1px;
+        }
+
+        .ammo-pip.filled {
+            background-color: #ffc107;
+            box-shadow: 0 0 2px #ffc107;
+        }
+
+        /* Marker Styles */
+        .unit-marker {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            z-index: 100;
+            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.6));
+            transition: transform 0.2s;
+        }
+
+        .unit-marker:hover {
+            transform: scale(1.3);
+            z-index: 102;
+        }
+
+        .unit-marker svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Global Menu Styles */
+        #global-menu {
+            position: absolute;
+            background-color: rgba(30, 30, 30, 0.95);
+            border: 1px solid #666;
+            border-radius: 6px;
+            padding: 8px;
+            display: none;
+            flex-direction: column;
+            /* Vertical list */
+            gap: 8px;
+            z-index: 999999;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+            min-width: 150px;
+        }
+
+        .menu-item {
+            color: #eee;
+            font-size: 13px;
+            padding: 6px;
+            cursor: pointer;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+
+        .menu-item:hover {
+            background-color: #555;
+        }
+
+        .menu-separator {
+            height: 1px;
+            background-color: #555;
+            margin: 2px 0;
+        }
+
+        #map-select-container select {
+            width: 100%;
+            background: #222;
+            color: white;
+            border: 1px solid #555;
+            padding: 4px;
+            border-radius: 4px;
+        }
+
+        #map-container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            background-color: #111;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="ui-container">
+        <!-- Map Selector Removed from Header -->
+        <div class="instructions">Enter: Toggle Terrain | Scroll: Zoom | Right-Click (Map): Menu | Right-Click (Unit):
+            Action</div>
+        <div id="scale-display">Escala: Carregando...</div>
+    </div>
+
+    <!-- Components -->
+    <div id="tooltip"></div>
+
+    <!-- Unit Action Menu -->
+    <div id="action-menu">
+        <div class="action-btn" id="btn-move" data-label="Move">
+            <svg class="action-icon" viewBox="0 0 24 24">
+                <path d="M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z" />
+            </svg>
+        </div>
+        <div class="action-btn" id="btn-attack" data-label="Attack">
+            <svg class="action-icon" viewBox="0 0 24 24">
+                <path
+                    d="M14.5 19C14.5 17.34 15.84 16 17.5 16C19.16 16 20.5 17.34 20.5 19C20.5 20.66 19.16 22 17.5 22C15.84 22 14.5 20.66 14.5 19M7 11V5H17V11H15V13H17V15H13V13H9V15H11V13H9V11H7M15.5 19C15.5 20.1 16.4 21 17.5 21C18.6 21 19.5 20.1 19.5 19C19.5 17.9 18.6 17 17.5 17C16.4 17 15.5 17.9 15.5 19M13.5 19L11.5 21L9.5 19L17.5 7L21.5 19H13.5Z" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- Global Map Menu -->
+    <div id="global-menu">
+        <div id="map-select-container">
+            <select id="map-selector">
+                <option value="SilverCreek">SilverCreek</option>
+                <option value="GreenValley">GreenValley</option>
+            </select>
+        </div>
+        <div class="menu-separator"></div>
+        <div class="menu-item" id="btn-send">
+            <svg style="width:16px;height:16px;fill:currentColor" viewBox="0 0 24 24">
+                <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z" />
+            </svg>
+            Send Command
+        </div>
+    </div>
+
+    <div id="map-container">
+        <img id="main-map" src="" alt="Game Map"
+            style="position: absolute; left: 0; top: 0; transform-origin: 0 0; cursor: default;">
+        <canvas id="route-overlay"
+            style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50;"></canvas>
+        <div id="units-container"
+            style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none;"></div>
+    </div>
+
+    <script>
+        const mapImage = document.getElementById('main-map');
+        const mapContainer = document.getElementById('map-container');
+        const unitsContainer = document.getElementById('units-container');
+        const routeCanvas = document.getElementById('route-overlay');
+        const routeCtx = routeCanvas.getContext('2d');
+        const tooltip = document.getElementById('tooltip');
+        const actionMenu = document.getElementById('action-menu');
+        const globalMenu = document.getElementById('global-menu');
+        const mapSelector = document.getElementById('map-selector');
+        const scaleDisplay = document.getElementById('scale-display');
+        const btnMove = document.getElementById('btn-move');
+        const btnSend = document.getElementById('btn-send');
+
+        // Off-screen canvas for terrain data
+        const terrainCanvas = document.createElement('canvas');
+        const ctx = terrainCanvas.getContext('2d', { willReadFrequently: true });
+        const terrainImage = new Image();
+
+        // Game State
+        let gameState = { unidades: [] };
+        let currentMapFolder = '';
+        let isShowingTerrain = false;
+        let mapScale = 50000;
+
+        // Transform State
+        let scale = 1;
+        let panX = 0;
+        let panY = 0;
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+        let lastLoadedMapFolder = null;
+
+        // Route Planning State
+        let isPlanningRoute = false;
+        let planningUnitId = null;
+        let mouseWorldPos = null;
+
+        const terrainPalette = {
+            "255,255,128": "Deserto",
+            "0,100,0": "Floresta",
+            "144,238,144": "Planície",
+            "173,216,230": "Rio",
+            "139,69,19": "Montanhas",
+            "211,211,211": "Neve",
+            "210,180,140": "Estrada de Terra",
+            "105,105,105": "Estrada de Asfalto"
+        };
+        let isTerrainLoaded = false;
+        let selectedUnitId = null;
+
+        function resizeCanvas() {
+            routeCanvas.width = mapContainer.clientWidth;
+            routeCanvas.height = mapContainer.clientHeight;
+            renderRoutes(); // Redraw on resize
+        }
+        window.addEventListener('resize', resizeCanvas);
+
+        // Logic: Coordinate System
+        let baseMapWidth = 0;
+        let baseMapHeight = 0;
+
+        function worldToCanvas(worldX, worldY) {
+            if (!gameState || !baseMapWidth || !gameState.mapa) return [0, 0];
+            const mapWidthMeters = gameState.mapa.larguraMetros;
+            const mapHeightMeters = gameState.mapa.alturaMetros; // Ensure this exists in your JSON or use aspect ratio
+            const imgWidth = baseMapWidth;
+            const imgHeight = baseMapHeight;
+            const imgX = (worldX / mapWidthMeters) * imgWidth;
+            const imgY = imgHeight - (worldY / mapHeightMeters) * imgHeight;
+            const canvasX = imgX * scale + panX;
+            const canvasY = imgY * scale + panY;
+            return [canvasX, canvasY];
+        }
+
+        function canvasToWorld(canvasX, canvasY) {
+            if (!gameState || !baseMapWidth || !gameState.mapa) return [0, 0];
+            const mapWidthMeters = gameState.mapa.larguraMetros;
+            const mapHeightMeters = gameState.mapa.alturaMetros;
+            const imgWidth = baseMapWidth;
+            const imgHeight = baseMapHeight;
+
+            // Reverse transform
+            const imgX = (canvasX - panX) / scale;
+            const imgY = (canvasY - panY) / scale;
+
+            // Reverse mapping
+            const worldX = (imgX / imgWidth) * mapWidthMeters;
+            const worldY = ((imgHeight - imgY) / imgHeight) * mapHeightMeters;
+
+            return { x: worldX, y: worldY };
+        }
+
+        function updateTransform() {
+            // Apply width/height to force alignment if resolutions differ
+            if (baseMapWidth > 0) {
+                mapImage.style.width = baseMapWidth + 'px';
+                mapImage.style.height = baseMapHeight + 'px';
+            }
+            mapImage.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+            renderUnits();
+            renderRoutes();
+        }
+
+        function centerMap() {
+            if (!baseMapWidth) return;
+            const containerRect = mapContainer.getBoundingClientRect();
+            const imgW = baseMapWidth;
+            const imgH = baseMapHeight;
+            const scaleX = containerRect.width / imgW;
+            const scaleY = containerRect.height / imgH;
+            scale = Math.min(scaleX, scaleY) * 0.95;
+            const displayW = imgW * scale;
+            const displayH = imgH * scale;
+            panX = (containerRect.width - displayW) / 2;
+            panY = (containerRect.height - displayH) / 2;
+            updateTransform();
+        }
+
+        // --- Logic: Fog of War & Icons ---
+        function checkVisibility(targetUnit) {
+            if (targetUnit.time === 0) return true;
+            const allies = gameState.unidades.filter(u => u.time === 0);
+            for (const ally of allies) {
+                const dx = targetUnit.posicaoX - ally.posicaoX;
+                const dy = targetUnit.posicaoY - ally.posicaoY;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist <= (ally.raioVisao || 1000)) return true;
+            }
+            return false;
+        }
+
+        // --- UI Logic ---
+        function getFlag(countryCode) {
+            if (countryCode === 'USA') {
+                return `<svg viewBox="0 0 32 24"><rect width="32" height="24" fill="#B22234"/><rect width="32" height="4" y="4" fill="white"/><rect width="32" height="4" y="12" fill="white"/><rect width="32" height="4" y="20" fill="white"/><rect width="14" height="14" fill="#3C3B6E"/><text x="7" y="10" font-size="8" text-anchor="middle" fill="white" dy="2">★</text></svg>`;
+            } else if (countryCode === 'GER') {
+                return `<svg viewBox="0 0 32 32"><path d="M16 4 L20 12 L28 12 L22 18 L24 26 L16 22 L8 26 L10 18 L4 12 L12 12 Z" fill="black" stroke="white" stroke-width="1"/></svg>`;
+            }
+            return `<svg viewBox="0 0 32 24"><rect width="32" height="24" fill="#555"/><text x="16" y="16" text-anchor="middle" fill="white" font-size="10">?</text></svg>`;
+        }
+
+        function createUnitCard(unit) {
+            try {
+                const isEnemy = unit.time === 1;
+                const maxFuel = unit.combustivelMax || 100;
+                const curFuel = unit.combustivelAtual !== undefined ? unit.combustivelAtual : maxFuel;
+                const fuelPct = (curFuel / maxFuel) * 100;
+                let fuelClass = '';
+                if (fuelPct < 25) fuelClass = 'critical';
+                else if (fuelPct < 50) fuelClass = 'low';
+
+                const maxAmmo = unit.municaoMax || 5;
+                const curAmmo = unit.municaoAtual !== undefined ? unit.municaoAtual : maxAmmo;
+                let ammoHtml = '';
+                for (let i = 0; i < maxAmmo; i++) {
+                    const filled = i < curAmmo ? 'filled' : '';
+                    ammoHtml += `<div class="ammo-pip ${filled}"></div>`;
+                }
+
+                return `
+                    <div class="card-header">
+                       <div class="flag-icon">${getFlag(unit.pais || (isEnemy ? 'GER' : 'USA'))}</div>
+                       <div class="unit-name">${unit.nome || 'Unidade'}</div>
+                    </div>
+                    <div class="unit-type">${unit.tipo || '???'} | ⚔️ ${unit.raioAtaque || '-'}m | ${isEnemy ? 'INIMIGO' : 'ALIADO'}</div>
+                    <div class="stat-row">
+                       <div class="stat-label">
+                            <span>Combustível</span>
+                            <span>${curFuel}/${maxFuel} ${unit.unidadeCombustivel || 'L'}</span>
+                       </div>
+                       <div class="progress-bar-container">
+                            <div class="progress-fill ${fuelClass}" style="width: ${fuelPct}%"></div>
+                       </div>
+                    </div>
+                    <div class="stat-row">
+                       <div class="stat-label"><span>Munição (${curAmmo})</span></div>
+                       <div class="ammo-container">${ammoHtml}</div>
+                    </div>
+                `;
+            } catch (e) { console.error(e); return "Erro"; }
+        }
+
+        // --- Route Logic ---
+        function startRoutePlanning(unitId) {
+            isPlanningRoute = true;
+            planningUnitId = unitId;
+            actionMenu.style.display = 'none';
+            mapContainer.style.cursor = 'crosshair';
+
+            // Initialize rota if not present
+            const unit = gameState.unidades.find(u => u.id === unitId);
+            if (unit && !unit.rota) unit.rota = [];
+
+            renderRoutes();
+        }
+
+        function renderRoutes() {
+            routeCtx.clearRect(0, 0, routeCanvas.width, routeCanvas.height);
+
+            if (!gameState.unidades) return;
+
+            gameState.unidades.forEach(unit => {
+                // If enemy and not visible, don't show route (optional, but good for FoW)
+                if (!checkVisibility(unit)) return;
+
+                const startPos = [unit.posicaoX, unit.posicaoY];
+                let currentPos = startPos;
+                const points = unit.rota || [];
+
+                if (points.length === 0 && (!isPlanningRoute || planningUnitId !== unit.id)) return;
+
+                routeCtx.beginPath();
+                routeCtx.strokeStyle = (unit.time === 1) ? 'rgba(211, 47, 47, 0.8)' : 'rgba(76, 175, 80, 0.8)';
+                routeCtx.lineWidth = 2;
+                routeCtx.setLineDash([5, 5]); // Checkpoint connections are dashed
+
+                // Draw existing checkpoints
+                let [userCx, userCy] = worldToCanvas(startPos[0], startPos[1]);
+                routeCtx.moveTo(userCx, userCy);
+
+                points.forEach(pt => {
+                    const [px, py] = worldToCanvas(pt.x, pt.y);
+                    routeCtx.lineTo(px, py);
+
+                    // Draw Checkpoint Icon
+                    // We can't draw DOM elements easily in canvas, so we draw a rect/circle
+                    // Draw small rect
+                    routeCtx.fillStyle = '#FFC107';
+                    routeCtx.fillRect(px - 4, py - 4, 8, 8);
+
+                    currentPos = [pt.x, pt.y];
+                    // Reset stroke for next line
+                    routeCtx.moveTo(px, py);
+                });
+                routeCtx.stroke();
+
+                // Draw rubber band line if planning this unit
+                if (isPlanningRoute && planningUnitId === unit.id && mouseWorldPos) {
+                    const [lastX, lastY] = worldToCanvas(currentPos[0], currentPos[1]);
+                    const [mouseX, mouseY] = worldToCanvas(mouseWorldPos.x, mouseWorldPos.y);
+
+                    routeCtx.beginPath();
+                    routeCtx.strokeStyle = '#FFFFFF';
+                    routeCtx.lineWidth = 1;
+                    routeCtx.setLineDash([4, 4]);
+                    routeCtx.moveTo(lastX, lastY);
+                    routeCtx.lineTo(mouseX, mouseY);
+                    routeCtx.stroke();
+                }
+
+                routeCtx.setLineDash([]); // Reset
+            });
+        }
+
+        function renderUnits() {
+            unitsContainer.innerHTML = '';
+            if (!gameState || !gameState.unidades) return;
+
+            gameState.unidades.forEach(unit => {
+                if (!checkVisibility(unit)) return;
+                const [cx, cy] = worldToCanvas(unit.posicaoX, unit.posicaoY);
+                if (cx < -100 || cy < -100) return;
+
+                const marker = document.createElement('div');
+                marker.className = 'unit-marker';
+                marker.style.pointerEvents = 'auto';
+                const isEnemy = unit.time === 1;
+                marker.innerHTML = getUnitIcon(unit.tipo, isEnemy);
+                marker.style.left = (cx - 20) + 'px';
+                marker.style.top = (cy - 20) + 'px';
+                if (isEnemy) marker.style.filter = 'drop-shadow(0 0 4px #d32f2f)';
+
+                // Mouse Over -> Tooltip
+                marker.addEventListener('mouseenter', () => {
+                    if (isPlanningRoute) return; // Don't show tooltip while planning
+                    tooltip.innerHTML = createUnitCard(unit);
+                    tooltip.className = '';
+                    tooltip.style.display = 'block';
+                    marker.style.zIndex = 10000;
+                    marker.style.transform = 'scale(1.2)';
+                });
+
+                marker.addEventListener('mousemove', (e) => {
+                    if (isPlanningRoute) return;
+                    tooltip.style.left = (e.clientX + 20) + 'px';
+                    tooltip.style.top = (e.clientY + 20) + 'px';
+                });
+
+                marker.addEventListener('mouseleave', () => {
+                    tooltip.style.display = 'none';
+                    if (selectedUnitId !== unit.id) { // Only reset z-index if not selected context logic (future)
+                        marker.style.zIndex = 100;
+                        marker.style.transform = 'scale(1)';
+                    }
+                });
+
+                // Right Click -> Action Menu
+                marker.addEventListener('contextmenu', (e) => {
+                    e.preventDefault();
+                    if (isPlanningRoute) return; // Don't open menu if planning (context closes planning)
+
+                    e.stopPropagation(); // Stop map pan
+                    selectedUnitId = unit.id;
+
+                    // Close Unit Detail if open
+                    tooltip.style.display = 'none';
+
+                    actionMenu.style.display = 'flex';
+                    actionMenu.style.left = e.clientX + 'px';
+                    actionMenu.style.top = e.clientY + 'px';
+
+                    console.log('Action Menu opened for unit:', unit.id);
+                });
+
+                unitsContainer.appendChild(marker);
+            });
+        }
+
+        function getUnitIcon(type, isEnemy) {
+            let color = isEnemy ? '#d32f2f' : '#4caf50';
+            let path = '';
+            switch (type) {
+                case 'INF':
+                    path = `<circle cx="256" cy="256" r="240" fill="${color}" stroke="white" stroke-width="20"/><path fill="white" d="M256 120l-80 140h160z M196 280h120l-60 100z"/>`; break;
+                case 'TNK':
+                    if (!isEnemy) color = '#ff9800';
+                    path = `<circle cx="256" cy="256" r="240" fill="${color}" stroke="white" stroke-width="20"/><rect x="156" y="186" width="200" height="140" rx="20" fill="white"/>`; break;
+                case 'ART':
+                    if (!isEnemy) color = '#f44336';
+                    path = `<circle cx="256" cy="256" r="240" fill="${color}" stroke="white" stroke-width="20"/><circle cx="256" cy="256" r="60" fill="white"/>`; break;
+                case 'RCN':
+                    if (!isEnemy) color = '#2196f3';
+                    path = `<circle cx="256" cy="256" r="240" fill="${color}" stroke="white" stroke-width="20"/><path fill="white" d="M120 400 L400 112" stroke="white" stroke-width="20"/>`; break;
+                default:
+                    path = `<circle cx="256" cy="256" r="200" fill="${color}"/>`;
+            }
+            return `<svg viewBox="0 0 512 512">${path}</svg>`;
+        }
+
+        // --- Core Map Logic ---
+        function loadMap(folderName) {
+            currentMapFolder = folderName;
+            const type = isShowingTerrain ? 'terreno' : 'mapa';
+            mapImage.src = `mapas/${folderName}/${type}.png`;
+            terrainImage.src = `mapas/${folderName}/terreno.png`;
+            fetch(`mapas/${folderName}/escala.txt`).then(r => r.text()).then(d => {
+                mapScale = parseInt(d.trim());
+                scaleDisplay.textContent = `Escala: 1:${mapScale.toLocaleString()}`;
+            }).catch(() => scaleDisplay.textContent = 'Escala: 1:50,000');
+        }
+
+        mapImage.onload = () => {
+            // If it's the main map, set base dimensions
+            if (!isShowingTerrain && mapImage.naturalWidth > 0) {
+                baseMapWidth = mapImage.naturalWidth;
+                baseMapHeight = mapImage.naturalHeight;
+            }
+
+            if (currentMapFolder !== lastLoadedMapFolder) { centerMap(); lastLoadedMapFolder = currentMapFolder; resizeCanvas(); }
+
+            // Force reflow/transform update to apply width/height
+            updateTransform();
+
+            renderUnits();
+            renderRoutes();
+        }
+        terrainImage.onload = () => { terrainCanvas.width = terrainImage.width; terrainCanvas.height = terrainImage.height; ctx.drawImage(terrainImage, 0, 0); isTerrainLoaded = true; }
+
+        function getTerrainAt(x, y) {
+            if (!isTerrainLoaded) return "Carregando...";
+            const rect = mapImage.getBoundingClientRect();
+            const scaleX = terrainCanvas.width / rect.width;
+            const scaleY = terrainCanvas.height / rect.height;
+            const imgX = Math.floor((x - rect.left) * scaleX);
+            const imgY = Math.floor((y - rect.top) * scaleY);
+            if (imgX < 0 || imgX >= terrainCanvas.width || imgY < 0 || imgY >= terrainCanvas.height) return null;
+            const p = ctx.getImageData(imgX, imgY, 1, 1).data;
+            const key = `${p[0]},${p[1]},${p[2]}`;
+            return terrainPalette[key] || "Desconhecido";
+        }
+
+        // --- Global Listeners ---
+        btnMove.addEventListener('click', (e) => {
+            if (selectedUnitId) startRoutePlanning(selectedUnitId);
+            e.stopPropagation();
+        });
+
+        window.addEventListener('click', (e) => {
+            // Close action menu if clicking outside
+            if (!e.target.closest('#action-menu') && !e.target.closest('.unit-marker')) {
+                actionMenu.style.display = 'none';
+            }
+            if (!e.target.closest('#global-menu')) { // Close global menu
+                globalMenu.style.display = 'none';
+            }
+
+            // Route Planning - Add Checkpoint
+            if (isPlanningRoute && planningUnitId) {
+                // Ignore clicks on UI
+                if (e.target.closest('#ui-container') || e.target.closest('#action-menu')) return;
+
+                const unit = gameState.unidades.find(u => u.id === planningUnitId);
+                if (unit) {
+                    const worldPos = canvasToWorld(e.clientX, e.clientY);
+                    unit.rota.push(worldPos);
+                    renderRoutes();
+                }
+            }
+        });
+
+        // Right Click / Esc (Finish Route)
+        window.addEventListener('contextmenu', (e) => {
+            if (isPlanningRoute) {
+                e.preventDefault();
+                isPlanningRoute = false;
+                planningUnitId = null;
+                mapContainer.style.cursor = 'default';
+                renderRoutes(); // Clear rubber band
+                return;
+            }
+
+            // Global Menu Logic (if not clicking unit)
+            if (!e.target.closest('.unit-marker')) {
+                e.preventDefault();
+                globalMenu.style.display = 'flex';
+                globalMenu.style.left = e.clientX + 'px';
+                globalMenu.style.top = e.clientY + 'px';
+            }
+        });
+
+        // Send Button Logic
+        btnSend.addEventListener('click', () => {
+            const jsonOutput = JSON.stringify(gameState, null, 2);
+            navigator.clipboard.writeText(jsonOutput).then(() => {
+                alert("Game state copied to clipboard! Paste into Game Engine.");
+                globalMenu.style.display = 'none';
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                alert("Failed to copy to clipboard.");
+            });
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (isPlanningRoute) {
+                    isPlanningRoute = false;
+                    planningUnitId = null;
+                    mapContainer.style.cursor = 'default';
+                    renderRoutes();
+                }
+            }
+            if (e.key === 'Enter') {
+                isShowingTerrain = !isShowingTerrain;
+                const type = isShowingTerrain ? 'terreno' : 'mapa';
+                mapImage.src = `mapas/${currentMapFolder}/${type}.png`;
+            }
+        });
+
+        // Terrain Hover
+        mapContainer.addEventListener('mousemove', (e) => {
+            // Route Planning Rubber Band
+            if (isPlanningRoute) {
+                mouseWorldPos = canvasToWorld(e.clientX, e.clientY);
+                renderRoutes();
+                return; // Skip terrain tooltip during planning
+            }
+
+            // Check if Action Menu is open
+            if (actionMenu.style.display !== 'none') {
+                if (!e.target.closest('.unit-marker')) tooltip.style.display = 'none';
+                return;
+            }
+            if (e.target.closest('.unit-marker')) return;
+            const rect = mapImage.getBoundingClientRect();
+            if (e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom) {
+                const terrain = getTerrainAt(e.clientX, e.clientY);
+                if (terrain) {
+                    tooltip.textContent = terrain;
+                    tooltip.className = 'terrain-mode';
+                    tooltip.style.display = 'block';
+                    tooltip.style.left = (e.clientX + 15) + 'px';
+                    tooltip.style.top = (e.clientY + 15) + 'px';
+                }
+            } else { if (!e.target.closest('.unit-marker')) tooltip.style.display = 'none'; }
+        });
+
+        mapContainer.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? -0.1 : 0.1;
+            const newScale = scale * (1 + delta);
+            if (newScale < 0.1 || newScale > 20) return;
+            const rect = mapContainer.getBoundingClientRect();
+            const mx = e.clientX - rect.left;
+            const my = e.clientY - rect.top;
+            const vx = mx - panX;
+            const vy = my - panY;
+            panX = mx - (vx * newScale / scale);
+            panY = my - (vy * newScale / scale);
+            scale = newScale;
+            updateTransform();
+        });
+
+        mapContainer.addEventListener('mousedown', (e) => {
+            if (e.button === 2 && !isPlanningRoute) { // Only pan if not planning
+                e.preventDefault();
+                globalMenu.style.display = 'none'; // Hide menu on pan
+                isDragging = true;
+                startX = e.clientX - panX;
+                startY = e.clientY - panY;
+                mapImage.style.cursor = 'grabbing';
+            }
+        });
+        window.addEventListener('mouseup', (e) => { if (e.button === 2) { isDragging = false; if (!isPlanningRoute) mapImage.style.cursor = 'default'; } });
+        window.addEventListener('mousemove', (e) => { if (isDragging) { e.preventDefault(); panX = e.clientX - startX; panY = e.clientY - startY; updateTransform(); } });
+        mapContainer.addEventListener('contextmenu', e => e.preventDefault());
+
+        mapSelector.addEventListener('change', (e) => { loadMap(e.target.value); e.target.blur(); });
+
+
+        fetch('dados.json').then(r => r.json()).then(data => { gameState = data; currentMapFolder = gameState.mapa.nome; mapSelector.value = currentMapFolder; loadMap(currentMapFolder); }).catch(e => { console.error(e); loadMap('SilverCreek'); });
+    </script>
+</body>
+
+</html>
