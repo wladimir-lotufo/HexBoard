@@ -355,6 +355,11 @@ O combate é resolvido comparando os valores de Ataque do agressor contra a Defe
 5.  **Reconhecimento é Vida**: Mova seus Recon cars (RCN) passo a passo ("phased movement") para evitar emboscadas. Saber onde o inimigo está antes de mover seus tanques pesados evita surpresas desagradáveis.
 ## 5. Notas de Implementação
 
+## 6. Implementação e Escalas
+
+- **Escala do Mapa**: O sistema utiliza **Metros por Pixel (m/px)** como definição padrão de escala.
+    - Exemplo: 10 m/px significa que um mapa de 1000 pixels de largura tem 10.000 metros (10 km) de largura real.
+    - O arquivo `escala.txt` em cada pasta de mapa deve conter apenas este número (float/int).
 - O sistema utiliza coordenadas cartesianas (metros) e não hexágonos discretos.
 - "Hexágono" é apenas uma abstração visual de escala (1 hex ~= 1-2 km).
 - Combustível e Munição devem ser reabastecidos em cidades ou por unidades de suprimento (future feature).

@@ -12,10 +12,11 @@ description: Gera novos (ou revisa existente) arquivo mapa.png (imagem realista)
 3. Crie uma pasta dentro da pasta src/mapas com o nome sugerido pelo usuário (se não existir).
 
 4. **IMPORTANTE - Escala do Mapa:**
-   - Todo mapa DEVE ter uma escala definida
-   - Pergunte ao usuário qual escala deseja (sugestões: 1:25000, 1:50000, 1:100000)
+   - Todo mapa DEVE ter uma escala definida em **Metros por Pixel**.
+   - Pergunte ao usuário qual a resolução desejada (Exemplo: 10 para 10 m/px, 5 para 5 m/px).
    - A escala deve ser salva em um arquivo `escala.txt` dentro da pasta do mapa
-   - Formato do arquivo: apenas o número da escala (ex: "50000" para 1:50000)
+   - Formato do arquivo: apenas o número (float/int). Ex: `10`
+   - Esta escala será usada para calcular as dimensões reais do mundo (Largura da Imagem * Escala).
 
 5. Gere uma imagem realista de um mapa (vista superior) com tamanho informado:
    - Prompt Base: "A realistic top-down view map. High resolution, no borders. Cities must have NO outer walls. Urban areas consist of clusters of buildings with internal streets that are directly connected to the main regional roads. 80% asphalt roads (dark gray), 20% dirt roads (light brown). Integration between city streets and highways must be seamless."

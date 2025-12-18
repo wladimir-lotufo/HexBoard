@@ -445,6 +445,7 @@
         };
         let isTerrainLoaded = false;
         let selectedUnitId = null;
+        let metersPerPixel = 1; // Default to 1:1 if not set
 
         function resizeCanvas() {
             routeCanvas.width = mapContainer.clientWidth;
@@ -459,10 +460,13 @@
 
         function worldToCanvas(worldX, worldY) {
             if (!gameState || !baseMapWidth || !gameState.mapa) return [0, 0];
-            const mapWidthMeters = gameState.mapa.larguraMetros;
-            const mapHeightMeters = gameState.mapa.alturaMetros; // Ensure this exists in your JSON or use aspect ratio
+            // World Width in meters = ImageWidth * MetersPerPixel
+            const mapWidthMeters = baseMapWidth * metersPerPixel;
+            const mapHeightMeters = baseMapHeight * metersPerPixel;
+
             const imgWidth = baseMapWidth;
             const imgHeight = baseMapHeight;
+
             const imgX = (worldX / mapWidthMeters) * imgWidth;
             const imgY = imgHeight - (worldY / mapHeightMeters) * imgHeight;
             const canvasX = imgX * scale + panX;
@@ -471,9 +475,10 @@
         }
 
         function canvasToWorld(canvasX, canvasY) {
-            if (!gameState || !baseMapWidth || !gameState.mapa) return [0, 0];
-            const mapWidthMeters = gameState.mapa.larguraMetros;
-            const mapHeightMeters = gameState.mapa.alturaMetros;
+            if (!gameState || !baseMapWidth) return { x: 0, y: 0 };
+
+            const mapWidthMeters = baseMapWidth * metersPerPixel;
+            const mapHeightMeters = baseMapHeight * metersPerPixel;
             const imgWidth = baseMapWidth;
             const imgHeight = baseMapHeight;
 
@@ -564,7 +569,7 @@
                     <div class="stat-row">
                        <div class="stat-label">
                             <span>Combustível</span>
-                            <span>${curFuel}/${maxFuel} ${unit.unidadeCombustivel || 'L'}</span>
+                            <span>${Math.round(curFuel)}/${maxFuel} ${unit.unidadeCombustivel || 'L'}</span>
                        </div>
                        <div class="progress-bar-container">
                             <div class="progress-fill ${fuelClass}" style="width: ${fuelPct}%"></div>
@@ -608,9 +613,9 @@
                 if (points.length === 0 && (!isPlanningRoute || planningUnitId !== unit.id)) return;
 
                 routeCtx.beginPath();
-                routeCtx.strokeStyle = (unit.time === 1) ? 'rgba(211, 47, 47, 0.8)' : 'rgba(76, 175, 80, 0.8)';
-                routeCtx.lineWidth = 2;
-                routeCtx.setLineDash([5, 5]); // Checkpoint connections are dashed
+                routeCtx.strokeStyle = '#000000';
+                routeCtx.lineWidth = 4;
+                routeCtx.setLineDash([10, 6]); // Checkpoint connections are dashed
 
                 // Draw existing checkpoints
                 let [userCx, userCy] = worldToCanvas(startPos[0], startPos[1]);
@@ -742,9 +747,18 @@
             mapImage.src = `mapas/${folderName}/${type}.png`;
             terrainImage.src = `mapas/${folderName}/terreno.png`;
             fetch(`mapas/${folderName}/escala.txt`).then(r => r.text()).then(d => {
-                mapScale = parseInt(d.trim());
-                scaleDisplay.textContent = `Escala: 1:${mapScale.toLocaleString()}`;
-            }).catch(() => scaleDisplay.textContent = 'Escala: 1:50,000');
+                metersPerPixel = parseFloat(d.trim());
+                if (isNaN(metersPerPixel)) metersPerPixel = 10;
+                // Update State
+                if (gameState.mapa) {
+                    gameState.mapa.larguraMetros = baseMapWidth * metersPerPixel;
+                    gameState.mapa.alturaMetros = baseMapHeight * metersPerPixel;
+                }
+                scaleDisplay.textContent = `Escala: ${metersPerPixel} m/px`;
+            }).catch(() => {
+                metersPerPixel = 10;
+                scaleDisplay.textContent = 'Escala: 10 m/px (Default)';
+            });
         }
 
         mapImage.onload = () => {

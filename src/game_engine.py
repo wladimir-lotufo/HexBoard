@@ -124,12 +124,32 @@ def process_turn(game_state):
         except Exception as e:
             print(f"Warning: Could not load terrain map: {e}")
     else:
-        # Fallback: Try absolute path relative to script location if necessary
-        # Assuming script run from repo root
+        # Fallback
         if os.path.exists(f"src/mapas/{map_name}/terreno.png"):
              terrain_img = Image.open(f"src/mapas/{map_name}/terreno.png").convert('RGB')
-        else:
-            print(f"Warning: Terrain map not found at src/mapas/{map_name}/terreno.png")
+
+    # Recalculate dimensions if missing (e.g. from new frontend logic)
+    if (map_w <= 0 or map_h <= 0) and terrain_img:
+        try:
+            escala_path = f"src/mapas/{map_name}/escala.txt"
+            scale_val = 10.0 # Default
+            if os.path.exists(escala_path):
+                with open(escala_path, 'r') as f:
+                    val = f.read().strip()
+                    scale_val = float(val)
+            
+            # map_w = pixels * meters_per_pixel
+            map_w = terrain_img.width * scale_val
+            map_h = terrain_img.height * scale_val
+            
+            # Update back to map_info to save it later?
+            map_info['larguraMetros'] = map_w
+            map_info['alturaMetros'] = map_h
+            map_info['escala'] = scale_val # Update text scale too
+        except Exception as e:
+            print(f"Error calculating dimensions: {e}")
+            map_w = 10000
+            map_h = 8000
 
     units = game_state.get('unidades', [])
     
