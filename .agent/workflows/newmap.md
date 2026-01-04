@@ -19,7 +19,7 @@ description: Gera novos (ou revisa existente) arquivo mapa.png (imagem realista)
    - Esta escala será usada para calcular as dimensões reais do mundo (Largura da Imagem * Escala).
 
 5. Gere uma imagem realista de um mapa (vista superior) com tamanho informado:
-   - Prompt Base: "A realistic top-down view map. High resolution, no borders. Cities must have NO outer walls. Urban areas consist of clusters of buildings with internal streets that are directly connected to the main regional roads. 80% asphalt roads (dark gray), 20% dirt roads (light brown). Integration between city streets and highways must be seamless."
+   - Prompt Base: "A realistic top-down view map. High resolution, no borders. Cities must have NO outer walls. Urban areas consist of clusters of buildings with internal streets, but **buildings must NOT be placed immediately adjacent to the main paved roads connecting cities**. Keep the sides of major roads clear of structures. 80% asphalt roads (dark gray), 20% dirt roads (light brown). Integration between city streets and highways must be seamless."
    - Adicione detalhes do tema solicitado no prompt.
    - Sem bordas ou molduras.
    - Nome do arquivo: `mapa.png`

@@ -6,11 +6,17 @@ description: Gera novos (ou revisa existente) arquivo terreno.png (máscara de t
 
 2. Gere a imagem de máscara de terreno baseada no `mapa.png`:
    - Use a imagem `src/mapas/{nome}/mapa.png` como referência (input image).
-   - Prompt: "Create a flat segmentation map (terrain mask) of the provided map image. Replace realistic textures with SOLID FLAT COLORS (no shading, no gradients, no borders) corresponding to the terrain type at that location at pixel level. Make road lines SOLID and CONTINUOUS.
+   - Prompt: "Create a flat segmentation map (terrain mask) of the provided map image. Replace realistic textures with SOLID FLAT COLORS (no shading, no gradients, no borders) corresponding to the terrain type at that location at pixel level.
+   - **CRITICAL: EXACT SPATIAL ALIGNMENT REQUIRED.**
+     - The output MUST overlay perfectly with the input image.
+     - Do NOT change the position, shape, or size of ANY element (roads, rivers, cities, mountains).
+     - Do NOT hallucinate new features or distort existing ones.
+     - This is a pixel-classification task, not a creative generation task.
+   
    - **MAPPING RULES (RGB):**
      - Plains/Grass: (144, 238, 144) - Light Green
      - Forest: (0, 100, 0) - Dark Green
-     - City/Buildings: (169, 169, 169) - Medium Gray
+     - City/Buildings: (169, 169, 169) - Medium Gray. **IMPORTANT:** Cities must be composed of distinct "Building Blocks" (irregular polygons) separated by a CLEAR GRID of Streets (Dark Gray). Do not create solid gray blobs. The street network must cut through the city.
      - River: (173, 216, 230) - Light Blue
      - Mountain: (139, 69, 19) - Brown
      - Swamp: (47, 79, 79) - Dark Slate Gray
@@ -30,16 +36,16 @@ description: Gera novos (ou revisa existente) arquivo terreno.png (máscara de t
    
    # Official Palette
    PALETTE = {
-       "Campo Aberto": (144, 238, 144),
-       "Floresta": (0, 100, 0),
-       "Cidade": (169, 169, 169),
-       "Estrada Asfalto": (105, 105, 105),
-       "Estrada Terra": (210, 180, 140),
-       "Rio": (173, 216, 230),
-       "Montanha": (139, 69, 19),
-       "Pântano": (47, 79, 79),
-       "Deserto": (255, 255, 128),
-       "Neve": (255, 250, 250)
+       "Plains/Grass": (144, 238, 144),
+       "Forest": (0, 100, 0),
+       "City/Buildings": (169, 169, 169),
+       "Asphalt Road": (105, 105, 105),
+       "Dirt Road": (210, 180, 140),
+       "River": (173, 216, 230),
+       "Mountain": (139, 69, 19),
+       "Swamp": (47, 79, 79),
+       "Desert": (255, 255, 128),
+       "Snow": (255, 250, 250)
    }
    
    def closest_color(requested_color):
