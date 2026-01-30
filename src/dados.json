@@ -1,9 +1,9 @@
 {
   "mapa": {
-    "nome": "GreenValley",
-    "escala": 3,
-    "larguraMetros": 7296,
-    "alturaMetros": 5184
+    "nome": "IronRidge",
+    "escala": 1,
+    "larguraMetros": 2400,
+    "alturaMetros": 1800
   },
   "parametros": {
     "horasPorTurno": 1

@@ -1,6 +1,134 @@
 ---
-description: Gera ou atualiza o arquivo src/index.html com as funcionalidades de mapa interativo, seletor de mapas, detecção de terreno, e renderização de unidades militares.
+description: Gera ou atualiza o arquivo src/index.html com as funcionalidades definidas neste arquivo.
 ---
+
+1. Objetivo:
+  - Implementar um jogo similar a Panzer General, que é um jogo estratégico militar.
+  - O jogo terá uma interface Web, onde um mapa do terreno será apresentado, e unidades serão colocadas sobre ele.
+  - Então o jogador poderá mover as unidades e fazer combates.
+  - O jogo terá uma interface que permitirá copiar-colar o estado atual do jogo, e colar no seu chat LLM, e seu chat fará as jogadas do seu oponente, fazendo o processo de copiar-colar de volta para o jogo. Isso permitirá simular a IA jogando pelo seu oponente na interface do jogo.
+  - Ponto interessante: você poderá "treinar" a IA com suas estratégias preferidas, podendo escolher oponentes com características distintas!
+
+2. Estruturas de Dados do Projeto:
+
+  1. Mapa
+    - O jogo terá duas imagens com o mapa do terreno onde o jogo vai acontecer.
+      - Mapa Mascara: maskMap.png
+        - Esta imagem segue diretrizes de desenho artístico, confome @newmask.md
+        - Tipo de Terreno mapeado pixel a pixel de acordo com o tabela de cores abaixo:
+        ```javascript
+        const terrainPalette = {
+            "255,255,128": "Deserto",
+            "0,100,0":     "Floresta",
+            "144,238,144": "Planície",
+            "173,216,230": "Rio",
+            "139,69,19":   "Montanhas",
+            "211,211,211": "Neve",
+            "210,180,140": "Estrada de Terra",
+            "105,105,105": "Estrada de Asfalto"
+        };
+        ```
+
+      - Mapa Artistico: artistMap.png
+        - Imagem artística do terreno, mapeado pixel a pixel de acordo com o mapa mascara, e tema de terreno.
+        - Este desenho segue diretrizes de desenho artístico, confome @newmap.md
+
+      - Escala: escala.txt
+        - Este arquivo contém a escala do mapa, em metros por pixel.
+
+    - A mecanica é que o maskMap terá mapeado pixel a pixel o Tipo de Terreno, que facilitará a lógica do jogo.
+
+  2. Dados do Jogo
+    - Tabuleiro
+      - Esta estrutura de dados contém todas as informações necessárias sobre o estado atual do jogo.
+      - Estrutua de Dados
+        - ListaUnidades: lista de unidades no jogo (aliadas e inimigas)  
+          - Unidade:
+            - id: Identificador único da Unidade Militar
+            - tipoUnidade: Tipo da Unidade Militar (ver: ListaTiposUnidades)
+            - exercito: Indica a qual exercito esta a unidade pertence (ver: ListaExercitos)
+            - nomeUnidade: Nome da Unidade Militar
+            - posicaoX: Posição X da Unidade Militar (em metros)
+            - posicaoY: Posição Y da Unidade Militar (em metros)
+            - combustivelAtual: Combustivel atual da Unidade Militar (em litros)
+            - municaoAtual: Municao atual da Unidade Militar (em unidades)
+            - visivel: Indica se a unidade foi visualizada pelo inimigo (boolean)
+            - comandos: Lista de comandos da Unidade Militar
+              - Comando:
+                - id: Identificador único do Comando
+                - tipoComando: Tipo do Comando ("Mover", "Atacar", "Recolher")
+                - posicaoX: Posição X do Comando (em metros)
+                - posicaoY: Posição Y do Comando (em metros)
+        - ListaExercitos:
+          - Exercito:
+            - id: Identificador único do Exercito
+            - nomeExercito: Nome do Exercito
+            - cor: Cor do Exercito
+            - icone: path para ícone do exercito {nomeExercito}.png
+        - ListaTiposUnidades:
+          - TipoUnidade:
+            - id: Identificador único do Tipo de Unidade Militar
+            - nomeTipoUnidade: Nome do Tipo de Unidade Militar
+            - icone: path para ícone do tipo de unidade {nomeTipoUnidade}.png
+            - velocidade: Velocidade do Tipo de Unidade Militar (em metros por segundo)
+              - Por Tipo de Terreno:
+                - Deserto: 2 Km/h
+                - Floresta: 1 Km/h
+                - Planície: 3 Km/h
+                - Rio: 2 Km/h
+                - Montanhas: 1 Km/h
+                - Neve: 0,5 Km/h
+                - Estrada de Terra: 5 Km/h
+                - Estrada de Asfalto: 6 Km/h
+            - raioVisaoMax: Raio de Visão Maximo do Tipo de Unidade Militar (em metros)
+            - combustivelMax: Combustivel maximo do Tipo de Unidade Militar (em litros)
+            - municaoMax: Municao maxima do Tipo de Unidade Militar (em unidades)
+
+  3. Turnos
+    - A cada turno, que é determinado estado atual do jogo Tabuleiro, a engine vai exeutar os movimentos do turno.
+    - O turno executa os movimentos para uma determinada janelaTempo (em minutos), sobre a qual as unidades serão movimentadas de acordo com comandos e velocidades destas unidades.
+    - O turno executará os movimentos consecutivamente, até haver a solicitação de interrupção de alguma das unidades.
+    - O resultado da execução de cada Turno é registrado em Tabuleiro.
+    - Turno:
+      - // Executar comandos de atacar inicialmente
+      - Foreach Unidade in ListaUnidades:
+        - foreach Comando in Unidade.comandos:
+          - if Comando.tipoComando == "Atacar":
+            - Executar Unidade.atacar(Comando.posicaoX, Comando.posicaoY)
+            - remover comando da lista
+    
+      - // Executar comandos de recolher em seguida
+      - Foreach Unidade in ListaUnidades:
+        - foreach Comando in Unidade.comandos:
+          - if Comando.tipoComando == "Recolher":
+            - Executar Unidade.recolher(Comando.posicaoX, Comando.posicaoY)
+            - remover comando da lista
+    
+      - // Executar comandos de mover finalmente
+      - Foreach Unidade in ListaUnidades:
+        - foreach Comando in Unidade.comandos:
+          - if Comando.tipoComando == "Mover":
+            - Executar Unidade.mover(Comando.posicaoX, Comando.posicaoY)
+            - remover comando da lista
+
+      - Atualizar Imagem do Tabuleiro na View
+
+
+
+
+3. Interface Web
+
+  1. Renderizar View
+    2. Mostrar o mapa Ocupando a tela inteira, sem margens.
+    3. Mostrar as unidades contidas em dados.json
+  2. Comandos:
+    1. ChangeMap: tecla Enter: troca a visualização entre artistMap e maskMap. Os dois mapas devem ser exatamente sobrepostos, pixel a pixel
+    2. Zoom: mouse wheel: Permite zoom in e out, mantendo o centro do zoom na posição do mouse.
+    3. Pan: mouse right button: arrastar o mapa.
+    4.  
+  
+
+
 
 **IMPORTANTE - Carregar Estado do Jogo:**
 - Ao iniciar a aplicação, carregar automaticamente o arquivo `src/dados.json`

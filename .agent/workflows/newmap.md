@@ -1,28 +1,31 @@
 ---
-description: Gera novos (ou revisa existente) arquivo mapa.png (imagem realista).
+description: Gera novos (ou revisa existente) arquivo Mapa{Nome}.png (imagem realista).
 ---
 
 1. Verifique se o usuário informou o nome do mapa a ser alterado/revisado, ou se ele deseja criar um novo mapa.
+   1. Usuário deve informar um TerrainMap de entrada
 
 2. Verifique com o usuário:
-   - o tamanho do mapa que ele deseja (gere tres alternativas)
-   - Algum tipo de "tema" que ele deseja para o mapa (tres alternativas de tema)
-   - Sugira tres alternativas de nomes para este novo mapa (se for novo)
-
-3. Crie uma pasta dentro da pasta src/mapas com o nome sugerido pelo usuário (se não existir).
+   - Considerar o tamanho do TerrainMask para o Mapa (mesmo tamanho)
+   - Pergunte ao usuário o tipo de "tema" que ele deseja para o mapa (tres alternativas numeradas)
+   - Pergunte ao usuário o nome do mapa (se for novo), Sugira tres alternativas numeradas.
+   - Insira no canto inferior uma Escala (em metros por pixel)
+   - Insira um Grid a cada 1 Km
+   - Insira Nome de Cidades, Principais enstradas, Rios, Montanhas, Cadeias Montanhosas, Pontes, etc.
 
 4. **IMPORTANTE - Escala do Mapa:**
+   - O desenho artistico deverá estar mapeado pixel a pixel com o TerrainMask
    - Todo mapa DEVE ter uma escala definida em **Metros por Pixel**.
-   - Pergunte ao usuário qual a resolução desejada (Exemplo: 10 para 10 m/px, 5 para 5 m/px).
    - A escala deve ser salva em um arquivo `escala.txt` dentro da pasta do mapa
-   - Formato do arquivo: apenas o número (float/int). Ex: `10`
    - Esta escala será usada para calcular as dimensões reais do mundo (Largura da Imagem * Escala).
 
 5. Gere uma imagem realista de um mapa (vista superior) com tamanho informado:
-   - Prompt Base: "A realistic top-down view map. High resolution, no borders. Cities must have NO outer walls. Urban areas consist of clusters of buildings with internal streets, but **buildings must NOT be placed immediately adjacent to the main paved roads connecting cities**. Keep the sides of major roads clear of structures. 80% asphalt roads (dark gray), 20% dirt roads (light brown). Integration between city streets and highways must be seamless."
-   - Adicione detalhes do tema solicitado no prompt.
-   - Sem bordas ou molduras.
-   - Nome do arquivo: `mapa.png`
-   - O arquivo gerado deve ser salvo em `src/mapas/{nome}/mapa.png`.
-
-6. Confirme a geração e solicite ao usuário para executar o workflow `/newmask` para gerar a máscara de terreno correspondente.
+   - Adicione detalhes artísticos do tema solicitado no prompt.
+   - **IMPORTANTE:** O desenho DEVE incluir Labels/Nomes visíveis para facilitar a comunicação:
+     - Nome das Cidades (Ex: "Silver City", "Northwatch")
+     - Nome dos Rios, Montanhas e Estradas principais.
+     - **IMPORTANTE:** O desenho deve reproduzir as estradas entre os quarteirões nas cidades.
+   - **IMPORTANTE:** O desenho DEVE incluir uma BARRA DE ESCALA no canto inferior direito.
+   - Sem bordas ou molduras externas (apenas a arte do mapa).
+   - Nome do arquivo: `Mapa{Nome}.png`
+   - O arquivo gerado deve ser salvo em `src/mapas/{nome}/Mapa{Nome}.png`.
