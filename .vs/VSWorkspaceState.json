@@ -1,11 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\.agent",
-    "\\.agent\\workflows",
-    "\\src",
-    "\\src\\icones",
     "\\src\\mapas"
   ],
+  "SelectedNode": "\\src",
   "PreviewInSolutionExplorer": false
 }
