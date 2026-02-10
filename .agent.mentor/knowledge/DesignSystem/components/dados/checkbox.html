@@ -1,0 +1,534 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkbox - Design System</title>
+    <link rel="stylesheet" href="../../../../../Vendor/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../../../Vendor/bootstrap/dist/css/bootstrap.min.css">
+    <link id="icheck-skin-css" href="../../../../../Vendor/iCheck/skins/square/green.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../../../../../Vendor/animate.css/animate.min.css">
+    <link rel="stylesheet" href="../../../../../Icons/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
+    <link rel="stylesheet" href="../../../../../Content/custom.css">
+    <link rel="stylesheet" href="../../../../../Content/spinner1.css">
+    <link rel="stylesheet" href="../../../../../Vendor/toastr214/build/toastr.css">
+    <link rel="stylesheet" href="../../../../../Content/style.css">
+    <link rel="stylesheet" href="../../../../../Content/style-custom.css">
+    <style>
+        .ds-component-section {
+            display: block;
+        }
+
+        .ds-content-header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .ds-content-header p {
+            font-size: 16px;
+            color: #676a6c;
+            margin-bottom: 30px;
+        }
+
+        .ds-section {
+            margin-bottom: 40px;
+        }
+
+        .ds-section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #676a6c;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e7eaec;
+            padding-bottom: 10px;
+        }
+
+        .ds-example {
+            background-color: #f9f9f9;
+            border: 1px solid #e7eaec;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .ds-code {
+            background-color: #2b2b2b;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .ds-code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #444;
+        }
+
+        .ds-code-title {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+        }
+
+        .ds-code-copy {
+            background-color: #444;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: background-color 0.2s;
+        }
+
+        .ds-code-copy:hover {
+            background-color: #555;
+        }
+
+        .ds-list {
+            list-style-type: disc;
+            padding-left: 20px;
+            color: #676a6c;
+        }
+
+        .ds-list li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="viw_Component" class="content-full">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="hpanel">
+                    <!-- Header Section -->
+                    <div id="PanelHeader" class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h4 class="font-extra-bold text-primary">Checkbox</h4>
+                                <small class="text-muted">Campo de seleção booleana com visual customizado
+                                    (iCheck).</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Section -->
+                    <div id="PanelBody" class="panel-body tooltip-demo">
+
+                        <!-- TabPanel -->
+                        <ul id="pnl_CheckboxTabs" class="nav nav-tabs">
+                            <li class="active">
+                                <a data-toggle="tab" href="#tab_Exemplo">
+                                    <i class="fa fa-eye text-primary fa-lg"></i> Exemplo
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#tab_HTML">
+                                    <i class="fa fa-code text-primary fa-lg"></i> HTML
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#tab_Propriedades">
+                                    <i class="fa fa-cog text-primary fa-lg"></i> Propriedades
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <br />
+
+                            <!-- Tab Exemplo -->
+                            <div id="tab_Exemplo" class="tab-pane active">
+                                <!-- Configuration Section -->
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Configuração</h2>
+                                    <div
+                                        style="background-color: #fff; border: 1px solid #e7eaec; border-radius: 4px; padding: 20px; margin: 20px 0;">
+
+                                        <!-- Context Selector -->
+                                        <div class="row"
+                                            style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #e7eaec;">
+                                            <div class="col-md-12">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    <i class="fa fa-lightbulb-o text-warning"></i> Contextos Comuns
+                                                </h4>
+                                                <select id="checkbox-context-selector" class="form-control"
+                                                    style="max-width: 400px;">
+                                                    <option value="">-- Selecione um contexto --</option>
+                                                    <option value="checkbox-default">Checkbox Padrão (Square Green) -
+                                                        100% dos casos</option>
+                                                    <option value="checkbox-checked">Checkbox Marcado</option>
+                                                    <option value="checkbox-disabled">Checkbox Desabilitado</option>
+                                                    <option value="checkbox-minimal">Estilo Minimal</option>
+                                                    <option value="checkbox-flat">Estilo Flat</option>
+                                                    <option value="radio-default">Radio Button</option>
+                                                </select>
+                                                <small class="text-muted">Selecione um contexto para aplicar a
+                                                    configuração automaticamente</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <!-- Column 1: Estilo -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Estilo</h4>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-style"
+                                                            value="square" checked> Square</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-style"
+                                                            value="minimal"> Minimal</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-style"
+                                                            value="flat"> Flat</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-style"
+                                                            value="line"> Line</label></div>
+                                            </div>
+
+                                            <!-- Column 2: Cor -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Cor</h4>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-color"
+                                                            value="green" checked> Green</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-color"
+                                                            value="blue"> Blue</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-color"
+                                                            value="red"> Red</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-color"
+                                                            value="grey"> Grey</label></div>
+                                            </div>
+
+                                            <!-- Column 3: Estado -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Estado</h4>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-state"
+                                                            value="" checked> Normal</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-state"
+                                                            value="disabled"> Disabled</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-state"
+                                                            value="checked"> Checked</label></div>
+                                            </div>
+
+                                            <!-- Column 4: Tipo -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Tipo</h4>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-type"
+                                                            value="checkbox" checked> Checkbox</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-type"
+                                                            value="radio"> Radio</label></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Exemplo Visual</h2>
+                                    <div class="ds-example">
+                                        <div id="checkbox-example-container" class="checkbox i-checks no-padding">
+                                            <input type="checkbox" id="chk_FlAtivo" class="input">
+                                            &nbsp;Ativo
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab HTML -->
+                            <div id="tab_HTML" class="tab-pane">
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Template HTML</h2>
+                                    <div class="ds-code">
+                                        <div class="ds-code-header">
+                                            <span class="ds-code-title">HTML</span>
+                                            <button class="ds-code-copy" onclick="copyCode(this)">Copiar</button>
+                                        </div>
+                                        <pre><code id="checkbox-html-code">&lt;div class="checkbox i-checks no-padding"&gt;
+    &lt;input type="checkbox" id="chk_FlAtivo" class="input"&gt;
+    &amp;nbsp;Ativo
+&lt;/div&gt;</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab Propriedades -->
+                            <div id="tab_Propriedades" class="tab-pane">
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Padrão de Nomenclatura</h2>
+                                    <ul class="ds-list">
+                                        <li>ID: `chk_{NomeCampo}` (ex: `chk_FlAtivo`)</li>
+                                        <li>Classe: `i-checks` no container pai</li>
+                                        <li>Prefixo `chk_` é obrigatório para checkbox</li>
+                                        <li>Prefixo `rdo_` para radio buttons</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Estilos Disponíveis</h2>
+                                    <ul class="ds-list">
+                                        <li><strong>Square</strong> - Estilo quadrado (padrão do projeto)</li>
+                                        <li><strong>Minimal</strong> - Estilo minimalista</li>
+                                        <li><strong>Flat</strong> - Estilo flat design</li>
+                                        <li><strong>Line</strong> - Estilo com bordas</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Cores Disponíveis</h2>
+                                    <ul class="ds-list">
+                                        <li><strong>Green</strong> - Verde (padrão do projeto)</li>
+                                        <li><strong>Blue</strong> - Azul</li>
+                                        <li><strong>Red</strong> - Vermelho</li>
+                                        <li><strong>Grey</strong> - Cinza</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Variações</h2>
+                                    <ul class="ds-list">
+                                        <li>`no-padding`: remove espaçamento padrão</li>
+                                        <li>Estados: normal, disabled, checked</li>
+                                        <li>Tipos: checkbox, radio</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Bibliotecas Necessárias</h2>
+                                    <ul class="ds-list">
+                                        <li>iCheck (visual de checkbox/radio)</li>
+                                        <li>jQuery</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- End TabPanel -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../../../../Scripts/jquery-3.6.0.min.js"></script>
+    <script src="../../../../../Vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../../../../../Vendor/iCheck/icheck.min.js"></script>
+    <script>
+        function copyCode(btn) {
+            var codeBlock = btn.parentElement.nextElementSibling;
+            var code = codeBlock.innerText;
+            var tempInput = document.createElement("textarea");
+            tempInput.value = code;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            var originalText = btn.innerText;
+            btn.innerText = "Copiado!";
+            setTimeout(function () { btn.innerText = originalText; }, 2000);
+        }
+
+        $(document).ready(function () {
+            // Context presets (based on usage analysis)
+            var contexts = {
+                'checkbox-default': {
+                    style: 'square',
+                    color: 'green',
+                    state: '',
+                    type: 'checkbox'
+                },
+                'checkbox-checked': {
+                    style: 'square',
+                    color: 'green',
+                    state: 'checked',
+                    type: 'checkbox'
+                },
+                'checkbox-disabled': {
+                    style: 'square',
+                    color: 'green',
+                    state: 'disabled',
+                    type: 'checkbox'
+                },
+                'checkbox-minimal': {
+                    style: 'minimal',
+                    color: 'green',
+                    state: '',
+                    type: 'checkbox'
+                },
+                'checkbox-flat': {
+                    style: 'flat',
+                    color: 'green',
+                    state: '',
+                    type: 'checkbox'
+                },
+                'radio-default': {
+                    style: 'square',
+                    color: 'green',
+                    state: '',
+                    type: 'radio'
+                }
+            };
+
+            // Context selector handler
+            $('#checkbox-context-selector').on('change', function () {
+                var contextKey = $(this).val();
+                if (contextKey && contexts[contextKey]) {
+                    applyContext(contexts[contextKey]);
+                }
+            });
+
+            function applyContext(context) {
+                // Apply style
+                $('.config-style').prop('checked', false);
+                $('.config-style[value="' + context.style + '"]').prop('checked', true);
+
+                // Apply color
+                $('.config-color').prop('checked', false);
+                $('.config-color[value="' + context.color + '"]').prop('checked', true);
+
+                // Apply state
+                $('.config-state').prop('checked', false);
+                $('.config-state[value="' + context.state + '"]').prop('checked', true);
+
+                // Apply type
+                $('.config-type').prop('checked', false);
+                $('.config-type[value="' + context.type + '"]').prop('checked', true);
+
+                // Update the checkbox
+                updateCheckbox();
+            }
+
+            // Radio-like behavior for style
+            $('.config-style').on('change', function () {
+                if (this.checked) {
+                    $('.config-style').not(this).prop('checked', false);
+                }
+                updateCheckbox();
+            });
+
+            // Radio-like behavior for color
+            $('.config-color').on('change', function () {
+                if (this.checked) {
+                    $('.config-color').not(this).prop('checked', false);
+                }
+                updateCheckbox();
+            });
+
+            // Radio-like behavior for state
+            $('.config-state').on('change', function () {
+                if (this.checked) {
+                    $('.config-state').not(this).prop('checked', false);
+                }
+                updateCheckbox();
+            });
+
+            // Radio-like behavior for type
+            $('.config-type').on('change', function () {
+                if (this.checked) {
+                    $('.config-type').not(this).prop('checked', false);
+                }
+                updateCheckbox();
+            });
+
+            function updateCheckbox() {
+                var $container = $('#checkbox-example-container');
+                var $input = $('#chk_FlAtivo');
+
+                var style = $('.config-style:checked').val() || 'square';
+                var color = $('.config-color:checked').val() || 'green';
+                var state = $('.config-state:checked').val() || '';
+                var type = $('.config-type:checked').val() || 'checkbox';
+
+                // Destroy iCheck if exists
+                if ($input.data('iCheck')) {
+                    $input.iCheck('destroy');
+                }
+
+                // Update input type
+                $input.attr('type', type);
+
+                // Update ID based on type
+                if (type === 'radio') {
+                    $input.attr('id', 'rdo_FlAtivo');
+                } else {
+                    $input.attr('id', 'chk_FlAtivo');
+                }
+
+                // Update CSS skin
+                var skinPath = '../../../../../Vendor/iCheck/skins/' + style + '/' + color + '.css';
+                $('#icheck-skin-css').attr('href', skinPath);
+
+                // Build iCheck class names
+                var checkboxClass = 'icheckbox_' + style + '-' + color;
+                var radioClass = 'iradio_' + style + '-' + color;
+
+                // Initialize iCheck
+                $input.iCheck({
+                    checkboxClass: checkboxClass,
+                    radioClass: radioClass
+                });
+
+                // Apply state
+                if (state === 'disabled') {
+                    $input.iCheck('disable');
+                } else {
+                    $input.iCheck('enable');
+                }
+
+                if (state === 'checked') {
+                    $input.iCheck('check');
+                } else if (state !== 'disabled') {
+                    $input.iCheck('uncheck');
+                }
+
+                // Update HTML code
+                updateHTMLCode(style, color, state, type);
+            }
+
+            function updateHTMLCode(style, color, state, type) {
+                var inputId = type === 'radio' ? 'rdo_FlAtivo' : 'chk_FlAtivo';
+                var stateAttr = '';
+                if (state === 'disabled') {
+                    stateAttr = ' disabled';
+                } else if (state === 'checked') {
+                    stateAttr = ' checked';
+                }
+
+                var checkboxClass = 'icheckbox_' + style + '-' + color;
+                var radioClass = 'iradio_' + style + '-' + color;
+
+                var htmlCode = '&lt;div class="' + type + ' i-checks no-padding"&gt;\n' +
+                    '    &lt;input type="' + type + '" id="' + inputId + '" class="input"' + stateAttr + '&gt;\n' +
+                    '    &amp;nbsp;Ativo\n' +
+                    '&lt;/div&gt;\n\n' +
+                    '&lt;!-- JavaScript Initialization --&gt;\n' +
+                    '&lt;script&gt;\n' +
+                    '    $(document).ready(function() {\n' +
+                    '        $(\'.i-checks\').iCheck({\n' +
+                    '            checkboxClass: \'' + checkboxClass + '\',\n' +
+                    '            radioClass: \'' + radioClass + '\'\n' +
+                    '        });\n' +
+                    '    });\n' +
+                    '&lt;/script&gt;';
+
+                $('#checkbox-html-code').html(htmlCode);
+            }
+
+            // Initialize
+            updateCheckbox();
+        });
+    </script>
+</body>
+
+</html>

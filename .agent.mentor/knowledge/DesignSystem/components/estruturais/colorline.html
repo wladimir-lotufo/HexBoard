@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ColorLine - Design System</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="../../../../../Vendor/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../../../Vendor/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../Vendor/animate.css/animate.min.css">
+    <link rel="stylesheet" href="../../../../../Icons/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
+    <link rel="stylesheet" href="../../../../../Content/custom.css">
+    <link rel="stylesheet" href="../../../../../Content/spinner1.css">
+    <link rel="stylesheet" href="../../../../../Vendor/toastr214/build/toastr.css">
+    <link rel="stylesheet" href="../../../../../Content/style.css">
+    <link rel="stylesheet" href="../../../../../Content/style-custom.css">
+    <style>
+        body {
+            overflow-y: auto;
+            padding-bottom: 20px;
+            background-color: #f3f3f4;
+        }
+
+        .ds-section {
+            margin-bottom: 40px;
+        }
+
+        .ds-section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #676a6c;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e7eaec;
+            padding-bottom: 10px;
+        }
+
+        .ds-example {
+            background-color: #f9f9f9;
+            border: 1px solid #e7eaec;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .ds-code {
+            background-color: #2b2b2b;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .ds-code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #444;
+        }
+
+        .ds-code-title {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+        }
+
+        .ds-code-copy {
+            background-color: #444;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: background-color 0.2s;
+        }
+
+        .ds-code-copy:hover {
+            background-color: #555;
+        }
+
+        .ds-list {
+            list-style-type: disc;
+            padding-left: 20px;
+            color: #676a6c;
+        }
+
+        .ds-list li {
+            margin-bottom: 8px;
+        }
+
+        .ds-info-box {
+            background-color: #d9edf7;
+            border: 1px solid #bce8f1;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #31708f;
+        }
+
+        .ds-info-box strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Demo styles */
+        .demo-panel {
+            background-color: #fff;
+            border: 1px solid #e7eaec;
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="viw_Component" class="content-full">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="hpanel">
+
+                    <!-- Header Section -->
+                    <div id="PanelHeader" class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h4 class="font-extra-bold text-primary">ColorLine</h4>
+                                <small class="text-muted">Linha colorida decorativa usada no topo de modais e painéis.
+                                    Herda de UIComponent.</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Section -->
+                    <div id="PanelBody" class="panel-body tooltip-demo">
+
+                        <!-- TabPanel -->
+                        <ul id="pnl_ColorLineTabs" class="nav nav-tabs">
+                            <li class="active">
+                                <a data-toggle="tab" href="#tab_Exemplo">
+                                    <i class="fa fa-eye text-primary fa-lg"></i> Exemplo
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#tab_HTML">
+                                    <i class="fa fa-code text-primary fa-lg"></i> HTML
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#tab_Propriedades">
+                                    <i class="fa fa-cog text-primary fa-lg"></i> Propriedades
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <br />
+
+                            <!-- Tab Exemplo -->
+                            <div id="tab_Exemplo" class="tab-pane active">
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Exemplo Visual</h2>
+
+                                    <div class="ds-info-box">
+                                        <strong><i class="fa fa-info-circle"></i> Sobre este componente</strong>
+                                        Este é um exemplo do componente ColorLine.
+                                        A ColorLine é uma linha colorida decorativa que aparece no topo de modais e
+                                        painéis,
+                                        adicionando um toque visual elegante à interface.
+                                    </div>
+
+                                    <div class="ds-example">
+                                        <h5 class="text-muted">Exemplo em Modal</h5>
+                                        <div class="demo-panel">
+                                            <div class="color-line"></div>
+                                            <div style="padding: 15px;">
+                                                <h4>Modal com ColorLine</h4>
+                                                <p class="text-muted">A linha colorida aparece no topo do modal, logo
+                                                    antes do header.</p>
+                                            </div>
+                                        </div>
+
+                                        <h5 class="text-muted">Exemplo em Panel</h5>
+                                        <div class="demo-panel">
+                                            <div class="color-line"></div>
+                                            <div style="padding: 15px;">
+                                                <h4>Panel com ColorLine</h4>
+                                                <p class="text-muted">A linha colorida também pode ser usada em painéis
+                                                    normais.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab HTML -->
+                            <div id="tab_HTML" class="tab-pane">
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Template HTML</h2>
+                                    <div class="ds-code">
+                                        <div class="ds-code-header">
+                                            <span class="ds-code-title">HTML</span>
+                                            <button class="ds-code-copy" onclick="copyCode(this)">Copiar</button>
+                                        </div>
+                                        <pre>
+                                            <code>&lt;div class="color-line"&gt;&lt;/div&gt;</code>
+                                        </pre>
+                                    </div>
+
+                                    <h2 class="ds-section-title">Exemplo em Contexto (Modal)</h2>
+                                    <div class="ds-code">
+                                        <div class="ds-code-header">
+                                            <span class="ds-code-title">HTML</span>
+                                            <button class="ds-code-copy" onclick="copyCode(this)">Copiar</button>
+                                        </div>
+                                        <pre>
+                                            <code>&lt;div class="modal-content"&gt;
+    &lt;div class="row"&gt;
+        &lt;div class="col-lg-12"&gt;
+            &lt;div class="color-line"&gt;&lt;/div&gt;
+            
+            &lt;div class="modal-header"&gt;
+                &lt;h4 class="modal-title"&gt;Título&lt;/h4&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="modal-body"&gt;
+                &lt;!-- Conteúdo --&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code>
+                                        </pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab Propriedades -->
+                            <div id="tab_Propriedades" class="tab-pane">
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Descrição</h2>
+                                    <p class="text-muted">
+                                        A <strong>ColorLine</strong> é um elemento decorativo que adiciona uma linha
+                                        colorida
+                                        no topo de modais e painéis. É um detalhe visual que ajuda a dar identidade e
+                                        elegância à interface do sistema.
+                                    </p>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Quando Usar</h2>
+                                    <ul class="ds-list">
+                                        <li>No topo de modais (logo após a div.modal-content)</li>
+                                        <li>No topo de painéis especiais</li>
+                                        <li>Como primeiro elemento dentro de um container</li>
+                                        <li>Para adicionar um toque visual decorativo</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Posicionamento</h2>
+                                    <ul class="ds-list">
+                                        <li>Em modais: logo após <code>&lt;div class="col-lg-12"&gt;</code></li>
+                                        <li>Antes do ModalHeader</li>
+                                        <li>Como primeiro elemento visual do componente</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Estrutura Hierárquica (em Modal)</h2>
+                                    <ul class="ds-list">
+                                        <li>ModalContent (div.modal-content)</li>
+                                        <li>└─ Row (div.row)</li>
+                                        <li>&nbsp;&nbsp;&nbsp;&nbsp;└─ Col (div.col-lg-12)</li>
+                                        <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─
+                                            <strong>ColorLine</strong> (div.color-line)</li>
+                                        <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ ModalHeader</li>
+                                        <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ ModalBody</li>
+                                        <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─ ModalFooter</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Classes CSS</h2>
+                                    <ul class="ds-list">
+                                        <li><code>.color-line</code> - Classe principal do componente</li>
+                                        <li>Definida em: <code>Content/style.css</code></li>
+                                        <li>Cria uma linha colorida com gradiente</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Características Visuais</h2>
+                                    <ul class="ds-list">
+                                        <li>Linha horizontal fina no topo</li>
+                                        <li>Gradiente de cores (definido pelo tema)</li>
+                                        <li>Altura mínima (geralmente 3-5px)</li>
+                                        <li>Largura 100% do container</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Observações Importantes</h2>
+                                    <ul class="ds-list">
+                                        <li>É um elemento vazio (self-closing)</li>
+                                        <li>Não contém texto ou outros elementos</li>
+                                        <li>Sempre deve ser o primeiro elemento visual</li>
+                                        <li>Usado principalmente em modais, mas pode ser usado em outros contextos</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Bibliotecas Necessárias</h2>
+                                    <ul class="ds-list">
+                                        <li>style.css (definição da classe .color-line)</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- End TabPanel -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../../../../Scripts/jquery-3.6.0.min.js"></script>
+    <script src="../../../../../Vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script>
+        function copyCode(btn) {
+            var codeBlock = btn.parentElement.nextElementSibling;
+            var code = codeBlock.innerText;
+            var tempInput = document.createElement("textarea");
+            tempInput.value = code;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            var originalText = btn.innerText;
+            btn.innerText = "Copiado!";
+            setTimeout(function () { btn.innerText = originalText; }, 2000);
+        }
+    </script>
+</body>
+
+</html>

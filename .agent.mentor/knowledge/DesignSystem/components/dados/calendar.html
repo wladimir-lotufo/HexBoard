@@ -1,0 +1,575 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar - Design System</title>
+    <link rel="stylesheet" href="../../../../../Vendor/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../../../Vendor/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../Vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../../../../../Vendor/animate.css/animate.min.css">
+    <link rel="stylesheet" href="../../../../../Icons/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
+    <link rel="stylesheet" href="../../../../../Content/custom.css">
+    <link rel="stylesheet" href="../../../../../Content/spinner1.css">
+    <link rel="stylesheet" href="../../../../../Vendor/toastr214/build/toastr.css">
+    <link rel="stylesheet" href="../../../../../Content/style.css">
+    <link rel="stylesheet" href="../../../../../Content/style-custom.css">
+    <style>
+        .ds-component-section {
+            display: block;
+        }
+
+        .ds-content-header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .ds-content-header p {
+            font-size: 16px;
+            color: #676a6c;
+            margin-bottom: 30px;
+        }
+
+        .ds-section {
+            margin-bottom: 40px;
+        }
+
+        .ds-section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #676a6c;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e7eaec;
+            padding-bottom: 10px;
+        }
+
+        .ds-example {
+            background-color: #f9f9f9;
+            border: 1px solid #e7eaec;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .ds-code {
+            background-color: #2b2b2b;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .ds-code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #444;
+        }
+
+        .ds-code-title {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+        }
+
+        .ds-code-copy {
+            background-color: #444;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: background-color 0.2s;
+        }
+
+        .ds-code-copy:hover {
+            background-color: #555;
+        }
+
+        .ds-list {
+            list-style-type: disc;
+            padding-left: 20px;
+            color: #676a6c;
+        }
+
+        .ds-list li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="viw_Component" class="content-full">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="hpanel">
+                    <!-- Header Section -->
+                    <div id="PanelHeader" class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h4 class="font-extra-bold text-primary">Calendar</h4>
+                                <small class="text-muted">Campo de seleção de data com datepicker.</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Section -->
+                    <div id="PanelBody" class="panel-body tooltip-demo">
+
+                        <!-- TabPanel -->
+                        <ul id="pnl_CalendarTabs" class="nav nav-tabs">
+                            <li class="active">
+                                <a data-toggle="tab" href="#tab_Exemplo">
+                                    <i class="fa fa-eye text-primary fa-lg"></i> Exemplo
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#tab_HTML">
+                                    <i class="fa fa-code text-primary fa-lg"></i> HTML
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#tab_Propriedades">
+                                    <i class="fa fa-cog text-primary fa-lg"></i> Propriedades
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <br />
+
+                            <!-- Tab Exemplo -->
+                            <div id="tab_Exemplo" class="tab-pane active">
+                                <!-- Configuration Section -->
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Configuração</h2>
+                                    <div
+                                        style="background-color: #fff; border: 1px solid #e7eaec; border-radius: 4px; padding: 20px; margin: 20px 0;">
+
+                                        <!-- Context Selector -->
+                                        <div class="row"
+                                            style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #e7eaec;">
+                                            <div class="col-md-12">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    <i class="fa fa-lightbulb-o text-warning"></i> Contextos Comuns
+                                                </h4>
+                                                <select id="calendar-context-selector" class="form-control"
+                                                    style="max-width: 400px;">
+                                                    <option value="">-- Selecione um contexto --</option>
+                                                    <option value="calendar-default">Data Padrão (dd/mm/yyyy) - 85% dos
+                                                        casos</option>
+                                                    <option value="calendar-month">Mês/Ano (MM/yyyy)</option>
+                                                    <option value="calendar-disabled">Data Desabilitada</option>
+                                                    <option value="calendar-readonly">Data Somente Leitura</option>
+                                                    <option value="calendar-required">Data Obrigatória</option>
+                                                    <option value="calendar-no-icon">Sem Ícone</option>
+                                                </select>
+                                                <small class="text-muted">Selecione um contexto para aplicar a
+                                                    configuração automaticamente</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <!-- Column 1: Formato -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Formato</h4>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-format" value="dd/mm/yyyy" checked>
+                                                        dd/mm/yyyy</label></div>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-format" value="MM/yyyy"> MM/yyyy
+                                                        (Mês/Ano)</label></div>
+                                            </div>
+
+                                            <!-- Column 2: Estado -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Estado</h4>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-state"
+                                                            value="" checked> Normal</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-state"
+                                                            value="disabled"> Disabled</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-state"
+                                                            value="readonly"> Readonly</label></div>
+                                            </div>
+
+                                            <!-- Column 3: Ícone -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Ícone</h4>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-icon"
+                                                            value="with-icon" checked> Com Ícone</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-icon"
+                                                            value="no-icon"> Sem Ícone</label></div>
+                                            </div>
+
+                                            <!-- Column 4: Opções -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Opções</h4>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-required" value="required"> Required</label>
+                                                </div>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-placeholder" value="placeholder" checked>
+                                                        Com Placeholder</label></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Exemplo Visual</h2>
+                                    <div class="ds-example">
+                                        <div class="form-group">
+                                            <label for="dt_Inclusao"><strong>Data de Inclusão:</strong></label>
+                                            <div id="cal_DtInclusao" class="input-group date">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                <input class="form-control input" id="dt_Inclusao" name="dt_Inclusao"
+                                                    type="text" value="" placeholder="" />
+                                                <span class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab HTML -->
+                            <div id="tab_HTML" class="tab-pane">
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Template HTML</h2>
+                                    <div class="ds-code">
+                                        <div class="ds-code-header">
+                                            <span class="ds-code-title">HTML</span>
+                                            <button class="ds-code-copy" onclick="copyCode(this)">Copiar</button>
+                                        </div>
+                                        <pre><code id="calendar-html-code">&lt;div class="form-group"&gt;
+    &lt;label for="cal_DtInclusao"&gt;&lt;strong&gt;Data de Inclusão:&lt;/strong&gt;&lt;/label&gt;
+    &lt;div id="cal_DtInclusao" class="input-group date"&gt;
+        &lt;span class="input-group-addon"&gt;&lt;i class="fa fa-calendar"&gt;&lt;/i&gt;&lt;/span&gt;
+        @Html.TextBoxFor(m =&gt; Model.modUsuario.dt_Inclusao, new { @class = "form-control input", id = "dt_Inclusao" })
+        @Html.ValidationMessageFor(model =&gt; Model.modUsuario.dt_Inclusao, "", new { @class = "text-danger" })
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab Propriedades -->
+                            <div id="tab_Propriedades" class="tab-pane">
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Padrão de Nomenclatura</h2>
+                                    <ul class="ds-list">
+                                        <li>ID do container: `cal_{NomeCampo}` (ex: `cal_DtInclusao`)</li>
+                                        <li>ID do input: `dt_{NomeCampo}` (ex: `dt_Inclusao`)</li>
+                                        <li>Prefixo `cal_` para container, `dt_` para input</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Variações</h2>
+                                    <ul class="ds-list">
+                                        <li>Formato de data: `dd/mm/yyyy` (padrão), `MM/yyyy` (mês/ano)</li>
+                                        <li>Pode ter restrições de data mínima/máxima</li>
+                                        <li>Pode incluir ou omitir ícone de calendário</li>
+                                        <li>Estados: normal, disabled, readonly</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Bibliotecas Necessárias</h2>
+                                    <ul class="ds-list">
+                                        <li>Bootstrap (estilos de formulário)</li>
+                                        <li>Bootstrap Datepicker (seleção de datas)</li>
+                                        <li>Moment.js (manipulação de datas)</li>
+                                        <li>Font Awesome (ícone de calendário)</li>
+                                        <li>jQuery Validation (validação client-side)</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- End TabPanel -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../../../../Scripts/jquery-3.6.0.min.js"></script>
+    <script src="../../../../../Vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../../../../../Vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="../../../../../Vendor/bootstrap-datepicker/dist/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+    <script>
+        function copyCode(btn) {
+            var codeBlock = btn.parentElement.nextElementSibling;
+            var code = codeBlock.innerText;
+            var tempInput = document.createElement("textarea");
+            tempInput.value = code;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            var originalText = btn.innerText;
+            btn.innerText = "Copiado!";
+            setTimeout(function () { btn.innerText = originalText; }, 2000);
+        }
+
+        $(document).ready(function () {
+            // Context presets (based on usage analysis)
+            var contexts = {
+                'calendar-default': {
+                    format: 'dd/mm/yyyy',
+                    state: '',
+                    icon: 'with-icon',
+                    required: false,
+                    placeholder: true
+                },
+                'calendar-month': {
+                    format: 'MM/yyyy',
+                    state: '',
+                    icon: 'with-icon',
+                    required: false,
+                    placeholder: true
+                },
+                'calendar-disabled': {
+                    format: 'dd/mm/yyyy',
+                    state: 'disabled',
+                    icon: 'with-icon',
+                    required: false,
+                    placeholder: true
+                },
+                'calendar-readonly': {
+                    format: 'dd/mm/yyyy',
+                    state: 'readonly',
+                    icon: 'with-icon',
+                    required: false,
+                    placeholder: true
+                },
+                'calendar-required': {
+                    format: 'dd/mm/yyyy',
+                    state: '',
+                    icon: 'with-icon',
+                    required: true,
+                    placeholder: true
+                },
+                'calendar-no-icon': {
+                    format: 'dd/mm/yyyy',
+                    state: '',
+                    icon: 'no-icon',
+                    required: false,
+                    placeholder: true
+                }
+            };
+
+            // Context selector handler
+            $('#calendar-context-selector').on('change', function () {
+                var contextKey = $(this).val();
+                if (contextKey && contexts[contextKey]) {
+                    applyContext(contexts[contextKey]);
+                }
+            });
+
+            function applyContext(context) {
+                // Apply format
+                $('.config-format').prop('checked', false);
+                $('.config-format[value="' + context.format + '"]').prop('checked', true);
+
+                // Apply state
+                $('.config-state').prop('checked', false);
+                $('.config-state[value="' + context.state + '"]').prop('checked', true);
+
+                // Apply icon
+                $('.config-icon').prop('checked', false);
+                $('.config-icon[value="' + context.icon + '"]').prop('checked', true);
+
+                // Apply required
+                $('.config-required').prop('checked', context.required);
+
+                // Apply placeholder
+                $('.config-placeholder').prop('checked', context.placeholder);
+
+                // Update the calendar
+                updateCalendar();
+            }
+
+            // Radio-like behavior for format
+            $('.config-format').on('change', function () {
+                if (this.checked) {
+                    $('.config-format').not(this).prop('checked', false);
+                }
+                updateCalendar();
+            });
+
+            // Radio-like behavior for state
+            $('.config-state').on('change', function () {
+                if (this.checked) {
+                    $('.config-state').not(this).prop('checked', false);
+                }
+                updateCalendar();
+            });
+
+            // Radio-like behavior for icon
+            $('.config-icon').on('change', function () {
+                if (this.checked) {
+                    $('.config-icon').not(this).prop('checked', false);
+                }
+                updateCalendar();
+            });
+
+            // Required checkbox
+            $('.config-required').on('change', function () {
+                updateCalendar();
+            });
+
+            // Placeholder checkbox
+            $('.config-placeholder').on('change', function () {
+                updateCalendar();
+            });
+
+            function updateCalendar() {
+                var $container = $('#cal_DtInclusao');
+                var $input = $('#dt_Inclusao');
+                var $icon = $container.find('.input-group-addon');
+
+                var format = $('.config-format:checked').val() || 'dd/mm/yyyy';
+                var state = $('.config-state:checked').val() || '';
+                var icon = $('.config-icon:checked').val() || 'with-icon';
+                var required = $('.config-required:checked').length > 0;
+                var hasPlaceholder = $('.config-placeholder:checked').length > 0;
+
+                // Destroy datepicker if exists
+                if ($container.data('datepicker')) {
+                    $container.datepicker('destroy');
+                }
+
+                // Handle icon visibility
+                if (icon === 'no-icon') {
+                    $icon.hide();
+                } else {
+                    $icon.show();
+                }
+
+                // Handle state
+                $input.prop('disabled', state === 'disabled');
+                $input.prop('readonly', state === 'readonly');
+
+                // Handle required
+                if (required) {
+                    $input.attr('required', 'required');
+                } else {
+                    $input.removeAttr('required');
+                }
+
+                // Handle placeholder
+                if (hasPlaceholder) {
+                    if (format === 'MM/yyyy') {
+                        $input.attr('placeholder', 'MM/yyyy');
+                    } else {
+                        $input.attr('placeholder', 'dd/mm/yyyy');
+                    }
+                } else {
+                    $input.attr('placeholder', '');
+                }
+
+                // Initialize datepicker
+                var datepickerOptions = {
+                    format: format.toLowerCase(),
+                    language: 'pt-BR',
+                    autoclose: true,
+                    todayHighlight: true
+                };
+
+                if (format === 'MM/yyyy') {
+                    datepickerOptions.minViewMode = 'months';
+                    datepickerOptions.format = 'mm/yyyy';
+                }
+
+                if (state !== 'disabled') {
+                    $container.datepicker(datepickerOptions);
+                }
+
+                // Update HTML code
+                updateHTMLCode(format, state, icon, required, hasPlaceholder);
+            }
+
+            function updateHTMLCode(format, state, icon, required, hasPlaceholder) {
+                var stateAttr = '';
+                if (state === 'disabled') {
+                    stateAttr = ', disabled = "disabled"';
+                } else if (state === 'readonly') {
+                    stateAttr = ', @readonly = "readonly"';
+                }
+
+                var requiredAttr = required ? ', required = ""' : '';
+                var placeholderAttr = '';
+                if (hasPlaceholder) {
+                    var placeholderValue = format === 'MM/yyyy' ? 'MM/yyyy' : 'dd/mm/yyyy';
+                    placeholderAttr = ', placeholder = "' + placeholderValue + '"';
+                }
+
+                var htmlCode = '';
+
+                if (icon === 'with-icon') {
+                    htmlCode = '&lt;div class="form-group"&gt;\n' +
+                        '    &lt;label for="cal_DtInclusao"&gt;&lt;strong&gt;Data de Inclusão:&lt;/strong&gt;&lt;/label&gt;\n' +
+                        '    &lt;div id="cal_DtInclusao" class="input-group date"&gt;\n' +
+                        '        &lt;span class="input-group-addon"&gt;&lt;i class="fa fa-calendar"&gt;&lt;/i&gt;&lt;/span&gt;\n' +
+                        '        @Html.TextBoxFor(m =&gt; Model.modUsuario.dt_Inclusao, new { @class = "form-control input", id = "dt_Inclusao"' + stateAttr + requiredAttr + placeholderAttr + ' })\n' +
+                        '        @Html.ValidationMessageFor(model =&gt; Model.modUsuario.dt_Inclusao, "", new { @class = "text-danger" })\n' +
+                        '    &lt;/div&gt;\n' +
+                        '&lt;/div&gt;';
+                } else {
+                    htmlCode = '&lt;div class="form-group"&gt;\n' +
+                        '    &lt;label for="dt_Inclusao"&gt;&lt;strong&gt;Data de Inclusão:&lt;/strong&gt;&lt;/label&gt;\n' +
+                        '    @Html.TextBoxFor(m =&gt; Model.modUsuario.dt_Inclusao, new { @class = "form-control input", id = "dt_Inclusao"' + stateAttr + requiredAttr + placeholderAttr + ' })\n' +
+                        '    @Html.ValidationMessageFor(model =&gt; Model.modUsuario.dt_Inclusao, "", new { @class = "text-danger" })\n' +
+                        '&lt;/div&gt;';
+                }
+
+                // Add JavaScript initialization comment
+                htmlCode += '\n\n&lt;!-- JavaScript Initialization --&gt;\n' +
+                    '&lt;script&gt;\n' +
+                    '    $(document).ready(function() {\n';
+
+                if (icon === 'with-icon') {
+                    htmlCode += '        $(\'.input-group.date\').datepicker({\n';
+                } else {
+                    htmlCode += '        $(\'#dt_Inclusao\').datepicker({\n';
+                }
+
+                htmlCode += '            format: \'' + format.toLowerCase() + '\',\n' +
+                    '            language: \'pt-BR\',\n' +
+                    '            autoclose: true,\n' +
+                    '            todayHighlight: true';
+
+                if (format === 'MM/yyyy') {
+                    htmlCode += ',\n            minViewMode: \'months\'';
+                }
+
+                htmlCode += '\n        });\n' +
+                    '    });\n' +
+                    '&lt;/script&gt;';
+
+                $('#calendar-html-code').html(htmlCode);
+            }
+
+            // Initialize
+            updateCalendar();
+        });
+    </script>
+</body>
+
+</html>

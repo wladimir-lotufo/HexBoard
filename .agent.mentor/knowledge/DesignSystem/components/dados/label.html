@@ -1,0 +1,474 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Label - Design System</title>
+    <link rel="stylesheet" href="../../../../../Vendor/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../../../Vendor/bootstrap/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../../../../../Vendor/animate.css/animate.min.css">
+    <link rel="stylesheet" href="../../../../../Icons/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
+    <link rel="stylesheet" href="../../../../../Content/custom.css">
+    <link rel="stylesheet" href="../../../../../Content/spinner1.css">
+    <link rel="stylesheet" href="../../../../../Vendor/toastr214/build/toastr.css">
+    <link rel="stylesheet" href="../../../../../Content/style.css">
+    <link rel="stylesheet" href="../../../../../Content/style-custom.css">
+    <style>
+        .ds-component-section {
+            display: block;
+        }
+
+        .ds-content-header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .ds-content-header p {
+            font-size: 16px;
+            color: #676a6c;
+            margin-bottom: 30px;
+        }
+
+        .ds-section {
+            margin-bottom: 40px;
+        }
+
+        .ds-section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #676a6c;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e7eaec;
+            padding-bottom: 10px;
+        }
+
+        .ds-example {
+            background-color: #f9f9f9;
+            border: 1px solid #e7eaec;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .ds-code {
+            background-color: #2b2b2b;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .ds-code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #444;
+        }
+
+        .ds-code-title {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+        }
+
+        .ds-code-copy {
+            background-color: #444;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: background-color 0.2s;
+        }
+
+        .ds-code-copy:hover {
+            background-color: #555;
+        }
+
+        .ds-list {
+            list-style-type: disc;
+            padding-left: 20px;
+            color: #676a6c;
+        }
+
+        .ds-list li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="viw_Component" class="content-full">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="hpanel">
+                    <!-- Header Section -->
+                    <div id="PanelHeader" class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h4 class="font-extra-bold text-primary">Label</h4>
+                                <small class="text-muted">Elemento de rótulo para identificar campos de formulário e
+                                    inputs.</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Section -->
+                    <div id="PanelBody" class="panel-body tooltip-demo">
+
+                        <!-- TabPanel -->
+                        <ul id="pnl_LabelTabs" class="nav nav-tabs">
+                            <li class="active">
+                                <a data-toggle="tab" href="#tab_Exemplo">
+                                    <i class="fa fa-eye text-primary fa-lg"></i> Exemplo
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#tab_HTML">
+                                    <i class="fa fa-code text-primary fa-lg"></i> HTML
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#tab_Propriedades">
+                                    <i class="fa fa-cog text-primary fa-lg"></i> Propriedades
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <br />
+
+                            <!-- Tab Exemplo -->
+                            <div id="tab_Exemplo" class="tab-pane active">
+                                <!-- Configuration Section -->
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Configuração</h2>
+                                    <div
+                                        style="background-color: #fff; border: 1px solid #e7eaec; border-radius: 4px; padding: 20px; margin: 20px 0;">
+
+                                        <!-- Context Selector -->
+                                        <div class="row"
+                                            style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #e7eaec;">
+                                            <div class="col-md-12">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    <i class="fa fa-lightbulb-o text-warning"></i> Contextos Comuns
+                                                </h4>
+                                                <select id="label-context-selector" class="form-control"
+                                                    style="max-width: 400px;">
+                                                    <option value="">-- Selecione um contexto --</option>
+                                                    <option value="field-standard">Campo Padrão (com strong)</option>
+                                                    <option value="field-control">Control Label (Bootstrap)</option>
+                                                    <option value="field-small">Label Pequeno</option>
+                                                    <option value="field-primary">Label com Texto Primário</option>
+                                                    <option value="field-radio">Label para Radio/Checkbox</option>
+                                                </select>
+                                                <small class="text-muted">Selecione um contexto para aplicar a
+                                                    configuração automaticamente</small>
+                                            </div>
+                                        </div>
+
+                                        <!-- 4-Column Configuration -->
+                                        <div class="row">
+                                            <!-- Column 1: Estilo -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Estilo</h4>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-style"
+                                                            value="" checked> Normal</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-style"
+                                                            value="strong"> Strong (negrito)</label></div>
+                                            </div>
+
+                                            <!-- Column 2: Classe -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Classe</h4>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-class"
+                                                            value="" checked> Nenhuma</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-class"
+                                                            value="control-label"> control-label</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-class"
+                                                            value="text-primary"> text-primary</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-class"
+                                                            value="text-muted"> text-muted</label></div>
+                                            </div>
+
+                                            <!-- Column 3: Tamanho -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Tamanho</h4>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-size"
+                                                            value="" checked> Normal</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-size"
+                                                            value="small"> Small</label></div>
+                                            </div>
+
+                                            <!-- Column 4: Posicionamento -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Posicionamento</h4>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-position" value="" checked> Default</label>
+                                                </div>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-position" value="pull-right">
+                                                        Pull-right</label></div>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-position" value="pull-left"> Pull-left</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Exemplo Visual</h2>
+                                    <div class="ds-example">
+                                        <div class="form-group">
+                                            <label id="label-example" for="example-input">Nome do Campo:</label>
+                                            <input type="text" id="example-input" class="form-control"
+                                                placeholder="Exemplo de input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab HTML -->
+                            <div id="tab_HTML" class="tab-pane">
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Template HTML</h2>
+                                    <div class="ds-code">
+                                        <div class="ds-code-header">
+                                            <span class="ds-code-title">HTML</span>
+                                            <button class="ds-code-copy" onclick="copyCode(this)">Copiar</button>
+                                        </div>
+                                        <pre><code id="label-html-code">&lt;label for="example-input"&gt;Nome do Campo:&lt;/label&gt;</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab Propriedades -->
+                            <div id="tab_Propriedades" class="tab-pane">
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Padrão de Nomenclatura</h2>
+                                    <ul class="ds-list">
+                                        <li>Elemento: `<label for="{id-do-campo}">Texto do Label</label>`</li>
+                                        <li>Atributo `for`: deve corresponder ao `id` do campo de input associado</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Variações</h2>
+                                    <ul class="ds-list">
+                                        <li>Estilo: Normal, `<strong>` (negrito)</li>
+                                        <li>Classes: `control-label`, `text-primary`, `text-muted`, `small`</li>
+                                        <li>Posicionamento: `pull-right`, `pull-left`</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Bibliotecas Necessárias</h2>
+                                    <ul class="ds-list">
+                                        <li>Bootstrap (form labels)</li>
+                                        <li>HTML5 (elemento <label>)</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- End TabPanel -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../../../../Scripts/jquery-3.6.0.min.js"></script>
+    <script src="../../../../../Vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script>
+        function copyCode(btn) {
+            var codeBlock = btn.parentElement.nextElementSibling;
+            var code = codeBlock.innerText;
+            var tempInput = document.createElement("textarea");
+            tempInput.value = code;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            var originalText = btn.innerText;
+            btn.innerText = "Copiado!";
+            setTimeout(function () { btn.innerText = originalText; }, 2000);
+        }
+
+        $(document).ready(function () {
+            // Context presets (based on usage analysis)
+            var contexts = {
+                'field-standard': {
+                    style: 'strong',
+                    class: '',
+                    size: '',
+                    position: '',
+                    text: 'Nome do Campo:'
+                },
+                'field-control': {
+                    style: '',
+                    class: 'control-label',
+                    size: '',
+                    position: '',
+                    text: 'Campo de Formulário'
+                },
+                'field-small': {
+                    style: '',
+                    class: 'small',
+                    size: 'small',
+                    position: '',
+                    text: 'Texto auxiliar'
+                },
+                'field-primary': {
+                    style: '',
+                    class: 'text-primary',
+                    size: '',
+                    position: 'pull-right',
+                    text: 'Mensagem importante'
+                },
+                'field-radio': {
+                    style: '',
+                    class: '',
+                    size: '',
+                    position: '',
+                    text: 'Opção de escolha'
+                }
+            };
+
+            // Context selector handler
+            $('#label-context-selector').on('change', function () {
+                var contextKey = $(this).val();
+                if (contextKey && contexts[contextKey]) {
+                    applyContext(contexts[contextKey]);
+                }
+            });
+
+            function applyContext(context) {
+                // Apply style
+                $('.config-style').prop('checked', false);
+                $('.config-style[value="' + context.style + '"]').prop('checked', true);
+
+                // Apply class
+                $('.config-class').prop('checked', false);
+                $('.config-class[value="' + context.class + '"]').prop('checked', true);
+
+                // Apply size
+                $('.config-size').prop('checked', false);
+                $('.config-size[value="' + context.size + '"]').prop('checked', true);
+
+                // Apply position
+                $('.config-position').prop('checked', false);
+                $('.config-position[value="' + context.position + '"]').prop('checked', true);
+
+                // Update the label
+                updateLabel();
+            }
+
+            // Radio-like behavior for each configuration category
+            $('.config-style').on('change', function () {
+                if (this.checked) {
+                    $('.config-style').not(this).prop('checked', false);
+                }
+                updateLabel();
+            });
+
+            $('.config-class').on('change', function () {
+                if (this.checked) {
+                    $('.config-class').not(this).prop('checked', false);
+                }
+                updateLabel();
+            });
+
+            $('.config-size').on('change', function () {
+                if (this.checked) {
+                    $('.config-size').not(this).prop('checked', false);
+                }
+                updateLabel();
+            });
+
+            $('.config-position').on('change', function () {
+                if (this.checked) {
+                    $('.config-position').not(this).prop('checked', false);
+                }
+                updateLabel();
+            });
+
+            function updateLabel() {
+                var $label = $('#label-example');
+
+                // Get selected values
+                var style = $('.config-style:checked').val() || '';
+                var cssClass = $('.config-class:checked').val() || '';
+                var size = $('.config-size:checked').val() || '';
+                var position = $('.config-position:checked').val() || '';
+
+                // Get current context text or default
+                var contextKey = $('#label-context-selector').val();
+                var labelText = contextKey && contexts[contextKey] ? contexts[contextKey].text : 'Nome do Campo:';
+
+                // Build class string
+                var classes = [];
+                if (cssClass) classes.push(cssClass);
+                if (size) classes.push(size);
+                if (position) classes.push(position);
+
+                // Update label attributes
+                $label.attr('class', classes.join(' '));
+
+                // Update label content based on style
+                if (style === 'strong') {
+                    $label.html('<strong>' + labelText + '</strong>');
+                } else {
+                    $label.text(labelText);
+                }
+
+                // Update HTML code
+                updateHTMLCode(classes.join(' '), style, labelText);
+            }
+
+            function updateHTMLCode(classString, style, labelText) {
+                var htmlCode = '';
+
+                // Build opening tag
+                htmlCode = '&lt;label';
+                if (classString) {
+                    htmlCode += ' class="' + classString + '"';
+                }
+                htmlCode += ' for="example-input"&gt;';
+
+                // Add content
+                if (style === 'strong') {
+                    htmlCode += '&lt;strong&gt;' + labelText + '&lt;/strong&gt;';
+                } else {
+                    htmlCode += labelText;
+                }
+
+                // Close tag
+                htmlCode += '&lt;/label&gt;';
+
+                $('#label-html-code').html(htmlCode);
+            }
+
+            // Initialize with default values
+            updateLabel();
+        });
+    </script>
+</body>
+
+</html>

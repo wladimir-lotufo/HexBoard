@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select - Design System</title>
+    <link rel="stylesheet" href="../../../../../Vendor/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../../../Vendor/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../Vendor/select2-4.1.0/dist/css/select2.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../../../../../Vendor/animate.css/animate.min.css">
+    <link rel="stylesheet" href="../../../../../Icons/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
+    <link rel="stylesheet" href="../../../../../Content/custom.css">
+    <link rel="stylesheet" href="../../../../../Content/spinner1.css">
+    <link rel="stylesheet" href="../../../../../Vendor/toastr214/build/toastr.css">
+    <link rel="stylesheet" href="../../../../../Content/style.css">
+    <link rel="stylesheet" href="../../../../../Content/style-custom.css">
+    <style>
+        .ds-component-section {
+            display: block;
+        }
+
+        .ds-content-header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .ds-content-header p {
+            font-size: 16px;
+            color: #676a6c;
+            margin-bottom: 30px;
+        }
+
+        .ds-section {
+            margin-bottom: 40px;
+        }
+
+        .ds-section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #676a6c;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e7eaec;
+            padding-bottom: 10px;
+        }
+
+        .ds-example {
+            background-color: #f9f9f9;
+            border: 1px solid #e7eaec;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .ds-code {
+            background-color: #2b2b2b;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .ds-code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #444;
+        }
+
+        .ds-code-title {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+        }
+
+        .ds-code-copy {
+            background-color: #444;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: background-color 0.2s;
+        }
+
+        .ds-code-copy:hover {
+            background-color: #555;
+        }
+
+        .ds-list {
+            list-style-type: disc;
+            padding-left: 20px;
+            color: #676a6c;
+        }
+
+        .ds-list li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="viw_Component" class="content-full">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="hpanel">
+                    <!-- Header Section -->
+                    <div id="PanelHeader" class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h4 class="font-extra-bold text-primary">Select</h4>
+                                <small class="text-muted">Campo de seleção dropdown com suporte a Select2.</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Section -->
+                    <div id="PanelBody" class="panel-body tooltip-demo">
+
+                        <!-- TabPanel -->
+                        <ul id="pnl_SelectTabs" class="nav nav-tabs">
+                            <li class="active">
+                                <a data-toggle="tab" href="#tab_Exemplo">
+                                    <i class="fa fa-eye text-primary fa-lg"></i> Exemplo
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#tab_HTML">
+                                    <i class="fa fa-code text-primary fa-lg"></i> HTML
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#tab_Propriedades">
+                                    <i class="fa fa-cog text-primary fa-lg"></i> Propriedades
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <br />
+
+                            <!-- Tab Exemplo -->
+                            <div id="tab_Exemplo" class="tab-pane active">
+                                <!-- Configuration Section -->
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Configuração</h2>
+                                    <div
+                                        style="background-color: #fff; border: 1px solid #e7eaec; border-radius: 4px; padding: 20px; margin: 20px 0;">
+
+                                        <!-- Context Selector -->
+                                        <div class="row"
+                                            style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #e7eaec;">
+                                            <div class="col-md-12">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    <i class="fa fa-lightbulb-o text-warning"></i> Contextos Comuns
+                                                </h4>
+                                                <select id="select-context-selector" class="form-control"
+                                                    style="max-width: 400px;">
+                                                    <option value="">-- Selecione um contexto --</option>
+                                                    <option value="select-default">Select Padrão com Select2 (90% dos
+                                                        casos)</option>
+                                                    <option value="select-simple">Select Simples (sem Select2)</option>
+                                                    <option value="select-multiple">Select Múltiplo</option>
+                                                    <option value="select-disabled">Select Desabilitado</option>
+                                                    <option value="select-required">Select Obrigatório</option>
+                                                </select>
+                                                <small class="text-muted">Selecione um contexto para aplicar a
+                                                    configuração automaticamente</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <!-- Column 1: Tipo -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Tipo</h4>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-type"
+                                                            value="select2" checked> Com Select2</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-type"
+                                                            value="simple"> Simples</label></div>
+                                            </div>
+
+                                            <!-- Column 2: Estado -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Estado</h4>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-state"
+                                                            value="" checked> Normal</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-state"
+                                                            value="disabled"> Disabled</label></div>
+                                            </div>
+
+                                            <!-- Column 3: Seleção -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Seleção</h4>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-multiple" value="" checked> Única</label>
+                                                </div>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-multiple" value="multiple"> Múltipla</label>
+                                                </div>
+                                            </div>
+
+                                            <!-- Column 4: Opções -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Opções</h4>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-required" value="required"> Required</label>
+                                                </div>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-placeholder" value="placeholder" checked>
+                                                        Com Placeholder</label></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Exemplo Visual</h2>
+                                    <div class="ds-example">
+                                        <div class="form-group">
+                                            <label for="sel_DsTipo"><strong>Tipo:</strong></label>
+                                            <select class="form-control js-source-states" id="sel_DsTipo"
+                                                name="sel_DsTipo">
+                                                <option value="">-- selecione --</option>
+                                                <option value="A">Administrador</option>
+                                                <option value="U">Usuário</option>
+                                            </select>
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab HTML -->
+                            <div id="tab_HTML" class="tab-pane">
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Template HTML</h2>
+                                    <div class="ds-code">
+                                        <div class="ds-code-header">
+                                            <span class="ds-code-title">HTML</span>
+                                            <button class="ds-code-copy" onclick="copyCode(this)">Copiar</button>
+                                        </div>
+                                        <pre><code>&lt;div class="form-group"&gt;
+    &lt;label for="sel_DsTipo"&gt;&lt;strong&gt;Tipo:&lt;/strong&gt;&lt;/label&gt;
+    @Html.DropDownListFor(
+        m =&gt; m.modUsuario.ds_Tipo,
+        new List&lt;SelectListItem&gt; {
+            new SelectListItem { Value = "A", Text = "Administrador" },
+            new SelectListItem { Value = "U", Text = "Usuário" }
+        },
+        "-- selecione --",
+        new { @class = "form-control js-source-states", @id = "sel_DsTipo" }
+    )
+    @Html.ValidationMessageFor(model =&gt; Model.modUsuario.ds_Tipo, "", new { @class = "text-danger" })
+&lt;/div&gt;</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab Propriedades -->
+                            <div id="tab_Propriedades" class="tab-pane">
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Padrão de Nomenclatura</h2>
+                                    <ul class="ds-list">
+                                        <li>ID: `sel_{NomeCampo}` (ex: `sel_DsTipo`, `sel_IdIdiomaPreferido`)</li>
+                                        <li>Classe: `js-source-states` para inicialização do Select2</li>
+                                        <li>Prefixo `sel_` é obrigatório</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Variações</h2>
+                                    <ul class="ds-list">
+                                        <li>Select com dados dinâmicos via Ajax</li>
+                                        <li>Select com múltipla seleção: adicionar `multiple="multiple"`</li>
+                                        <li>Select com busca (Select2 padrão)</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Bibliotecas Necessárias</h2>
+                                    <ul class="ds-list">
+                                        <li>Bootstrap (estilos de formulário)</li>
+                                        <li>Select2 (dropdown avançado com busca)</li>
+                                        <li>jQuery Validation (validação client-side)</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- End TabPanel -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../../../../Scripts/jquery-3.6.0.min.js"></script>
+    <script src="../../../../../Vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../../../../../Vendor/select2-4.1.0/dist/js/select2.min.js"></script>
+    <script>
+        function copyCode(btn) {
+            var codeBlock = btn.parentElement.nextElementSibling;
+            var code = codeBlock.innerText;
+            var tempInput = document.createElement("textarea");
+            tempInput.value = code;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            var originalText = btn.innerText;
+            btn.innerText = "Copiado!";
+            setTimeout(function () { btn.innerText = originalText; }, 2000);
+        }
+
+        // Select configuration
+        $(document).ready(function () {
+            // Initialize Select2 for the example
+            function initSelect2() {
+                if ($('#sel_DsTipo').hasClass('js-source-states')) {
+                    $('#sel_DsTipo').select2({
+                        placeholder: '-- selecione --',
+                        allowClear: true
+                    });
+                }
+            }
+
+            initSelect2();
+
+            // Context presets
+            var contexts = {
+                'select-default': {
+                    type: 'select2',
+                    state: '',
+                    multiple: '',
+                    required: false,
+                    placeholder: true
+                },
+                'select-simple': {
+                    type: 'simple',
+                    state: '',
+                    multiple: '',
+                    required: false,
+                    placeholder: true
+                },
+                'select-multiple': {
+                    type: 'select2',
+                    state: '',
+                    multiple: 'multiple',
+                    required: false,
+                    placeholder: true
+                },
+                'select-disabled': {
+                    type: 'select2',
+                    state: 'disabled',
+                    multiple: '',
+                    required: false,
+                    placeholder: true
+                },
+                'select-required': {
+                    type: 'select2',
+                    state: '',
+                    multiple: '',
+                    required: true,
+                    placeholder: true
+                }
+            };
+
+            // Context selector
+            $('#select-context-selector').on('change', function () {
+                var contextKey = $(this).val();
+                if (contextKey && contexts[contextKey]) {
+                    applyContext(contexts[contextKey]);
+                }
+            });
+
+            function applyContext(context) {
+                // Apply type
+                $('.config-type').prop('checked', false);
+                $('.config-type[value="' + context.type + '"]').prop('checked', true);
+
+                // Apply state
+                $('.config-state').prop('checked', false);
+                $('.config-state[value="' + context.state + '"]').prop('checked', true);
+
+                // Apply multiple
+                $('.config-multiple').prop('checked', false);
+                $('.config-multiple[value="' + context.multiple + '"]').prop('checked', true);
+
+                // Apply required
+                $('.config-required').prop('checked', context.required);
+
+                // Apply placeholder
+                $('.config-placeholder').prop('checked', context.placeholder);
+
+                // Update the select
+                updateSelect();
+            }
+
+            // Radio-like behavior for type
+            $('.config-type').on('change', function () {
+                if (this.checked) {
+                    $('.config-type').not(this).prop('checked', false);
+                }
+                updateSelect();
+            });
+
+            // Radio-like behavior for state
+            $('.config-state').on('change', function () {
+                if (this.checked) {
+                    $('.config-state').not(this).prop('checked', false);
+                }
+                updateSelect();
+            });
+
+            // Radio-like behavior for multiple
+            $('.config-multiple').on('change', function () {
+                if (this.checked) {
+                    $('.config-multiple').not(this).prop('checked', false);
+                }
+                updateSelect();
+            });
+
+            // Required checkbox
+            $('.config-required').on('change', function () {
+                updateSelect();
+            });
+
+            // Placeholder checkbox
+            $('.config-placeholder').on('change', function () {
+                updateSelect();
+            });
+
+            function updateSelect() {
+                var $select = $('#sel_DsTipo');
+                var type = $('.config-type:checked').val() || 'select2';
+                var state = $('.config-state:checked').val() || '';
+                var multiple = $('.config-multiple:checked').val() || '';
+                var required = $('.config-required:checked').length > 0;
+                var hasPlaceholder = $('.config-placeholder:checked').length > 0;
+
+                // Destroy Select2 if exists
+                if ($select.hasClass('select2-hidden-accessible')) {
+                    $select.select2('destroy');
+                }
+
+                // Rebuild options to ensure placeholder is properly handled
+                var currentValue = $select.val();
+                $select.empty();
+
+                if (hasPlaceholder) {
+                    $select.append('<option value="">-- selecione --</option>');
+                }
+                $select.append('<option value="A">Administrador</option>');
+                $select.append('<option value="U">Usuário</option>');
+
+                // Restore value if it wasn't the placeholder
+                if (currentValue && currentValue !== '') {
+                    $select.val(currentValue);
+                }
+
+                // Build class string
+                var classes = ['form-control'];
+                if (type === 'select2') {
+                    classes.push('js-source-states');
+                }
+
+                // Update select
+                $select.attr('class', classes.join(' '));
+
+                // Handle state
+                $select.prop('disabled', state === 'disabled');
+
+                // Handle multiple
+                if (multiple === 'multiple') {
+                    $select.attr('multiple', 'multiple');
+                } else {
+                    $select.removeAttr('multiple');
+                }
+
+                // Handle required
+                if (required) {
+                    $select.attr('required', 'required');
+                } else {
+                    $select.removeAttr('required');
+                }
+
+                // Reinitialize Select2 if needed
+                if (type === 'select2' && state !== 'disabled') {
+                    $select.select2({
+                        placeholder: hasPlaceholder ? '-- selecione --' : '',
+                        allowClear: hasPlaceholder
+                    });
+                }
+
+                // Update HTML code - use setTimeout to ensure all DOM updates are complete
+                setTimeout(function () {
+                    updateHTMLCode(classes.join(' '), state, multiple, required, hasPlaceholder);
+                }, 0);
+            }
+
+            function updateHTMLCode(classString, state, multiple, required, hasPlaceholder) {
+                var stateAttr = '';
+                if (state === 'disabled') {
+                    stateAttr = ', disabled = "disabled"';
+                }
+
+                var multipleAttr = '';
+                if (multiple === 'multiple') {
+                    multipleAttr = ', multiple = "multiple"';
+                }
+
+                var requiredAttr = required ? ', required = ""' : '';
+                var placeholderText = hasPlaceholder ? '"-- selecione --"' : '""';
+
+                var htmlCode = '&lt;div class="form-group"&gt;\n' +
+                    '    &lt;label for="sel_DsTipo"&gt;&lt;strong&gt;Tipo:&lt;/strong&gt;&lt;/label&gt;\n' +
+                    '    @Html.DropDownListFor(\n' +
+                    '        m =&gt; m.modUsuario.ds_Tipo,\n' +
+                    '        new List&lt;SelectListItem&gt; {\n' +
+                    '            new SelectListItem { Value = "A", Text = "Administrador" },\n' +
+                    '            new SelectListItem { Value = "U", Text = "Usuário" }\n' +
+                    '        },\n' +
+                    '        ' + placeholderText + ',\n' +
+                    '        new { @class = "' + classString + '", @id = "sel_DsTipo"' + stateAttr + multipleAttr + requiredAttr + ' }\n' +
+                    '    )\n' +
+                    '    @Html.ValidationMessageFor(model =&gt; Model.modUsuario.ds_Tipo, "", new { @class = "text-danger" })\n' +
+                    '&lt;/div&gt;';
+
+                $('#tab_HTML .ds-code pre code').html(htmlCode);
+            }
+
+            // Initialize
+            updateSelect();
+        });
+    </script>
+</body>
+
+</html>

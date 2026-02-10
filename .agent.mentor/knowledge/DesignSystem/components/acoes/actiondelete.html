@@ -1,0 +1,442 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ActionDelete - Design System</title>
+    <link rel="stylesheet" href="../../../../../Vendor/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../../../Vendor/bootstrap/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../../../../../Vendor/animate.css/animate.min.css">
+    <link rel="stylesheet" href="../../../../../Icons/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
+    <link rel="stylesheet" href="../../../../../Content/custom.css">
+    <link rel="stylesheet" href="../../../../../Content/spinner1.css">
+    <link rel="stylesheet" href="../../../../../Vendor/toastr214/build/toastr.css">
+    <link rel="stylesheet" href="../../../../../Content/style.css">
+    <link rel="stylesheet" href="../../../../../Content/style-custom.css">
+    <style>
+        .ds-component-section {
+            display: block;
+        }
+
+        .ds-content-header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .ds-content-header p {
+            font-size: 16px;
+            color: #676a6c;
+            margin-bottom: 30px;
+        }
+
+        .ds-section {
+            margin-bottom: 40px;
+        }
+
+        .ds-section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #676a6c;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e7eaec;
+            padding-bottom: 10px;
+        }
+
+        .ds-example {
+            background-color: #f9f9f9;
+            border: 1px solid #e7eaec;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .ds-code {
+            background-color: #2b2b2b;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .ds-code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #444;
+        }
+
+        .ds-code-title {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+        }
+
+        .ds-code-copy {
+            background-color: #444;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: background-color 0.2s;
+        }
+
+        .ds-code-copy:hover {
+            background-color: #555;
+        }
+
+        .ds-list {
+            list-style-type: disc;
+            padding-left: 20px;
+            color: #676a6c;
+        }
+
+        .ds-list li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="viw_Component" class="content-full">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="hpanel">
+                    <!-- Header Section -->
+                    <div id="PanelHeader" class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h4 class="font-extra-bold text-primary">ActionDelete</h4>
+                                <small class="text-muted">Link de ação para excluir registro.</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Section -->
+                    <div id="PanelBody" class="panel-body tooltip-demo">
+
+                        <!-- TabPanel -->
+                        <ul id="pnl_ActiondeleteTabs" class="nav nav-tabs">
+                            <li class="active">
+                                <a data-toggle="tab" href="#tab_Exemplo">
+                                    <i class="fa fa-eye text-primary fa-lg"></i> Exemplo
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#tab_HTML">
+                                    <i class="fa fa-code text-primary fa-lg"></i> HTML
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#tab_Propriedades">
+                                    <i class="fa fa-cog text-primary fa-lg"></i> Propriedades
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <br />
+
+                            <!-- Tab Exemplo -->
+                            <div id="tab_Exemplo" class="tab-pane active">
+                                <!-- Configuration Section -->
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Configuração</h2>
+                                    <div
+                                        style="background-color: #fff; border: 1px solid #e7eaec; border-radius: 4px; padding: 20px; margin: 20px 0;">
+                                        <!-- Context Selector -->
+                                        <div class="row"
+                                            style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #e7eaec;">
+                                            <div class="col-md-12">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    <i class="fa fa-lightbulb-o text-warning"></i> Contextos Comuns
+                                                </h4>
+                                                <select id="actiondelete-context-selector" class="form-control"
+                                                    style="max-width: 400px;">
+                                                    <option value="">-- Selecione um contexto --</option>
+                                                    <option value="grid-default">Padrão (Grid)</option>
+                                                    <option value="warning">Aviso</option>
+                                                    <option value="compact">Compacto</option>
+                                                </select>
+                                                <small class="text-muted">Selecione um contexto para aplicar a
+                                                    configuração automaticamente</small>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Variante</h4>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-variant" value="primary"> Primary</label>
+                                                </div>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-variant" value="default"> Default</label>
+                                                </div>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-variant" value="success"> Success</label>
+                                                </div>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-variant" value="danger" checked>
+                                                        Danger</label></div>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-variant" value="warning"> Warning</label>
+                                                </div>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-variant" value="info"> Info</label></div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Tamanho</h4>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-size"
+                                                            value="lg"> Large (lg)</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-size"
+                                                            value=""> Normal</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-size"
+                                                            value="sm" checked> Small (sm)</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-size"
+                                                            value="xs"> Extra Small (xs)</label></div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Posicionamento</h4>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-position" value="" checked> Default</label>
+                                                </div>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-position" value="pull-right">
+                                                        Pull-right</label></div>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-position" value="pull-left"> Pull-left</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Estilo</h4>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-style"
+                                                            value="" checked> Normal</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-style"
+                                                            value="btn-block"> Block</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-style"
+                                                            value="btn-outline"> Outline</label></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Exemplo Visual</h2>
+                                    <div class="ds-example">
+                                        <a href="#" id="action-example" class="btn btn-danger btn-sm"
+                                            data-toggle="tooltip" title="Excluir">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab HTML -->
+                            <div id="tab_HTML" class="tab-pane">
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Template HTML</h2>
+                                    <div class="ds-code">
+                                        <div class="ds-code-header">
+                                            <span class="ds-code-title">HTML</span>
+                                            <button class="ds-code-copy" onclick="copyCode(this)">Copiar</button>
+                                        </div>
+                                        <pre><code id="action-html-code">&lt;a href="#" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Excluir"&gt;
+    &lt;i class="fa fa-trash"&gt;&lt;/i&gt;
+&lt;/a&gt;</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab Propriedades -->
+                            <div id="tab_Propriedades" class="tab-pane">
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Padrão de Nomenclatura</h2>
+                                    <ul class="ds-list">
+                                        <li>ID: `act_Excluir` ou `act_Excluir_{id}`</li>
+                                        <li>Prefixo `act_` é obrigatório</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Variações</h2>
+                                    <ul class="ds-list">
+                                        <li>Pode ser usado dentro de um dropdown menu</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Bibliotecas Necessárias</h2>
+                                    <ul class="ds-list">
+                                        <li>Bootstrap (estilos de botão e tooltip)</li>
+                                        <li>Font Awesome (ícone fa-trash)</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- End TabPanel -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../../../../Scripts/jquery-3.6.0.min.js"></script>
+    <script src="../../../../../Vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+        function copyCode(btn) {
+            var codeBlock = btn.parentElement.nextElementSibling;
+            var code = codeBlock.innerText;
+            var tempInput = document.createElement("textarea");
+            tempInput.value = code;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            var originalText = btn.innerText;
+            btn.innerText = "Copiado!";
+            setTimeout(function () { btn.innerText = originalText; }, 2000);
+        }
+
+        // Action configuration
+        $(document).ready(function () {
+            // Context presets (based on usage analysis)
+            var contexts = {
+                'grid-default': {
+                    variant: 'danger',
+                    size: 'sm',
+                    position: '',
+                    style: ''
+                },
+                'warning': {
+                    variant: 'warning',
+                    size: 'sm',
+                    position: '',
+                    style: ''
+                },
+                'compact': {
+                    variant: 'danger',
+                    size: 'xs',
+                    position: '',
+                    style: ''
+                }
+            };
+
+            // Context selector handler
+            $('#actiondelete-context-selector').on('change', function () {
+                var contextKey = $(this).val();
+                if (contextKey && contexts[contextKey]) {
+                    applyContext(contexts[contextKey]);
+                }
+            });
+
+            function applyContext(context) {
+                // Apply variant
+                $('.config-variant').prop('checked', false);
+                $('.config-variant[value="' + context.variant + '"]').prop('checked', true);
+
+                // Apply size
+                $('.config-size').prop('checked', false);
+                $('.config-size[value="' + context.size + '"]').prop('checked', true);
+
+                // Apply position
+                $('.config-position').prop('checked', false);
+                $('.config-position[value="' + context.position + '"]').prop('checked', true);
+
+                // Apply style
+                $('.config-style').prop('checked', false);
+                $('.config-style[value="' + context.style + '"]').prop('checked', true);
+
+                // Update the action
+                updateAction();
+            }
+
+            $('.config-variant').on('change', function (event) {
+                if (this.checked) {
+                    $('.config-variant').each(function () {
+                        if (this !== event.target) {
+                            $(this).prop('checked', false);
+                        }
+                    });
+                } else if ($('.config-variant:checked').length === 0) {
+                    $('.config-variant[value="danger"]').prop('checked', true);
+                }
+                updateAction();
+            });
+
+            $('.config-size').on('change', function (event) {
+                if (this.checked) {
+                    $('.config-size').each(function () {
+                        if (this !== event.target) {
+                            $(this).prop('checked', false);
+                        }
+                    });
+                } else if ($('.config-size:checked').length === 0) {
+                    $('.config-size[value="sm"]').prop('checked', true);
+                }
+                updateAction();
+            });
+
+            $('.config-position').on('change', function () {
+                if (this.checked) {
+                    $('.config-position').not(this).prop('checked', false);
+                }
+                updateAction();
+            });
+
+            $('.config-style').on('change', function () {
+                if (this.checked) {
+                    $('.config-style').not(this).prop('checked', false);
+                }
+                updateAction();
+            });
+
+            function updateAction() {
+                var $action = $('#action-example');
+
+                // Get selected values
+                var variant = $('.config-variant:checked').val() || 'danger';
+                var size = $('.config-size:checked').val() || '';
+                var position = $('.config-position:checked').val() || '';
+                var style = $('.config-style:checked').val() || '';
+
+                // Build class string
+                var classes = ['btn', 'btn-' + variant];
+                if (size) classes.push('btn-' + size);
+                if (position) classes.push(position);
+                if (style) classes.push(style);
+
+                // Update action
+                $action.attr('class', classes.join(' '));
+
+                // Update HTML code
+                updateHTMLCode(classes.join(' '));
+            }
+
+            function updateHTMLCode(classString) {
+                var htmlCode = '&lt;a href="#" class="' + classString + '" data-toggle="tooltip" title="Excluir"&gt;\n    &lt;i class="fa fa-trash"&gt;&lt;/i&gt;\n&lt;/a&gt;';
+                $('#action-html-code').html(htmlCode);
+            }
+        });
+
+    </script>
+</body>
+
+</html>

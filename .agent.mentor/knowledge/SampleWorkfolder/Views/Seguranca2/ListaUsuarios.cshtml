@@ -1,0 +1,461 @@
+<!-- 
+void ListaUsuarios () :StdView2
+{
+    /// Declaração de Componentes da View
+    {
+        NewButton but_NovoUsuario;
+        Grid lstViewListaUsuarios {
+            Columns {
+                Text(ModUsuariosListar.id_Usuario) txt_IdUsuario;
+                Text(ModUsuariosListar.ds_Nome) txt_DsNome;
+                Text(ModUsuariosListar.ds_Tipo) txt_DsTipo;
+                Text(ModUsuariosListar.nm_Salario) txt_NmSalario;
+                Calendar(ModUsuariosListar.dt_Inclusao) cal_DtInclusao;
+            }
+            Actions {
+                EditButton but_Editar;
+                DeleteButton but_Excluir;
+            }
+        };
+    }
+
+    /// Declaração dos Eventos
+    {
+        void ListaUsuarios_Load() 
+        {
+            // Controller
+            List<ModUsuariosListar> modListaUsuarios = Usuario.ListarTodosUsuarios();
+
+            // View
+            RefreshGridUsuarios();
+        }
+
+        void but_NovoUsuario_Click() 
+        {
+            // View
+            DetalheUsuario.Open(0);
+        }
+
+        void but_Editar_Click(id_Usuario) 
+        {
+            // View
+            DetalheUsuario.Open(id_Usuario);
+        }
+
+    }
+
+}
+-->
+@model List<WarpSolutions.APIs.Usuario.ModUsuariosListar>
+@using Newtonsoft.Json
+@{
+    ViewBag.Title = "Painel de Usuários";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var jsonModel = JsonConvert.SerializeObject(Model, new JsonSerializerSettings {
+        DateFormatHandling = DateFormatHandling.IsoDateFormat,
+        DateTimeZoneHandling = DateTimeZoneHandling.RoundtripKind
+    });
+
+}
+
+<div id="viw_ListaUsuarios" class="content-full">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="hpanel" style="border-left:solid; border-left-color:#62cb31; border-left-width:5px">
+                <!-- Header2 -->
+                <div id="Header2" class="panel-body tooltip-demo" style="margin-left:0; padding-top:10px; padding-bottom:10px">
+                    <div class="col-lg-2 border-right ">
+                        <!-- Additional Content or Logo -->
+                    </div>
+                    <div class="col-lg-4">
+                        <h4 class="font-extra-bold text-primary vertical-mid" style="margin-top:5px">Painel de Usuários</h4>
+                        <h6>
+                            <span id="NomeConta">Todos Usuários</span>
+                            <span id="Divisor"></span>
+                            <span id="NomeUnidade"></span>
+                        </h6>
+                    </div>
+                    <div class="col-lg-6 pull-right AreaPrincipal">
+                        <!-- Button to Open Modal -->
+                        <button id="but_NovoUsuario" class="btn btn-default pull-right" onclick="but_NovoUsuario_Click()" type="button" data-toggle="tooltip" data-placement="top" title="Adicionar Novo usuário" data-original-title="Adicionar Novo Usuário">
+                            <i class="fa fa-plus"></i> Novo Usuário
+                        </button>
+                    </div>
+                </div>
+                <!-- End Header2 -->
+
+                <!-- User List Table -->
+                <div class="table-responsive">
+                    <table id="datatablecustom" class="table table-striped table-responsive table-hover dataTable">
+                        <thead>
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">Nome</th>
+                                <th class="text-center">Tipo</th>
+                                <th class="text-center">Salário</th>
+                                <th class="text-center">Data de Inclusão</th>
+                                <th class="text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lstViewListaUsuariosBody">
+
+                            <tr id="usuarioTemplate" style="display:none">
+                                <td class="text-center" data-id_Usuario></td>
+                                <td class="text-center" data-ds_Nome></td>
+                                <td class="text-center" data-ds_Tipo></td>
+                                <td class="text-center" data-nm_Salario></td>
+                                <td class="text-center" data-dt_Inclusao></td>
+                                <td class="text-center">
+                                    <button id="but_Editar" class="btn btn-info btn-xs" data-edit data-toggle="tooltip" title="Editar"><i class="fa fa-pencil"></i></button>
+                                    <button id="but_Excluir" class="btn btn-danger btn-xs" data-delete data-toggle="tooltip" title="Excluir"><i class="fa fa-trash"></i></button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- End User List Table -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for DetalheUsuario -->
+<!-- <div class="hmodal-danger" aria-hidden="false" style="overflow:auto;" data-backdrop="static" data-keyboard="false"> -->
+<div id="mod_DetalheUsuario" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true" style="overflow:auto;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" >
+        <div class="modal-content">
+            <div id="mod_DetalheUsuarioBody" class="modal-body tooltip-demo" style="padding-bottom:0" >
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    @Styles.Render("~/bundles/select2/css")
+    @Styles.Render("~/bundles/ladda/css")
+    @Styles.Render("~/bundles/datatables/css")
+    @Styles.Render("~/bundles/datatablesSelect/css")
+    @Styles.Render("~/bundles/datepicker/css")
+    @Styles.Render("~/bundles/iCheck/css")
+    @Styles.Render("~/bundles/spinner1/css")
+    @Styles.Render("~/bundles/switchery/css")
+    @Styles.Render("~/bundles/touchspin/css")
+    @Styles.Render("~/bundles/sweetAlert/css")
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/ladda/js")
+    @Scripts.Render("~/bundles/select2/js")
+    @Scripts.Render("~/bundles/datatables/js")
+    @Scripts.Render("~/bundles/datatablesBootstrap/js")
+    @Scripts.Render("~/bundles/clipboard/js")
+    @Scripts.Render("~/bundles/datatablesPlugins/js")
+    @Scripts.Render("~/bundles/datatablesSelect/js")
+    @Scripts.Render("~/bundles/datatablesCheckbox/js")
+    @Scripts.Render("~/bundles/datepicker/js")
+    @Scripts.Render("~/bundles/iCheck/js")
+    @Scripts.Render("~/bundles/switchery/js")
+    @Scripts.Render("~/bundles/touchspin/js")
+    @Scripts.Render("~/bundles/sweetAlert/js")
+}
+    
+<script type="text/javascript">
+
+    var lstListaUsuarios;
+
+    // Guardar elemento Template da lnha do Grid usuarios
+    const gridUsuariosTemplate = document.getElementById("usuarioTemplate");
+
+    function loadViewModal(url) {
+        $("#mod_DetalheUsuario").load(url, function () {
+            $('#mod_DetalheUsuarioBody').modal('show');
+        })
+    }
+
+    function ddMMyyyy(date){
+        const dd = String(date.getDate()).padStart(2,'0');
+        const mm = String(date.getMonth()+1).padStart(2,'0');
+        const yyyy = date.getFullYear();
+        return `${dd}/${mm}/${yyyy}`;
+    }
+
+    function ddMMyyyyUTC(d){
+        if (!(d instanceof Date) || isNaN(d)) return '';
+        const dd = String(d.getUTCDate()).padStart(2,'0');
+        const mm = String(d.getUTCMonth()+1).padStart(2,'0');
+        const yyyy = d.getUTCFullYear();
+        return `${dd}/${mm}/${yyyy}`;
+    }
+
+    function formatMoneyBR(valor) {
+        if (valor == null || valor === '') return '';
+        // aceita número ou string "1234.56" / "1.234,56"
+        const n = typeof valor === 'string'
+        ? Number(valor.replace(/\./g, '').replace(',', '.'))
+        : Number(valor);
+        return Number.isFinite(n)
+        ? n.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+        : '';
+    }
+
+    function RefreshGridUsuarios() {
+
+        // Clear existing Usuarios grid data
+        const tbody = document.getElementById("lstViewListaUsuariosBody");
+        tbody.innerHTML = ""; 
+
+        debugger;
+
+        lstListaUsuarios.forEach(function (modListaUsuarios) {
+
+            // clona o template
+            const clone = gridUsuariosTemplate.cloneNode(true);
+            clone.style.display = "";     // garante que apareça
+            clone.id = "row_" + modListaUsuarios.id_Usuario;
+
+            const uid = modListaUsuarios.id_Usuario; // chave
+
+            // Obtem elemento de cada coluna
+            const elId_Usuario = clone.querySelector("[data-id_Usuario]");
+            const elDs_Nome = clone.querySelector("[data-ds_Nome]");
+            const elDs_Tipo = clone.querySelector("[data-ds_Tipo]");
+            const elNm_Salario = clone.querySelector("[data-nm_Salario]");
+            const elDt_Inclusao = clone.querySelector("[data-dt_Inclusao]");
+            const but_Editar = clone.querySelector("[data-edit]");
+            const but_Delete = clone.querySelector("[data-delete]");
+
+            // Atribuir valores e ids aos elementos
+            elId_Usuario.id = "id_Usuario_" + modListaUsuarios.id_Usuario;
+            elId_Usuario.textContent = modListaUsuarios.id_Usuario;
+
+            elDs_Nome.textContent = modListaUsuarios.ds_Nome;
+            elDs_Nome.id = "ds_Nome_" + modListaUsuarios.id_Usuario;
+
+            elDs_Tipo.textContent = modListaUsuarios.ds_Tipo;
+            elDs_Tipo.id = "ds_Tipo_" + modListaUsuarios.id_Usuario;
+
+            elNm_Salario.textContent = formatMoneyBR(modListaUsuarios.nm_Salario);
+            elNm_Salario.id = "nm_Salario_" + modListaUsuarios.id_Usuario;
+
+            elDt_Inclusao.textContent = ddMMyyyyUTC(new Date(modListaUsuarios.dt_Inclusao)); 
+            elDt_Inclusao.id = "dt_Inclusao_" + modListaUsuarios.id_Usuario;
+
+            // configura botão Edit
+            but_Editar.id = "but_Editar_" + modListaUsuarios.id_Usuario;
+            but_Editar.addEventListener("click", function () {
+                but_Editar_Click(modListaUsuarios.id_Usuario);
+            });
+
+            // configura botão Delete
+            but_Delete.id = "but_Delete_" + modListaUsuarios.id_Usuario;
+            but_Delete.addEventListener("click", function () {
+                but_Excluir_Click(modListaUsuarios.id_Usuario, modListaUsuarios.ds_Nome);
+            });
+
+            // adiciona linha no corpo da tabela
+            tbody.appendChild(clone);
+        });
+    }
+
+    let dt = null;
+
+    function ListUsuarios_Load() {
+
+        RefreshGridUsuarios();
+
+        // agora inicializa o DataTables (uma vez só)
+        if (!dt) {
+            dt = $('#datatablecustom').DataTable({
+                columnDefs: [
+                    { targets: [4], type: 'date-uk' },
+                    { targets: [0,1,2,3,4], orderable: true },
+                    { targets: '_all', orderable: false }
+                ],
+                order: [[0,'asc']],
+                dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+                lengthMenu: [[10,25,50,-1],[10,25,50,"All"]],
+                buttons: [
+                    { extend:'copy', className:'btn-sm' },
+                    { extend:'csv', title:'Conta', className:'btn-sm' },
+                    { extend:'pdfHtml5', title:'Conta', className:'btn-sm', orientation:'landscape', pageSize:'A4' },
+                    { extend:'excel', title:'Conta', className:'btn-sm' },
+                    { extend:'print', title:'Conta', className:'btn-sm' }
+                ],
+                "language": {
+                    "lengthMenu": "Exibir _MENU_ registros por página",
+                    "zeroRecords": "Não existem dados",
+                    "info": "Exibindo _PAGE_ de _PAGES_",
+                    "infoEmpty": "Nenhum registro encontrado",
+                    "infoFiltered": "(Filtrado _MAX_ registros totais)",
+                    "sSearch": "Pesquisar: ",
+                    "oPaginate":
+                    {
+                        "sFirst": "Início",
+                        "sPrevious": "Anterior",
+                        "sNext": "Próximo",
+                        "sLast": "Último"
+                    }
+                }
+            });
+        }
+    }
+
+    function but_NovoUsuario_Click() {
+        var url = "/Seguranca2/DetalheUsuario";
+        $("#mod_DetalheUsuarioBody").load(url, function () {
+            $('#mod_DetalheUsuario').modal('show');
+        })
+    }
+
+    function but_Editar_Click(id_Usuario) {
+        var url = "/Seguranca2/DetalheUsuario?id=" + id_Usuario;
+        $("#mod_DetalheUsuarioBody").load(url, function () {
+            $('#mod_DetalheUsuario').modal('show');
+        });
+    }
+
+    function but_Excluir_Click(id_Usuario, ds_Nome) {
+
+        swal({
+            title: "Confirme ?",
+            text: "Deseja inativar o Usuário: " + ds_Nome + "?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Sim",
+            cancelButtonText: "Não",
+            closeOnConfirm: true
+        },
+        function (isConfirm) {
+            if (isConfirm) {
+                var isWaitClosed = $('#waitModal').is(":hidden");
+                if (isWaitClosed == true) $('#waitModal').show();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Seguranca2/butExcluir_Click",
+                    data: JSON.stringify({ id_Usuario: id_Usuario }),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+
+                    success: function (response) {
+
+                        if (response.Resultado != "OK") {
+                            var msg = '';
+                            for (var i = 0; i < response.Mensagens.length; i++) {
+                                msg = msg + response.Mensagens[i] + '\n';
+                            }
+
+                            swal({
+                                title: 'Atenção!',
+                                text: msg,
+                                type: 'error',
+                            });
+                        } else {
+                            // Remove o usuário da lista local e atualiza o grid
+                            lstListaUsuarios = lstListaUsuarios.filter(function(u) { return u.id_Usuario != id_Usuario; });
+                            RefreshGridUsuarios();
+                            swal("Sucesso!", "Usuário inativado com sucesso.", "success");
+                        }
+
+                        if (isWaitClosed == true) $('#waitModal').hide();
+                    },
+
+                    error: function (response) {
+                        swal({
+                            title: 'Erro!',
+                            text: "Falha na comunicação com o servidor.",
+                            type: 'error',
+                        });
+
+                        if (isWaitClosed == true) $('#waitModal').hide();
+                    }
+                });
+            }
+        });
+    }
+
+    function mod_DetalheUsuario_Return(modUsuario) {
+
+        var isWaitClosed = $('#waitModal').is(":hidden");
+        if (isWaitClosed == true) $('#waitModal').show();
+
+        $.ajax({
+            type: "POST",
+            url: "/Seguranca2/ListarTodosUsuarios",
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+
+            success: function (response) {
+
+                if (response.Resultado != "OK") {
+                    var msg = '';
+                    for (var i = 0; i < response.Mensagens.length; i++) {
+                        msg = msg + response.Mensagens[i];
+                    }
+
+                    swal({
+                        title: 'Atenção!',
+                        text: msg,
+                        icon: 'error',
+                    });
+                }
+
+                // Perform post Controller actions here
+                //
+                lstListaUsuarios = response.Retorno;
+                RefreshGridUsuarios();      
+
+                if (isWaitClosed == true) $('#waitModal').hide();
+            },
+
+            error: function (response) {
+                var msg = '';
+                for (var i = 0; i < response.Mensagens.length; i++) {
+                    msg = msg + response.Mensagens[i];
+                }
+
+                swal({
+                    title: 'Atenção!',
+                    text: msg,
+                    icon: 'error',
+                });
+
+                if (isWaitClosed == true) $('#waitModal').hide();
+
+            }
+        })
+    }
+
+    function InitializeComponents() {
+
+        // Configurar opçoes de Sort do Grid
+        $.extend(jQuery.fn.dataTableExt.oSort, {
+            "date-uk-pre": function (a) {
+                return parseInt(moment(a, "DD/MM/YYYY").format("X"), 10);
+            },
+            "date-uk-asc": function (a, b) {
+                return a - b;
+            },
+            "date-uk-desc": function (a, b) {
+                return b - a;
+            }
+        });
+
+    }
+
+    $(document).ready(function () {
+
+        lstListaUsuarios = @Html.Raw(jsonModel);  
+        InitializeComponents();
+
+        ListUsuarios_Load(); // Load users when document is ready
+
+    });
+
+</script>

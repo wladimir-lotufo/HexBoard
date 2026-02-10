@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModalHeader - Design System</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="../../../../../Vendor/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../../../Vendor/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../Vendor/animate.css/animate.min.css">
+    <link rel="stylesheet" href="../../../../../Icons/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
+    <link rel="stylesheet" href="../../../../../Content/custom.css">
+    <link rel="stylesheet" href="../../../../../Content/spinner1.css">
+    <link rel="stylesheet" href="../../../../../Vendor/toastr214/build/toastr.css">
+    <link rel="stylesheet" href="../../../../../Content/style.css">
+    <link rel="stylesheet" href="../../../../../Content/style-custom.css">
+    <style>
+        body {
+            overflow-y: auto;
+            padding-bottom: 20px;
+            background-color: #f3f3f4;
+        }
+
+        .ds-section {
+            margin-bottom: 40px;
+        }
+
+        .ds-section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #676a6c;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e7eaec;
+            padding-bottom: 10px;
+        }
+
+        .ds-example {
+            background-color: #f9f9f9;
+            border: 1px solid #e7eaec;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .ds-code {
+            background-color: #2b2b2b;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .ds-code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #444;
+        }
+
+        .ds-code-title {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+        }
+
+        .ds-code-copy {
+            background-color: #444;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: background-color 0.2s;
+        }
+
+        .ds-code-copy:hover {
+            background-color: #555;
+        }
+
+        .ds-list {
+            list-style-type: disc;
+            padding-left: 20px;
+            color: #676a6c;
+        }
+
+        .ds-list li {
+            margin-bottom: 8px;
+        }
+
+        .ds-info-box {
+            background-color: #d9edf7;
+            border: 1px solid #bce8f1;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #31708f;
+        }
+
+        .ds-info-box strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="viw_Component" class="content-full">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="hpanel">
+
+                    <!-- Header Section -->
+                    <div id="PanelHeader" class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h4 class="font-extra-bold text-primary">ModalHeader</h4>
+                                <small class="text-muted">Cabeçalho de um modal, contendo título e botão fechar. Herda
+                                    de UIComponent.</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Section -->
+                    <div id="PanelBody" class="panel-body tooltip-demo">
+
+                        <!-- TabPanel -->
+                        <ul id="pnl_ModalHeaderTabs" class="nav nav-tabs">
+                            <li class="active">
+                                <a data-toggle="tab" href="#tab_Exemplo">
+                                    <i class="fa fa-eye text-primary fa-lg"></i> Exemplo
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#tab_HTML">
+                                    <i class="fa fa-code text-primary fa-lg"></i> HTML
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#tab_Propriedades">
+                                    <i class="fa fa-cog text-primary fa-lg"></i> Propriedades
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <br />
+
+                            <!-- Tab Exemplo -->
+                            <div id="tab_Exemplo" class="tab-pane active">
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Exemplo Visual</h2>
+
+                                    <div class="ds-info-box">
+                                        <strong><i class="fa fa-info-circle"></i> Sobre este componente</strong>
+                                        Este é um exemplo do componente ModalHeader.
+                                        O ModalHeader contém o título do modal e o botão de fechar (×).
+                                    </div>
+
+                                    <div class="ds-example">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#mod_ExemploModal">
+                                            <i class="fa fa-window-maximize"></i> Abrir Modal Exemplo
+                                        </button>
+
+                                        <!-- Modal Example -->
+                                        <div class="modal fade" id="mod_ExemploModal" tabindex="-1" role="dialog"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="color-line"></div>
+                                                            <div id="example_ModalHeader" class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close"></button>
+                                                                <h4 class="modal-title">Detalhe do Usuário</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="alert alert-success">
+                                                                    <strong><i class="fa fa-check-circle"></i>
+                                                                        Componentes Interativos:</strong><br>
+                                                                    Use os checkboxes abaixo para mostrar/ocultar o
+                                                                    <strong>ModalHeader</strong> e
+                                                                    <strong>ModalFooter</strong> deste modal.
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label>
+                                                                        <input type="checkbox" id="chk_ShowHeader"
+                                                                            checked>
+                                                                        Exibir ModalHeader
+                                                                    </label>
+                                                                    &nbsp;&nbsp;&nbsp;
+                                                                    <label>
+                                                                        <input type="checkbox" id="chk_ShowFooter"
+                                                                            checked>
+                                                                        Exibir ModalFooter
+                                                                    </label>
+                                                                </div>
+
+                                                                <p class="text-muted">
+                                                                    <i class="fa fa-lightbulb-o"></i>
+                                                                    Este é um exemplo completo de modal com todos os
+                                                                    componentes:
+                                                                    <strong>ModalContent</strong>,
+                                                                    <strong>ColorLine</strong>,
+                                                                    <strong>ModalHeader</strong>,
+                                                                    <strong>ModalBody</strong> e
+                                                                    <strong>ModalFooter</strong>.
+                                                                </p>
+                                                            </div>
+                                                            <div id="example_ModalFooter" class="modal-footer">
+                                                                <button id="but_Fechar" class="btn btn-default btn-sm"
+                                                                    type="button" data-dismiss="modal">
+                                                                    <i class="fa fa-sign-out"></i> Fechar
+                                                                </button>
+                                                                <button id="but_Salvar" class="btn btn-primary btn-sm"
+                                                                    type="submit">
+                                                                    <i class="fa fa-check"></i> Salvar
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab HTML -->
+                            <div id="tab_HTML" class="tab-pane">
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Template HTML</h2>
+                                    <div class="ds-code">
+                                        <div class="ds-code-header">
+                                            <span class="ds-code-title">HTML</span>
+                                            <button class="ds-code-copy" onclick="copyCode(this)">Copiar</button>
+                                        </div>
+                                        <pre>
+                                            <code>&lt;div class="modal-header"&gt;
+    &lt;button type="button" class="close" data-dismiss="modal" aria-label="Close"&gt;
+    &lt;/button&gt;
+    &lt;h4 class="modal-title"&gt;Detalhe do Usuário&lt;/h4&gt;
+&lt;/div&gt;</code>
+                                        </pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab Propriedades -->
+                            <div id="tab_Propriedades" class="tab-pane">
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Descrição</h2>
+                                    <p class="text-muted">
+                                        O <strong>ModalHeader</strong> é o cabeçalho de um modal, contendo o título
+                                        e o botão de fechar. Aparece logo após a ColorLine dentro do ModalContent.
+                                    </p>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Quando Usar</h2>
+                                    <ul class="ds-list">
+                                        <li>Em todo StdModal</li>
+                                        <li>Logo após a ColorLine</li>
+                                        <li>Antes do ModalBody</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Elementos Obrigatórios</h2>
+                                    <ul class="ds-list">
+                                        <li><code>&lt;button class="close"&gt;</code> - Botão de fechar (×)</li>
+                                        <li><code>&lt;h4 class="modal-title"&gt;</code> - Título do modal</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Posicionamento</h2>
+                                    <ul class="ds-list">
+                                        <li>Dentro de ModalContent > Row > Col</li>
+                                        <li>Após ColorLine</li>
+                                        <li>Antes de ModalBody</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Classes CSS</h2>
+                                    <ul class="ds-list">
+                                        <li><code>.modal-header</code> - Classe Bootstrap para header de modal</li>
+                                        <li><code>.close</code> - Classe Bootstrap para botão fechar</li>
+                                        <li><code>.modal-title</code> - Classe Bootstrap para título</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Observações Importantes</h2>
+                                    <ul class="ds-list">
+                                        <li>O botão close deve vir antes do título</li>
+                                        <li>O botão close tem <code>data-dismiss="modal"</code> para fechar o modal</li>
+                                        <li>Use h4 para o título (padrão Bootstrap)</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Bibliotecas Necessárias</h2>
+                                    <ul class="ds-list">
+                                        <li>Bootstrap (modals)</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- End TabPanel -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../../../../Scripts/jquery-3.6.0.min.js"></script>
+    <script src="../../../../../Vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script>
+        function copyCode(btn) {
+            var codeBlock = btn.parentElement.nextElementSibling;
+            var code = codeBlock.innerText;
+            var tempInput = document.createElement("textarea");
+            tempInput.value = code;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            var originalText = btn.innerText;
+            btn.innerText = "Copiado!";
+            setTimeout(function () { btn.innerText = originalText; }, 2000);
+        }
+
+        // Toggle ModalHeader and ModalFooter visibility
+        $(document).ready(function () {
+            $('#chk_ShowHeader').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#example_ModalHeader').show();
+                } else {
+                    $('#example_ModalHeader').hide();
+                }
+            });
+
+            $('#chk_ShowFooter').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#example_ModalFooter').show();
+                } else {
+                    $('#example_ModalFooter').hide();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

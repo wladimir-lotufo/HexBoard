@@ -1,0 +1,545 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GridHeader - Design System</title>
+    <link rel="stylesheet" href="../../../../../Vendor/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../../../Vendor/bootstrap/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../../../../../Vendor/animate.css/animate.min.css">
+    <link rel="stylesheet" href="../../../../../Icons/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
+    <link rel="stylesheet" href="../../../../../Content/custom.css">
+    <link rel="stylesheet" href="../../../../../Content/spinner1.css">
+    <link rel="stylesheet" href="../../../../../Vendor/toastr214/build/toastr.css">
+    <link rel="stylesheet" href="../../../../../Content/style.css">
+    <link rel="stylesheet" href="../../../../../Content/style-custom.css">
+    <style>
+        .ds-component-section {
+            display: block;
+        }
+
+        .ds-content-header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .ds-content-header p {
+            font-size: 16px;
+            color: #676a6c;
+            margin-bottom: 30px;
+        }
+
+        .ds-section {
+            margin-bottom: 40px;
+        }
+
+        .ds-section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #676a6c;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e7eaec;
+            padding-bottom: 10px;
+        }
+
+        .ds-example {
+            background-color: #f9f9f9;
+            border: 1px solid #e7eaec;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .ds-code {
+            background-color: #2b2b2b;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .ds-code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #444;
+        }
+
+        .ds-code-title {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+        }
+
+        .ds-code-copy {
+            background-color: #444;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: background-color 0.2s;
+        }
+
+        .ds-code-copy:hover {
+            background-color: #555;
+        }
+
+        .ds-list {
+            list-style-type: disc;
+            padding-left: 20px;
+            color: #676a6c;
+        }
+
+        .ds-list li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="viw_Component" class="content-full">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="hpanel">
+                    <!-- Header Section -->
+                    <div id="PanelHeader" class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h4 class="font-extra-bold text-primary">GridHeader</h4>
+                                <small class="text-muted">Cabeçalho de coluna da grid.</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Section -->
+                    <div id="PanelBody" class="panel-body tooltip-demo">
+
+                        <!-- TabPanel -->
+                        <ul id="pnl_GridheaderTabs" class="nav nav-tabs">
+                            <li class="active">
+                                <a data-toggle="tab" href="#tab_Exemplo">
+                                    <i class="fa fa-eye text-primary fa-lg"></i> Exemplo
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#tab_HTML">
+                                    <i class="fa fa-code text-primary fa-lg"></i> HTML
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#tab_Propriedades">
+                                    <i class="fa fa-cog text-primary fa-lg"></i> Propriedades
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <br />
+
+                            <!-- Tab Exemplo -->
+                            <div id="tab_Exemplo" class="tab-pane active">
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Configuração</h2>
+                                    <div
+                                        style="background-color: #fff; border: 1px solid #e7eaec; border-radius: 4px; padding: 20px; margin: 20px 0;">
+
+                                        <!-- Context Selector -->
+                                        <div class="row"
+                                            style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #e7eaec;">
+                                            <div class="col-md-12">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    <i class="fa fa-lightbulb-o text-warning"></i> Contextos Comuns
+                                                </h4>
+                                                <select id="gridheader-context-selector" class="form-control"
+                                                    style="max-width: 400px;">
+                                                    <option value="">-- Selecione um contexto --</option>
+                                                    <option value="header-default">Header Padrão (sem atributos)
+                                                    </option>
+                                                    <option value="header-centered">Header Centralizado</option>
+                                                    <option value="header-fixed-width">Header com Largura Fixa</option>
+                                                    <option value="header-actions">Header de Ações (vazio)</option>
+                                                </select>
+                                                <small class="text-muted">Selecione um contexto para aplicar a
+                                                    configuração automaticamente</small>
+                                            </div>
+                                        </div>
+
+                                        <!-- 4-Column Configuration -->
+                                        <div class="row">
+                                            <!-- Column 1: Alinhamento -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Alinhamento</h4>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-alignment" value="" checked> Padrão
+                                                        (left)</label></div>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-alignment" value="text-center">
+                                                        text-center</label></div>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-alignment" value="text-right">
+                                                        text-right</label></div>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-alignment" value="pull-right">
+                                                        pull-right</label></div>
+                                            </div>
+
+                                            <!-- Column 2: Largura -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Largura</h4>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-width"
+                                                            value="" checked> Auto</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-width"
+                                                            value="5%"> 5%</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-width"
+                                                            value="10%"> 10%</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-width"
+                                                            value="20%"> 20%</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-width"
+                                                            value="20px"> 20px</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-width"
+                                                            value="60px"> 60px</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-width"
+                                                            value="100px"> 100px</label></div>
+                                            </div>
+
+                                            <!-- Column 3: Conteúdo -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Conteúdo</h4>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-content" value="text" checked> Texto</label>
+                                                </div>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-content" value="nbsp"> Vazio (&nbsp;)</label>
+                                                </div>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-content" value="tooltip"> Com Tooltip</label>
+                                                </div>
+                                            </div>
+
+                                            <!-- Column 4: Opções -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Opções</h4>
+                                                <div class="checkbox"><label><input type="checkbox" id="config-with-id">
+                                                        Com ID</label></div>
+                                                <div class="form-group" style="margin-top: 10px;">
+                                                    <label style="font-size: 12px; font-weight: normal;">Nome da
+                                                        Coluna:</label>
+                                                    <input type="text" id="config-column-name"
+                                                        class="form-control input-sm" value="Nome"
+                                                        placeholder="Ex: Nome">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Exemplo Visual</h2>
+                                    <div class="ds-example">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr id="header-example-row">
+                                                    <th id="header-example">Nome</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab HTML -->
+                            <div id="tab_HTML" class="tab-pane">
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Template HTML</h2>
+                                    <div class="ds-code">
+                                        <div class="ds-code-header">
+                                            <span class="ds-code-title">HTML</span>
+                                            <button class="ds-code-copy" onclick="copyCode(this)">Copiar</button>
+                                        </div>
+                                        <pre><code id="gridheader-html-code">&lt;th&gt;Nome&lt;/th&gt;</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab Propriedades -->
+                            <div id="tab_Propriedades" class="tab-pane">
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Padrão de Nomenclatura</h2>
+                                    <ul class="ds-list">
+                                        <li>ID (opcional): `grd_header_{NomeColuna}` (ex: `grd_header_Nome`)</li>
+                                        <li>Prefixo `grd_header_` é recomendado quando usar ID</li>
+                                        <li>ID é útil para manipulação via JavaScript</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Atributos Comuns</h2>
+                                    <ul class="ds-list">
+                                        <li><strong>class="text-center"</strong> - Centraliza o texto do cabeçalho</li>
+                                        <li><strong>class="text-right"</strong> - Alinha o texto à direita</li>
+                                        <li><strong>class="pull-right"</strong> - Alinha o elemento à direita</li>
+                                        <li><strong>width="5%"</strong> - Define largura em percentual</li>
+                                        <li><strong>width="60px"</strong> - Define largura em pixels</li>
+                                        <li><strong>data-toggle="tooltip"</strong> - Adiciona tooltip ao cabeçalho</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Variações</h2>
+                                    <ul class="ds-list">
+                                        <li>Header padrão: `&lt;th&gt;Nome&lt;/th&gt;`</li>
+                                        <li>Header centralizado: `&lt;th class="text-center"&gt;Nome&lt;/th&gt;`</li>
+                                        <li>Header com largura fixa: `&lt;th width="60px"
+                                            class="text-center"&gt;Ações&lt;/th&gt;`</li>
+                                        <li>Header de ações (vazio): `&lt;th width="5%"&gt;&amp;nbsp;&lt;/th&gt;`</li>
+                                        <li>Header com tooltip: `&lt;th data-toggle="tooltip"
+                                            title="Descrição"&gt;Nome&lt;/th&gt;`</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Bibliotecas Necessárias</h2>
+                                    <ul class="ds-list">
+                                        <li>Bootstrap (estilos de tabela)</li>
+                                        <li>Bootstrap Tooltip (para tooltips, se usado)</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- End TabPanel -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../../../../Scripts/jquery-3.6.0.min.js"></script>
+    <script src="../../../../../Vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Context presets based on usage analysis
+            var contexts = {
+                'header-default': {
+                    alignment: '',
+                    width: '',
+                    content: 'text',
+                    withId: false,
+                    columnName: 'Nome'
+                },
+                'header-centered': {
+                    alignment: 'text-center',
+                    width: '',
+                    content: 'text',
+                    withId: false,
+                    columnName: 'Nome'
+                },
+                'header-fixed-width': {
+                    alignment: 'text-center',
+                    width: '60px',
+                    content: 'text',
+                    withId: false,
+                    columnName: 'Ações'
+                },
+                'header-actions': {
+                    alignment: '',
+                    width: '5%',
+                    content: 'nbsp',
+                    withId: false,
+                    columnName: ''
+                }
+            };
+
+            // Context selector handler
+            $('#gridheader-context-selector').on('change', function () {
+                var contextKey = $(this).val();
+                if (contextKey && contexts[contextKey]) {
+                    applyContext(contexts[contextKey]);
+                }
+            });
+
+            function applyContext(context) {
+                // Apply alignment
+                $('.config-alignment').prop('checked', false);
+                $('.config-alignment[value="' + context.alignment + '"]').prop('checked', true);
+
+                // Apply width
+                $('.config-width').prop('checked', false);
+                $('.config-width[value="' + context.width + '"]').prop('checked', true);
+
+                // Apply content
+                $('.config-content').prop('checked', false);
+                $('.config-content[value="' + context.content + '"]').prop('checked', true);
+
+                // Apply options
+                $('#config-with-id').prop('checked', context.withId);
+                $('#config-column-name').val(context.columnName);
+
+                // Update the header
+                updateHeader();
+            }
+
+            // Radio-like behavior for configuration categories
+            $('.config-alignment').on('change', function () {
+                if (this.checked) {
+                    $('.config-alignment').not(this).prop('checked', false);
+                }
+                updateHeader();
+            });
+
+            $('.config-width').on('change', function () {
+                if (this.checked) {
+                    $('.config-width').not(this).prop('checked', false);
+                }
+                updateHeader();
+            });
+
+            $('.config-content').on('change', function () {
+                if (this.checked) {
+                    $('.config-content').not(this).prop('checked', false);
+                }
+                updateHeader();
+            });
+
+            $('#config-with-id, #config-column-name').on('change keyup', function () {
+                updateHeader();
+            });
+
+            function updateHeader() {
+                var $header = $('#header-example');
+
+                // Get selected values
+                var alignment = $('.config-alignment:checked').val() || '';
+                var width = $('.config-width:checked').val() || '';
+                var content = $('.config-content:checked').val() || 'text';
+                var withId = $('#config-with-id').is(':checked');
+                var columnName = $('#config-column-name').val() || 'Nome';
+
+                // Build attributes
+                var attrs = {};
+
+                if (width) {
+                    attrs.width = width;
+                }
+
+                if (alignment) {
+                    attrs.class = alignment;
+                }
+
+                if (withId && columnName) {
+                    attrs.id = 'grd_header_' + columnName.replace(/\s+/g, '');
+                }
+
+                if (content === 'tooltip') {
+                    attrs['data-toggle'] = 'tooltip';
+                    attrs['data-placement'] = 'top';
+                    attrs['title'] = 'Descrição da coluna';
+                }
+
+                // Clear existing attributes
+                $header.removeAttr('width class id data-toggle data-placement title');
+
+                // Apply new attributes
+                if (attrs.width) $header.attr('width', attrs.width);
+                if (attrs.class) $header.attr('class', attrs.class);
+                if (attrs.id) $header.attr('id', attrs.id);
+                if (attrs['data-toggle']) {
+                    $header.attr('data-toggle', attrs['data-toggle']);
+                    $header.attr('data-placement', attrs['data-placement']);
+                    $header.attr('title', attrs['title']);
+                }
+
+                // Set content
+                if (content === 'nbsp') {
+                    $header.html('&nbsp;');
+                } else if (content === 'tooltip') {
+                    $header.text(columnName);
+                } else {
+                    $header.text(columnName);
+                }
+
+                // Update HTML code
+                updateHTMLCode();
+            }
+
+            function updateHTMLCode() {
+                var alignment = $('.config-alignment:checked').val() || '';
+                var width = $('.config-width:checked').val() || '';
+                var content = $('.config-content:checked').val() || 'text';
+                var withId = $('#config-with-id').is(':checked');
+                var columnName = $('#config-column-name').val() || 'Nome';
+
+                // Build HTML code
+                var htmlCode = '&lt;th';
+
+                // Add width attribute
+                if (width) {
+                    htmlCode += ' width="' + width + '"';
+                }
+
+                // Add class attribute
+                if (alignment) {
+                    htmlCode += ' class="' + alignment + '"';
+                }
+
+                // Add id attribute
+                if (withId && columnName) {
+                    htmlCode += ' id="grd_header_' + columnName.replace(/\s+/g, '') + '"';
+                }
+
+                // Add tooltip attributes
+                if (content === 'tooltip') {
+                    htmlCode += ' data-toggle="tooltip" data-placement="top" title="Descrição da coluna"';
+                }
+
+                htmlCode += '&gt;';
+
+                // Add content
+                if (content === 'nbsp') {
+                    htmlCode += '&amp;nbsp;';
+                } else {
+                    htmlCode += columnName;
+                }
+
+                htmlCode += '&lt;/th&gt;';
+
+                $('#gridheader-html-code').html(htmlCode);
+            }
+
+            // Initialize with default values
+            updateHeader();
+        });
+
+        function copyCode(btn) {
+            var codeBlock = btn.parentElement.nextElementSibling;
+            var code = codeBlock.innerText;
+            var tempInput = document.createElement("textarea");
+            tempInput.value = code;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            var originalText = btn.innerText;
+            btn.innerText = "Copiado!";
+            setTimeout(function () { btn.innerText = originalText; }, 2000);
+        }
+    </script>
+</body>
+
+</html>

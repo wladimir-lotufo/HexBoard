@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Tarefas</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f5f7;
+            margin: 0;
+            padding: 20px;
+            color: #172b4d;
+        }
+
+        h1 {
+            text-align: center;
+            color: #172b4d;
+        }
+
+        .board {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        .column {
+            background-color: #ebecf0;
+            border-radius: 3px;
+            width: 300px;
+            min-width: 300px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100px;
+        }
+
+        .column-header {
+            font-weight: bold;
+            padding-bottom: 10px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: #5e6c84;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .task-card {
+            background-color: #fff;
+            border-radius: 3px;
+            box-shadow: 0 1px 0 rgba(9, 30, 66, .25);
+            padding: 10px;
+            margin-bottom: 8px;
+            cursor: grab;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        .task-card:active {
+            cursor: grabbing;
+        }
+
+        .task-card.dragging {
+            opacity: 0.5;
+            transform: rotate(2deg);
+        }
+
+        .task-card:hover {
+            background-color: #f4f5f7;
+        }
+
+        .task-id {
+            font-size: 0.75rem;
+            color: #5e6c84;
+            margin-bottom: 4px;
+        }
+
+        .task-desc {
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .count {
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 2px 8px;
+            font-size: 0.8rem;
+        }
+
+        /* Drop zone highlight */
+        .column.drag-over {
+            background-color: #dfe1e6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Dashboard de Tarefas</h1>
+
+    <div class="board">
+        <div class="column" id="Todo" ondrop="drop(event)" ondragover="allowDrop(event)" ondragenter="dragEnter(event)"
+            ondragleave="dragLeave(event)">
+            <div class="column-header">
+                TODO <span class="count" id="todo-count">0</span>
+            </div>
+            <div id="todo-list" class="task-list"></div>
+        </div>
+
+        <div class="column" id="Doing" ondrop="drop(event)" ondragover="allowDrop(event)" ondragenter="dragEnter(event)"
+            ondragleave="dragLeave(event)">
+            <div class="column-header">
+                DOING <span class="count" id="doing-count">0</span>
+            </div>
+            <div id="doing-list" class="task-list"></div>
+        </div>
+
+        <div class="column" id="Done" ondrop="drop(event)" ondragover="allowDrop(event)" ondragenter="dragEnter(event)"
+            ondragleave="dragLeave(event)">
+            <div class="column-header">
+                DONE <span class="count" id="done-count">0</span>
+            </div>
+            <div id="done-list" class="task-list"></div>
+        </div>
+    </div>
+
+    <script>
+        let tasks = [];
+
+        async function loadTasks() {
+            try {
+                const response = await fetch('/api/tasks');
+                tasks = await response.json();
+                renderTasks();
+            } catch (error) {
+                console.error('Erro ao carregar tarefas:', error);
+                // Fallback for testing without server
+                if (tasks.length === 0) {
+                    alert('Erro ao conectar com o servidor. Certifique-se de que o server.js está rodando.');
+                }
+            }
+        }
+
+        async function saveTasks() {
+            try {
+                await fetch('/api/tasks', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(tasks, null, 2)
+                });
+            } catch (error) {
+                console.error('Erro ao salvar tarefas:', error);
+            }
+        }
+
+        function renderTasks() {
+            const todoList = document.getElementById('todo-list');
+            const doingList = document.getElementById('doing-list');
+            const doneList = document.getElementById('done-list');
+
+            // Clear lists
+            todoList.innerHTML = '';
+            doingList.innerHTML = '';
+            doneList.innerHTML = '';
+
+            let todoCount = 0;
+            let doingCount = 0;
+            let doneCount = 0;
+
+            tasks.forEach(task => {
+                const card = document.createElement('div');
+                card.className = 'task-card';
+                card.draggable = true;
+                card.id = `task-${task.id}`;
+                card.setAttribute('data-id', task.id);
+                card.ondragstart = drag;
+                card.ondragend = dragEnd;
+
+                card.innerHTML = `
+                    <div class="task-id">#${task.id}</div>
+                    <div class="task-desc">${task.descricao}</div>
+                `;
+
+                if (task.status === 'Todo') {
+                    todoList.appendChild(card);
+                    todoCount++;
+                } else if (task.status === 'Doing') {
+                    doingList.appendChild(card);
+                    doingCount++;
+                } else if (task.status === 'Done') {
+                    doneList.appendChild(card);
+                    doneCount++;
+                }
+            });
+
+            document.getElementById('todo-count').textContent = todoCount;
+            document.getElementById('doing-count').textContent = doingCount;
+            document.getElementById('done-count').textContent = doneCount;
+        }
+
+        // Drag and Drop Functions
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.getAttribute('data-id'));
+            ev.target.classList.add('dragging');
+        }
+
+        function dragEnd(ev) {
+            ev.target.classList.remove('dragging');
+            // Remove drag-over class from all columns
+            document.querySelectorAll('.column').forEach(col => col.classList.remove('drag-over'));
+        }
+
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function dragEnter(ev) {
+            ev.preventDefault();
+            if (ev.target.classList.contains('column')) {
+                ev.target.classList.add('drag-over');
+            } else {
+                const column = ev.target.closest('.column');
+                if (column) column.classList.add('drag-over');
+            }
+        }
+
+        function dragLeave(ev) {
+            if (ev.target.classList.contains('column')) {
+                ev.target.classList.remove('drag-over');
+            }
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            const taskId = parseInt(ev.dataTransfer.getData("text"));
+
+            // Find the drop target column
+            let column = ev.target;
+            if (!column.classList.contains('column')) {
+                column = column.closest('.column');
+            }
+
+            if (column) {
+                column.classList.remove('drag-over');
+                const newStatus = column.id; // 'Todo', 'Doing', or 'Done'
+
+                // Update task status
+                const taskIndex = tasks.findIndex(t => t.id === taskId);
+                if (taskIndex > -1 && tasks[taskIndex].status !== newStatus) {
+                    tasks[taskIndex].status = newStatus;
+                    renderTasks(); // Re-render UI immediately
+                    saveTasks();   // Save to server
+                }
+            }
+        }
+
+        // Initial load
+        loadTasks();
+    </script>
+</body>
+
+</html>

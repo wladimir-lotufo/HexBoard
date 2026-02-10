@@ -1,0 +1,641 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid - Design System</title>
+    <link rel="stylesheet" href="../../../../../Vendor/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../../../Vendor/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../Vendor/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../../../../../Vendor/animate.css/animate.min.css">
+    <link rel="stylesheet" href="../../../../../Icons/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
+    <link rel="stylesheet" href="../../../../../Content/custom.css">
+    <link rel="stylesheet" href="../../../../../Content/spinner1.css">
+    <link rel="stylesheet" href="../../../../../Vendor/toastr214/build/toastr.css">
+    <link rel="stylesheet" href="../../../../../Content/style.css">
+    <link rel="stylesheet" href="../../../../../Content/style-custom.css">
+    <style>
+        .ds-component-section {
+            display: block;
+        }
+
+        .ds-content-header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .ds-content-header p {
+            font-size: 16px;
+            color: #676a6c;
+            margin-bottom: 30px;
+        }
+
+        .ds-section {
+            margin-bottom: 40px;
+        }
+
+        .ds-section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #676a6c;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e7eaec;
+            padding-bottom: 10px;
+        }
+
+        .ds-example {
+            background-color: #f9f9f9;
+            border: 1px solid #e7eaec;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .ds-code {
+            background-color: #2b2b2b;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .ds-code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #444;
+        }
+
+        .ds-code-title {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+        }
+
+        .ds-code-copy {
+            background-color: #444;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: background-color 0.2s;
+        }
+
+        .ds-code-copy:hover {
+            background-color: #555;
+        }
+
+        .ds-list {
+            list-style-type: disc;
+            padding-left: 20px;
+            color: #676a6c;
+        }
+
+        .ds-list li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="viw_Component" class="content-full">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="hpanel">
+                    <!-- Header Section -->
+                    <div id="PanelHeader" class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h4 class="font-extra-bold text-primary">Grid</h4>
+                                <small class="text-muted">Tabela de dados com paginação e ordenação.</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Section -->
+                    <div id="PanelBody" class="panel-body tooltip-demo">
+
+                        <!-- TabPanel -->
+                        <ul id="pnl_GridTabs" class="nav nav-tabs">
+                            <li class="active">
+                                <a data-toggle="tab" href="#tab_Exemplo">
+                                    <i class="fa fa-eye text-primary fa-lg"></i> Exemplo
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#tab_HTML">
+                                    <i class="fa fa-code text-primary fa-lg"></i> HTML
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#tab_Propriedades">
+                                    <i class="fa fa-cog text-primary fa-lg"></i> Propriedades
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <br />
+
+                            <!-- Tab Exemplo -->
+                            <div id="tab_Exemplo" class="tab-pane active">
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Configuração</h2>
+                                    <div
+                                        style="background-color: #fff; border: 1px solid #e7eaec; border-radius: 4px; padding: 20px; margin: 20px 0;">
+
+                                        <!-- Context Selector -->
+                                        <div class="row"
+                                            style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #e7eaec;">
+                                            <div class="col-md-12">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    <i class="fa fa-lightbulb-o text-warning"></i> Contextos Comuns
+                                                </h4>
+                                                <select id="grid-context-selector" class="form-control"
+                                                    style="max-width: 400px;">
+                                                    <option value="">-- Selecione um contexto --</option>
+                                                    <option value="grid-standard">Grid Padrão (Striped + Hover +
+                                                        DataTables)</option>
+                                                    <option value="grid-simple">Grid Simples (Sem DataTables)</option>
+                                                    <option value="grid-selection">Grid com Seleção (Checkboxes)
+                                                    </option>
+                                                    <option value="grid-mailbox">Grid Mailbox (Estilo especial)</option>
+                                                </select>
+                                                <small class="text-muted">Selecione um contexto para aplicar a
+                                                    configuração automaticamente</small>
+                                            </div>
+                                        </div>
+
+                                        <!-- 4-Column Configuration -->
+                                        <div class="row">
+                                            <!-- Column 1: Estilo -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Estilo</h4>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-style"
+                                                            value=""> Padrão</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-style"
+                                                            value="table-striped"> Striped</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-style"
+                                                            value="table-hover"> Hover</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-style"
+                                                            value="table-striped table-hover" checked> Striped +
+                                                        Hover</label></div>
+                                            </div>
+
+                                            <!-- Column 2: DataTables -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    DataTables</h4>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-datatables" value="true" checked> Com
+                                                        DataTables</label></div>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-datatables" value="false"> Sem
+                                                        DataTables</label></div>
+                                            </div>
+
+                                            <!-- Column 3: Seleção -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Seleção</h4>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-selection" value="false" checked> Sem
+                                                        seleção</label></div>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-selection" value="true"> Com
+                                                        checkboxes</label></div>
+                                            </div>
+
+                                            <!-- Column 4: Opções -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Opções</h4>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            id="config-responsive" checked> Responsive wrapper</label>
+                                                </div>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            id="config-bordered"> Bordered</label></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Exemplo Visual</h2>
+                                    <div class="ds-example">
+                                        <div id="grid-wrapper">
+                                            <table id="grid-example" class="table table-striped table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Nome</th>
+                                                        <th>Email</th>
+                                                        <th>Ações</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>João Silva</td>
+                                                        <td>joao@email.com</td>
+                                                        <td>
+                                                            <a href="#" class="btn btn-xs btn-default"><i
+                                                                    class="fa fa-pencil"></i></a>
+                                                            <a href="#" class="btn btn-xs btn-danger"><i
+                                                                    class="fa fa-trash"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Maria Souza</td>
+                                                        <td>maria@email.com</td>
+                                                        <td>
+                                                            <a href="#" class="btn btn-xs btn-default"><i
+                                                                    class="fa fa-pencil"></i></a>
+                                                            <a href="#" class="btn btn-xs btn-danger"><i
+                                                                    class="fa fa-trash"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Pedro Santos</td>
+                                                        <td>pedro@email.com</td>
+                                                        <td>
+                                                            <a href="#" class="btn btn-xs btn-default"><i
+                                                                    class="fa fa-pencil"></i></a>
+                                                            <a href="#" class="btn btn-xs btn-danger"><i
+                                                                    class="fa fa-trash"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab HTML -->
+                            <div id="tab_HTML" class="tab-pane">
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Template HTML</h2>
+                                    <div class="ds-code">
+                                        <div class="ds-code-header">
+                                            <span class="ds-code-title">HTML</span>
+                                            <button class="ds-code-copy" onclick="copyCode(this)">Copiar</button>
+                                        </div>
+                                        <pre><code id="grid-html-code">&lt;div class="table-responsive"&gt;
+    &lt;table id="grd_Usuarios" class="table table-striped table-hover"&gt;
+        &lt;thead&gt;
+            &lt;tr&gt;
+                &lt;th&gt;Nome&lt;/th&gt;
+                &lt;th&gt;Email&lt;/th&gt;
+                &lt;th&gt;Ações&lt;/th&gt;
+            &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+            @foreach (var item in Model) {
+                &lt;tr&gt;
+                    &lt;td&gt;@item.Nome&lt;/td&gt;
+                    &lt;td&gt;@item.Email&lt;/td&gt;
+                    &lt;td&gt;
+                        &lt;!-- Ações aqui --&gt;
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+            }
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab Propriedades -->
+                            <div id="tab_Propriedades" class="tab-pane">
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Padrão de Nomenclatura</h2>
+                                    <ul class="ds-list">
+                                        <li>ID: `grd_{Entidade}` (ex: `grd_Usuarios`)</li>
+                                        <li>Classe: `dataTables-example` para inicialização automática do DataTables
+                                        </li>
+                                        <li>Prefixo `grd_` é obrigatório</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Variações</h2>
+                                    <ul class="ds-list">
+                                        <li>Tabelas simples sem DataTables (remover classe `dataTables-example`)</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Bibliotecas Necessárias</h2>
+                                    <ul class="ds-list">
+                                        <li>Bootstrap (estilos de tabela)</li>
+                                        <li>DataTables (funcionalidades de grid)</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- End TabPanel -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../../../../Scripts/jquery-3.6.0.min.js"></script>
+    <script src="../../../../../Vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../../../../../Vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="../../../../../Vendor/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var dataTableInstance = null;
+
+            // Context presets based on usage analysis
+            var contexts = {
+                'grid-standard': {
+                    style: 'table-striped table-hover',
+                    datatables: 'true',
+                    selection: 'false',
+                    responsive: true,
+                    bordered: false
+                },
+                'grid-simple': {
+                    style: '',
+                    datatables: 'false',
+                    selection: 'false',
+                    responsive: true,
+                    bordered: false
+                },
+                'grid-selection': {
+                    style: 'table-striped table-hover',
+                    datatables: 'true',
+                    selection: 'true',
+                    responsive: true,
+                    bordered: false
+                },
+                'grid-mailbox': {
+                    style: 'table-hover',
+                    datatables: 'true',
+                    selection: 'false',
+                    responsive: true,
+                    bordered: true
+                }
+            };
+
+            // Context selector handler
+            $('#grid-context-selector').on('change', function () {
+                var contextKey = $(this).val();
+                if (contextKey && contexts[contextKey]) {
+                    applyContext(contexts[contextKey]);
+                }
+            });
+
+            function applyContext(context) {
+                // Apply style
+                $('.config-style').prop('checked', false);
+                $('.config-style[value="' + context.style + '"]').prop('checked', true);
+
+                // Apply datatables
+                $('.config-datatables').prop('checked', false);
+                $('.config-datatables[value="' + context.datatables + '"]').prop('checked', true);
+
+                // Apply selection
+                $('.config-selection').prop('checked', false);
+                $('.config-selection[value="' + context.selection + '"]').prop('checked', true);
+
+                // Apply options
+                $('#config-responsive').prop('checked', context.responsive);
+                $('#config-bordered').prop('checked', context.bordered);
+
+                // Update the grid
+                updateGrid();
+            }
+
+            // Radio-like behavior for configuration categories
+            $('.config-style').on('change', function () {
+                if (this.checked) {
+                    $('.config-style').not(this).prop('checked', false);
+                }
+                updateGrid();
+            });
+
+            $('.config-datatables').on('change', function () {
+                if (this.checked) {
+                    $('.config-datatables').not(this).prop('checked', false);
+                }
+                updateGrid();
+            });
+
+            $('.config-selection').on('change', function () {
+                if (this.checked) {
+                    $('.config-selection').not(this).prop('checked', false);
+                }
+                updateGrid();
+            });
+
+            $('#config-responsive, #config-bordered').on('change', function () {
+                updateGrid();
+            });
+
+            function updateGrid() {
+                var $table = $('#grid-example');
+                var $wrapper = $('#grid-wrapper');
+
+                // Get selected values
+                var style = $('.config-style:checked').val() || '';
+                var useDatatables = $('.config-datatables:checked').val() === 'true';
+                var useSelection = $('.config-selection:checked').val() === 'true';
+                var useResponsive = $('#config-responsive').is(':checked');
+                var useBordered = $('#config-bordered').is(':checked');
+
+                // Destroy existing DataTable if it exists
+                if (dataTableInstance) {
+                    dataTableInstance.destroy();
+                    dataTableInstance = null;
+                }
+
+                // Build table classes
+                var tableClasses = ['table'];
+                if (style) {
+                    var styleClasses = style.split(' ');
+                    tableClasses = tableClasses.concat(styleClasses);
+                }
+                if (useBordered) {
+                    tableClasses.push('table-bordered');
+                }
+
+                // Update table classes
+                $table.attr('class', tableClasses.join(' '));
+
+                // Handle selection column
+                var $thead = $table.find('thead tr');
+                var $tbody = $table.find('tbody');
+
+                if (useSelection) {
+                    // Add checkbox column if not exists
+                    if ($thead.find('th:first').text() !== '') {
+                        $thead.prepend('<th width="5%"><input type="checkbox" class="select-all"></th>');
+                        $tbody.find('tr').each(function () {
+                            $(this).prepend('<td><input type="checkbox" class="select-row"></td>');
+                        });
+                    }
+                } else {
+                    // Remove checkbox column if exists
+                    if ($thead.find('th:first').text() === '') {
+                        $thead.find('th:first').remove();
+                        $tbody.find('tr').each(function () {
+                            $(this).find('td:first').remove();
+                        });
+                    }
+                }
+
+                // Handle responsive wrapper
+                if (useResponsive) {
+                    if (!$wrapper.hasClass('table-responsive')) {
+                        $wrapper.addClass('table-responsive');
+                    }
+                } else {
+                    $wrapper.removeClass('table-responsive');
+                }
+
+                // Initialize DataTables if selected
+                if (useDatatables) {
+                    dataTableInstance = $table.DataTable({
+                        pageLength: 10,
+                        responsive: true,
+                        language: {
+                            lengthMenu: "Exibir _MENU_ registros por página",
+                            zeroRecords: "Não existem dados",
+                            info: "Exibindo _PAGE_ de _PAGES_",
+                            infoEmpty: "Nenhum registro encontrado",
+                            infoFiltered: "(Filtrado _MAX_ registros totais)",
+                            search: "Pesquisar: ",
+                            paginate: {
+                                first: "Início",
+                                previous: "Anterior",
+                                next: "Próximo",
+                                last: "Último"
+                            }
+                        }
+                    });
+                }
+
+                // Update HTML code
+                updateHTMLCode();
+            }
+
+            function updateHTMLCode() {
+                var style = $('.config-style:checked').val() || '';
+                var useDatatables = $('.config-datatables:checked').val() === 'true';
+                var useSelection = $('.config-selection:checked').val() === 'true';
+                var useResponsive = $('#config-responsive').is(':checked');
+                var useBordered = $('#config-bordered').is(':checked');
+
+                // Build table classes
+                var tableClasses = ['table'];
+                if (style) {
+                    var styleClasses = style.split(' ');
+                    tableClasses = tableClasses.concat(styleClasses);
+                }
+                if (useBordered) {
+                    tableClasses.push('table-bordered');
+                }
+
+                var classString = tableClasses.join(' ');
+
+                // Build HTML code
+                var htmlCode = '';
+
+                if (useResponsive) {
+                    htmlCode += '&lt;div class="table-responsive"&gt;\n    ';
+                }
+
+                htmlCode += '&lt;table id="grd_Usuarios" class="' + classString + '"&gt;\n';
+                htmlCode += '        &lt;thead&gt;\n';
+                htmlCode += '            &lt;tr&gt;\n';
+
+                if (useSelection) {
+                    htmlCode += '                &lt;th width="5%"&gt;&lt;input type="checkbox" class="select-all"&gt;&lt;/th&gt;\n';
+                }
+
+                htmlCode += '                &lt;th&gt;Nome&lt;/th&gt;\n';
+                htmlCode += '                &lt;th&gt;Email&lt;/th&gt;\n';
+                htmlCode += '                &lt;th&gt;Ações&lt;/th&gt;\n';
+                htmlCode += '            &lt;/tr&gt;\n';
+                htmlCode += '        &lt;/thead&gt;\n';
+                htmlCode += '        &lt;tbody&gt;\n';
+                htmlCode += '            @foreach (var item in Model) {\n';
+                htmlCode += '                &lt;tr&gt;\n';
+
+                if (useSelection) {
+                    htmlCode += '                    &lt;td&gt;&lt;input type="checkbox" class="select-row"&gt;&lt;/td&gt;\n';
+                }
+
+                htmlCode += '                    &lt;td&gt;@item.Nome&lt;/td&gt;\n';
+                htmlCode += '                    &lt;td&gt;@item.Email&lt;/td&gt;\n';
+                htmlCode += '                    &lt;td&gt;\n';
+                htmlCode += '                        &lt;!-- Ações aqui --&gt;\n';
+                htmlCode += '                    &lt;/td&gt;\n';
+                htmlCode += '                &lt;/tr&gt;\n';
+                htmlCode += '            }\n';
+                htmlCode += '        &lt;/tbody&gt;\n';
+                htmlCode += '    &lt;/table&gt;\n';
+
+                if (useResponsive) {
+                    htmlCode += '&lt;/div&gt;';
+                }
+
+                if (useDatatables) {
+                    htmlCode += '\n\n&lt;script&gt;\n';
+                    htmlCode += '    $(document).ready(function() {\n';
+                    htmlCode += '        $(\'#grd_Usuarios\').DataTable({\n';
+                    htmlCode += '            pageLength: 25,\n';
+                    htmlCode += '            responsive: true,\n';
+                    htmlCode += '            language: {\n';
+                    htmlCode += '                lengthMenu: "Exibir _MENU_ registros por página",\n';
+                    htmlCode += '                zeroRecords: "Não existem dados",\n';
+                    htmlCode += '                info: "Exibindo _PAGE_ de _PAGES_",\n';
+                    htmlCode += '                infoEmpty: "Nenhum registro encontrado",\n';
+                    htmlCode += '                search: "Pesquisar: "\n';
+                    htmlCode += '            }\n';
+                    htmlCode += '        });\n';
+                    htmlCode += '    });\n';
+                    htmlCode += '&lt;/script&gt;';
+                }
+
+                $('#grid-html-code').html(htmlCode);
+            }
+
+            // Initialize with default values
+            updateGrid();
+        });
+
+        function copyCode(btn) {
+            var codeBlock = btn.parentElement.nextElementSibling;
+            var code = codeBlock.innerText;
+            var tempInput = document.createElement("textarea");
+            tempInput.value = code;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            var originalText = btn.innerText;
+            btn.innerText = "Copiado!";
+            setTimeout(function () { btn.innerText = originalText; }, 2000);
+        }
+    </script>
+</body>
+
+</html>

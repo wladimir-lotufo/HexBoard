@@ -1,0 +1,518 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FilterPanel - Design System</title>
+    <link rel="stylesheet" href="../../../../../Vendor/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../../../Vendor/bootstrap/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../../../../../Vendor/animate.css/animate.min.css">
+    <link rel="stylesheet" href="../../../../../Icons/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
+    <link rel="stylesheet" href="../../../../../Content/custom.css">
+    <link rel="stylesheet" href="../../../../../Content/spinner1.css">
+    <link rel="stylesheet" href="../../../../../Vendor/toastr214/build/toastr.css">
+    <link rel="stylesheet" href="../../../../../Content/style.css">
+    <link rel="stylesheet" href="../../../../../Content/style-custom.css">
+    <style>
+        .ds-component-section {
+            display: block;
+        }
+
+        .ds-content-header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .ds-content-header p {
+            font-size: 16px;
+            color: #676a6c;
+            margin-bottom: 30px;
+        }
+
+        .ds-section {
+            margin-bottom: 40px;
+        }
+
+        .ds-section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #676a6c;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e7eaec;
+            padding-bottom: 10px;
+        }
+
+        .ds-example {
+            background-color: #f9f9f9;
+            border: 1px solid #e7eaec;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .ds-code {
+            background-color: #2b2b2b;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .ds-code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #444;
+        }
+
+        .ds-code-title {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+        }
+
+        .ds-code-copy {
+            background-color: #444;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: background-color 0.2s;
+        }
+
+        .ds-code-copy:hover {
+            background-color: #555;
+        }
+
+        .ds-list {
+            list-style-type: disc;
+            padding-left: 20px;
+            color: #676a6c;
+        }
+
+        .ds-list li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="viw_Component" class="content-full">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="hpanel">
+                    <!-- Header Section -->
+                    <div id="PanelHeader" class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h4 class="font-extra-bold text-primary">FilterPanel</h4>
+                                <small class="text-muted">Painel expansível para filtros de busca.</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Section -->
+                    <div id="PanelBody" class="panel-body tooltip-demo">
+
+                        <!-- TabPanel -->
+                        <ul id="pnl_FilterpanelTabs" class="nav nav-tabs">
+                            <li class="active">
+                                <a data-toggle="tab" href="#tab_Exemplo">
+                                    <i class="fa fa-eye text-primary fa-lg"></i> Exemplo
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#tab_HTML">
+                                    <i class="fa fa-code text-primary fa-lg"></i> HTML
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#tab_Propriedades">
+                                    <i class="fa fa-cog text-primary fa-lg"></i> Propriedades
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <br />
+
+                            <!-- Tab Exemplo -->
+                            <div id="tab_Exemplo" class="tab-pane active">
+                                <!-- Configuration Section -->
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Configuração</h2>
+                                    <div
+                                        style="background-color: #fff; border: 1px solid #e7eaec; border-radius: 4px; padding: 20px; margin: 20px 0;">
+
+                                        <!-- Context Selector -->
+                                        <div class="row"
+                                            style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #e7eaec;">
+                                            <div class="col-md-12">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    <i class="fa fa-lightbulb-o text-warning"></i> Contextos Comuns
+                                                </h4>
+                                                <select id="filterpanel-context-selector" class="form-control"
+                                                    style="max-width: 400px;">
+                                                    <option value="">-- Selecione um contexto --</option>
+                                                    <option value="search-filters">Filtros de Pesquisa (Expandido,
+                                                        Verde)</option>
+                                                    <option value="user-data">Dados do Usuário (Expandido, Verde)
+                                                    </option>
+                                                    <option value="file-upload">Upload de Arquivos (Expandido, Amarelo)
+                                                    </option>
+                                                </select>
+                                                <small class="text-muted">Selecione um contexto para aplicar a
+                                                    configuração automaticamente</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Estado Inicial</h4>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-state"
+                                                            value="expanded" checked> Expandido</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-state"
+                                                            value="collapsed"> Recolhido</label></div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">Cor
+                                                    do Painel</h4>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-color"
+                                                            value=""> Default (hpanel)</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-color"
+                                                            value="hgreen" checked> Verde (hgreen)</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-color"
+                                                            value="hyellow"> Amarelo (hyellow)</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-color"
+                                                            value="hblue"> Azul (hblue)</label></div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Botão de Pesquisa</h4>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-button" value="yes" checked> Sim</label></div>
+                                                <div class="checkbox"><label><input type="checkbox"
+                                                            class="config-button" value="no"> Não</label></div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Ícone</h4>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-icon"
+                                                            value="fa-chevron-up" checked> Chevron Up</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-icon"
+                                                            value="fa-chevron-down"> Chevron Down</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-icon"
+                                                            value="fa-filter"> Filter</label></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Exemplo Visual</h2>
+                                    <div class="ds-example">
+                                        <div class="hpanel hgreen tooltip-demo" id="filterpanel-example">
+                                            <div class="panel-heading hbuilt">
+                                                <div class="panel-tools">
+                                                    <a class="showhide"><i class="fa fa-chevron-up"></i></a>
+                                                </div>
+                                                Filtros de Pesquisa
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <!-- Campos de filtro aqui -->
+                                                        <div class="form-group">
+                                                            <label>Nome</label>
+                                                            <input type="text" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel-footer">
+                                                <button class="btn btn-primary btn-sm">Pesquisar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab HTML -->
+                            <div id="tab_HTML" class="tab-pane">
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Template HTML</h2>
+                                    <div class="ds-code">
+                                        <div class="ds-code-header">
+                                            <span class="ds-code-title">HTML</span>
+                                            <button class="ds-code-copy" onclick="copyCode(this)">Copiar</button>
+                                        </div>
+                                        <pre><code id="filterpanel-html-code">&lt;div class="hpanel hgreen"&gt;
+    &lt;div class="panel-heading hbuilt"&gt;
+        &lt;div class="panel-tools"&gt;
+            &lt;a class="showhide"&gt;&lt;i class="fa fa-chevron-up"&gt;&lt;/i&gt;&lt;/a&gt;
+        &lt;/div&gt;
+        Filtros de Pesquisa
+    &lt;/div&gt;
+    &lt;div class="panel-body"&gt;
+        &lt;div class="row"&gt;
+            &lt;div class="col-lg-12"&gt;
+                &lt;!-- Campos de filtro aqui --&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="panel-footer"&gt;
+        &lt;button class="btn btn-primary btn-sm"&gt;Pesquisar&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab Propriedades -->
+                            <div id="tab_Propriedades" class="tab-pane">
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Padrão de Nomenclatura</h2>
+                                    <ul class="ds-list">
+                                        <li>Classe: `hpanel` (container principal)</li>
+                                        <li>Classe: `showhide` (botão de expandir/recolher)</li>
+                                        <li>Classe: `hbuilt` (estilo do cabeçalho)</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Variações</h2>
+                                    <ul class="ds-list">
+                                        <li>Pode iniciar recolhido (adicionar lógica JS)</li>
+                                        <li>Cores disponíveis: hpanel (default), hgreen, hyellow, hblue</li>
+                                        <li>Panel-footer é opcional (para botões de ação)</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Bibliotecas Necessárias</h2>
+                                    <ul class="ds-list">
+                                        <li>Bootstrap (panels)</li>
+                                        <li>Homer Theme Scripts (funcionalidade showhide)</li>
+                                        <li>Font Awesome (ícones)</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- End TabPanel -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../../../../Scripts/jquery-3.6.0.min.js"></script>
+    <script src="../../../../../Vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script>
+        // Simulação do script do tema Homer para showhide
+        $(document).on('click', '.showhide', function (event) {
+            event.preventDefault();
+            var hpanel = $(this).closest('div.hpanel');
+            var icon = $(this).find('i:first');
+            var body = hpanel.find('div.panel-body');
+            var footer = hpanel.find('div.panel-footer');
+            body.slideToggle(300);
+            footer.slideToggle(300);
+            icon.toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
+            hpanel.toggleClass('').toggleClass('panel-collapse');
+            setTimeout(function () {
+                hpanel.resize();
+                hpanel.find('[id^=map-]').resize();
+            }, 50);
+        });
+
+        function copyCode(btn) {
+            var codeBlock = btn.parentElement.nextElementSibling;
+            var code = codeBlock.innerText;
+            var tempInput = document.createElement("textarea");
+            tempInput.value = code;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            var originalText = btn.innerText;
+            btn.innerText = "Copiado!";
+            setTimeout(function () { btn.innerText = originalText; }, 2000);
+        }
+
+        // Configuration update logic
+        $(document).ready(function () {
+            // Context presets (based on usage analysis)
+            var contexts = {
+                'search-filters': {
+                    state: 'expanded',
+                    color: 'hgreen',
+                    button: 'yes',
+                    icon: 'fa-chevron-up'
+                },
+                'user-data': {
+                    state: 'expanded',
+                    color: 'hgreen',
+                    button: 'no',
+                    icon: 'fa-chevron-up'
+                },
+                'file-upload': {
+                    state: 'expanded',
+                    color: 'hyellow',
+                    button: 'no',
+                    icon: 'fa-chevron-up'
+                }
+            };
+
+            // Context selector handler
+            $('#filterpanel-context-selector').on('change', function () {
+                var contextKey = $(this).val();
+                if (contextKey && contexts[contextKey]) {
+                    applyContext(contexts[contextKey]);
+                }
+            });
+
+            function applyContext(context) {
+                // Apply state
+                $('.config-state').prop('checked', false);
+                $('.config-state[value="' + context.state + '"]').prop('checked', true);
+
+                // Apply color
+                $('.config-color').prop('checked', false);
+                $('.config-color[value="' + context.color + '"]').prop('checked', true);
+
+                // Apply button
+                $('.config-button').prop('checked', false);
+                $('.config-button[value="' + context.button + '"]').prop('checked', true);
+
+                // Apply icon
+                $('.config-icon').prop('checked', false);
+                $('.config-icon[value="' + context.icon + '"]').prop('checked', true);
+
+                // Update the panel
+                updatePanel();
+            }
+
+            // Radio-like behavior for checkboxes
+            $('.config-state').on('change', function () {
+                if (this.checked) {
+                    $('.config-state').not(this).prop('checked', false);
+                }
+                updatePanel();
+            });
+
+            $('.config-color').on('change', function () {
+                if (this.checked) {
+                    $('.config-color').not(this).prop('checked', false);
+                }
+                updatePanel();
+            });
+
+            $('.config-button').on('change', function () {
+                if (this.checked) {
+                    $('.config-button').not(this).prop('checked', false);
+                }
+                updatePanel();
+            });
+
+            $('.config-icon').on('change', function () {
+                if (this.checked) {
+                    $('.config-icon').not(this).prop('checked', false);
+                }
+                updatePanel();
+            });
+
+            function updatePanel() {
+                // Get selected values
+                var state = $('.config-state:checked').val() || 'expanded';
+                var color = $('.config-color:checked').val() || 'hgreen';
+                var hasButton = $('.config-button:checked').val() === 'yes';
+                var icon = $('.config-icon:checked').val() || 'fa-chevron-up';
+
+                // Build panel classes
+                var panelClasses = ['hpanel', 'tooltip-demo'];
+                if (color) panelClasses.push(color);
+
+                // Build panel HTML
+                var panelHtml = '<div class="' + panelClasses.join(' ') + '">';
+                panelHtml += '<div class="panel-heading hbuilt">';
+                panelHtml += '<div class="panel-tools">';
+                panelHtml += '<a class="showhide"><i class="fa ' + icon + '"></i></a>';
+                panelHtml += '</div>';
+                panelHtml += 'Filtros de Pesquisa';
+                panelHtml += '</div>';
+
+                var bodyStyle = state === 'collapsed' ? ' style="display:none;"' : '';
+                panelHtml += '<div class="panel-body"' + bodyStyle + '>';
+                panelHtml += '<div class="row">';
+                panelHtml += '<div class="col-lg-12">';
+                panelHtml += '<!-- Campos de filtro aqui -->';
+                panelHtml += '<div class="form-group">';
+                panelHtml += '<label>Nome</label>';
+                panelHtml += '<input type="text" class="form-control">';
+                panelHtml += '</div>';
+                panelHtml += '</div>';
+                panelHtml += '</div>';
+                panelHtml += '</div>';
+
+                if (hasButton) {
+                    panelHtml += '<div class="panel-footer"' + bodyStyle + '>';
+                    panelHtml += '<button class="btn btn-primary btn-sm">Pesquisar</button>';
+                    panelHtml += '</div>';
+                }
+
+                panelHtml += '</div>';
+
+                // Update example - use html() to preserve the wrapper element
+                var $wrapper = $('#filterpanel-example').parent();
+                $('#filterpanel-example').remove();
+                $wrapper.append($(panelHtml).attr('id', 'filterpanel-example'));
+
+                // Update HTML code
+                updateHTMLCode(panelClasses.join(' '), icon, hasButton);
+            }
+
+            function updateHTMLCode(panelClass, icon, hasButton) {
+                var htmlCode = '&lt;div class="' + panelClass + '"&gt;\n';
+                htmlCode += '    &lt;div class="panel-heading hbuilt"&gt;\n';
+                htmlCode += '        &lt;div class="panel-tools"&gt;\n';
+                htmlCode += '            &lt;a class="showhide"&gt;&lt;i class="fa ' + icon + '"&gt;&lt;/i&gt;&lt;/a&gt;\n';
+                htmlCode += '        &lt;/div&gt;\n';
+                htmlCode += '        Filtros de Pesquisa\n';
+                htmlCode += '    &lt;/div&gt;\n';
+                htmlCode += '    &lt;div class="panel-body"&gt;\n';
+                htmlCode += '        &lt;div class="row"&gt;\n';
+                htmlCode += '            &lt;div class="col-lg-12"&gt;\n';
+                htmlCode += '                &lt;!-- Campos de filtro aqui --&gt;\n';
+                htmlCode += '            &lt;/div&gt;\n';
+                htmlCode += '        &lt;/div&gt;\n';
+                htmlCode += '    &lt;/div&gt;\n';
+
+                if (hasButton) {
+                    htmlCode += '    &lt;div class="panel-footer"&gt;\n';
+                    htmlCode += '        &lt;button class="btn btn-primary btn-sm"&gt;Pesquisar&lt;/button&gt;\n';
+                    htmlCode += '    &lt;/div&gt;\n';
+                }
+
+                htmlCode += '&lt;/div&gt;';
+
+                $('#filterpanel-html-code').html(htmlCode);
+            }
+        });
+    </script>
+</body>
+
+</html>

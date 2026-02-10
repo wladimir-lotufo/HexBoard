@@ -1,0 +1,511 @@
+<!-- 
+void DetalheUsuario (id_Usuario) :Modal2
+{
+    /// Declaração de Componentes da View
+    {
+        Text(ModUsuario2.id_Usuario) txt_IdUsuario;
+        Text(ModUsuario2.ds_Nome) txt_DsNome;
+        Text(ModUsuario2.ds_Senha) txt_DsSenha;
+        Calendar(ModUsuario2.dt_Inclusao) cal_DtInclusao;
+        Select(ModUsuario2.ds_Tipo) sel_DsTipo;
+        Text(ModUsuario2.nm_Salario) txt_NmSalario;
+        Select(IdiomaPreferido.IdiomaPreferidoListar) sel_IdIdiomaPreferido;
+        SaveButton but_Salvar;
+        CloseButton but_Fechar;
+    }
+
+    /// Declaração dos Eventos
+    {
+        
+        void DetalheUsuario_Load() 
+        {
+            // Controller
+            ModDetalheUsuario modView;
+            modView.lstListIdiomas = IdiomaPreferido.IdiomaPreferidoListar();
+
+            // View
+            id_IdiomaPreferido.Colunas = list;
+
+            if (id_Usuario == 0)
+            {
+                txt_IdUsuario = 0;
+                txt_DsNome = "";
+                txt_DsSenha = "";
+                cal_DtInclusao = "";
+                sel_DsTipo = "";
+                txt_NmSalario = 0;
+                sel_IdIdiomaPreferido = 0;
+            }
+            else
+            {
+                modView.modUsuario = Usuario.DalUsuarioConsultar(id_Usuario);
+                txt_IdUsuario = modView.modUsuario.id_Usuario;
+                txt_DsNome = modView.modUsuario.ds_Nome;
+                txt_DsSenha = modView.modUsuario.ds_Senha;
+                cal_DtInclusao = modView.modUsuario.dt_Inclusao;
+                sel_DsTipo = modView.modUsuario.ds_Tipo;
+                txt_NmSalario = modView.modUsuario.nm_Salario;
+                sel_IdIdiomaPreferido = modView.modUsuario.id_IdiomaPreferido;
+            }
+        }
+
+        void but_Salvar_Click() 
+        {
+            // View
+            ModUsuario modUsuario;
+            modUsuario.id_Usuario = txt_IdUsuario;
+            modUsuario.ds_Nome = txt_DsNome;
+            modUsuario.ds_Senha = txt_DsSenha;
+            modUsuario.dt_Inclusao = cal_DtInclusao;
+            modUsuario.ds_Tipo = sel_DsTipo;
+            modUsuario.nm_Salario = txt_NmSalario;
+            modUsuario.id_IdiomaPreferido = sel_IdIdiomaPreferido.SelectedItem;
+
+            // Controller
+            if (modUsuario.id_Usuario == 0) {
+                Usuario.DalUsuarioIncluir(modUsuario);
+            }
+            else {
+                Usuario.DalUsuarioAlterar(modUsuario);
+            }
+        }
+
+    }
+
+}
+-->
+@model WarpSolutions.Views.Seguranca2.ModDetalheUsuario
+@using Newtonsoft.Json
+@{
+    ViewBag.Title = "Detalhes do Usuário";
+
+    var jsonModel = JsonConvert.SerializeObject(Model, new JsonSerializerSettings {
+        DateFormatHandling = DateFormatHandling.IsoDateFormat,
+        DateTimeZoneHandling = DateTimeZoneHandling.RoundtripKind
+    });
+
+}
+
+<!-- Modal -->
+
+
+<div id="mod_DetalheUsuario" class="modal-content">
+    
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+                <h4 class="modal-title">Detalhe do Usuário</h4>
+            </div>
+    
+            <div class="modal-body">
+
+                @using (Html.BeginForm("butSalvar_Click", "Seguranca2", FormMethod.Post, new { @class = "hpanel", id = "formUsuario" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-group">
+                        <label for="txt_IdUsuario"><strong>Id:</strong></label>
+                        @Html.TextBoxFor(m => Model.modUsuario.id_Usuario, new { @class = "form-control input", @id = "txt_IdUsuario" })
+                        @Html.ValidationMessageFor(model => Model.modUsuario.id_Usuario, "", new { @class = "text-danger" })
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="txt_DsNome"><strong>Nome Completo:</strong></label>
+                        @Html.TextBoxFor(m => Model.modUsuario.ds_Nome, new { @class = "form-control input", @id = "txt_DsNome" })
+                        @Html.ValidationMessageFor(model => Model.modUsuario.ds_Nome, "", new { @class = "text-danger" })
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="txt_DsSenha"><strong>Senha Criptografada:</strong></label>
+                        @Html.TextBoxFor(m => Model.modUsuario.ds_Senha, new { @class = "form-control input", @id = "txt_DsSenha" })
+                        @Html.ValidationMessageFor(model => Model.modUsuario.ds_Senha, "", new { @class = "text-danger" })
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="cal_DtInclusao"><strong>Data de Inclusão:</strong></label>
+                        <div id="cal_DtInclusao" class="input-group date" >
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            @Html.TextBoxFor(m => Model.modUsuario.dt_Inclusao, new { @class = "form-control input", id = "dt_Inclusao" })
+                            @Html.ValidationMessageFor(model => Model.modUsuario.dt_Inclusao, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="sel_DsTipo"><strong>Tipo:</strong></label>
+                        @Html.DropDownListFor(
+                            m => m.modUsuario.ds_Tipo,
+                            new List<SelectListItem> {
+                                new SelectListItem { Value = "A", Text = "Administrador" },
+                                new SelectListItem { Value = "U", Text = "Usuário" }
+                            },
+                            "-- selecione --",
+                            new { @class = "form-control js-source-states", @id = "sel_DsTipo" }
+                        )
+                        @Html.ValidationMessageFor(model => Model.modUsuario.ds_Tipo, "", new { @class = "text-danger" })
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="txt_NmSalario"><strong>Salário:</strong></label>
+                        @Html.TextBoxFor(m => Model.modUsuario.nm_Salario, new { @class = "form-control input", @id = "txt_NmSalario" })
+                        @Html.ValidationMessageFor(model => Model.modUsuario.nm_Salario, "", new { @class = "text-danger" })
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="sel_IdIdiomaPreferido"><strong>Idioma Preferido:</strong></label>
+                        @Html.DropDownListFor(
+                            m => m.modUsuario.id_IdiomaPreferido,
+                            new SelectList(Model.lstListIdiomas, "id_Idioma", "ds_Idioma", Model.modUsuario?.id_IdiomaPreferido),
+                            "-- selecione --",                                // optionLabel
+                            new { @class = "form-control js-source-states", @id = "sel_IdIdiomaPreferido" }
+                        )
+                        @Html.ValidationMessageFor(model => Model.modUsuario.id_IdiomaPreferido, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="modal-footer">
+                        <button id="but_Fechar" type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <button id="but_Salvar" type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
+    
+                }
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script src="~/Vendor/moment/moment.js"></script>
+<script src="~/Scripts/Mascaras/jquery.mask.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Vendor/bootstrap-datepicker-master/dist/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+@section Styles {
+    @Styles.Render("~/bundles/select2/css")
+    @Styles.Render("~/bundles/ladda/css")
+    @Styles.Render("~/bundles/datatables/css")
+    @Styles.Render("~/bundles/datatablesSelect/css")
+    @Styles.Render("~/bundles/datepicker/css")
+    @Styles.Render("~/bundles/iCheck/css")
+    @Styles.Render("~/bundles/spinner1/css")
+    @Styles.Render("~/bundles/switchery/css")
+    @Styles.Render("~/bundles/touchspin/css")
+    @Styles.Render("~/bundles/sweetAlert/css")
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/select2/js")
+    @Scripts.Render("~/bundles/ladda/js")
+    @Scripts.Render("~/bundles/datatables/js")
+    @Scripts.Render("~/bundles/datatablesBootstrap/js")
+    @Scripts.Render("~/bundles/datatablesPlugins/js")
+    @Scripts.Render("~/bundles/datatablesSelect/js")
+    @Scripts.Render("~/bundles/datatablesCheckbox/js")
+    @Scripts.Render("~/bundles/datepicker/js")
+    @Scripts.Render("~/bundles/iCheck/js")
+    @Scripts.Render("~/bundles/switchery/js")
+    @Scripts.Render("~/bundles/touchspin/js")
+    @Scripts.Render("~/bundles/sweetAlert/js")
+}
+
+<script type="text/javascript" >
+
+    var modDetalheUsuario;
+
+    /// Evento CadastroRegraConciliacao_Load
+    function DetalheUsuario_Load() {
+
+        popularSel_IdIdiomaPreferido(modDetalheUsuario.lstListIdiomas);
+
+        if (modDetalheUsuario?.modUsuario) {
+
+            if (modDetalheUsuario.modUsuario.id_Usuario == 0) {
+
+                var txt_IdUsuario = document.getElementById("txt_IdUsuario");
+                txt_IdUsuario.value = 0;
+
+                var txt_DsNome = document.getElementById("txt_DsNome");
+                txt_DsNome.value = "";
+
+                var txt_DsSenha = document.getElementById("txt_DsSenha");
+                txt_DsSenha.value = "";
+
+                var cal_DtInclusao = document.getElementById("cal_DtInclusao");
+                cal_DtInclusao.value = new Date(); // data e hora atual
+
+                var sel_DsTipo = document.getElementById("sel_DsTipo");
+                sel_DsTipo.value = ""; 
+
+                var txt_NmSalario = document.getElementById("txt_NmSalario");
+                txt_NmSalario.value = "0,00"; 
+
+                var sel_IdIdiomaPreferido = document.getElementById("sel_IdIdiomaPreferido");
+                sel_IdIdiomaPreferido.value = ""; 
+
+            }
+            else {
+
+                var txt_IdUsuario = document.getElementById("txt_IdUsuario");
+                txt_IdUsuario.value = modDetalheUsuario.modUsuario.id_Usuario;
+
+                var txt_DsNome = document.getElementById("txt_DsNome");
+                txt_DsNome.value = modDetalheUsuario.modUsuario.ds_Nome;
+
+                var txt_DsSenha = document.getElementById("txt_DsSenha");
+                txt_DsSenha.value = modDetalheUsuario.modUsuario.ds_Senha;
+
+                const cal_DtInclusao = document.getElementById("dt_Inclusao");
+                cal_DtInclusao.value = ddMMyyyy(new Date(modDetalheUsuario.modUsuario.dt_Inclusao));  
+
+                var sel_DsTipo = document.getElementById("sel_DsTipo");
+                sel_DsTipo.value = modDetalheUsuario.modUsuario.ds_Tipo; 
+
+                var txt_NmSalario = document.getElementById("txt_NmSalario");
+                txt_NmSalario.value = formatMoneyBR(modDetalheUsuario.modUsuario.nm_Salario);
+
+                var sel_IdIdiomaPreferido = document.getElementById("sel_IdIdiomaPreferido");
+                sel_IdIdiomaPreferido.value = modDetalheUsuario.modUsuario.id_IdiomaPreferido.toString(); 
+                $(sel_IdIdiomaPreferido).val(sel_IdIdiomaPreferido.value).trigger('change.select2');
+
+            }
+        }
+
+    }
+
+    /// Evento butSalvar_Click
+    function butSalvar_Click(e) {
+
+        // Evita submit/navegação padrão (funciona tanto em click quanto em submit)
+        e?.preventDefault?.();
+        // e?.stopPropagation?.(); // (opcional) impedir propagação
+
+        //var $form = $('#formUsuario');
+
+        var isWaitClosed = $('#waitModal').is(":hidden");
+        if (isWaitClosed == true) $('#waitModal').show();
+
+        if (!window.modDetalheUsuario || typeof window.modDetalheUsuario !== 'object') {
+            window.modDetalheUsuario = {};
+        }
+        if (!modDetalheUsuario.modUsuario || typeof modDetalheUsuario.modUsuario !== 'object') {
+            modDetalheUsuario.modUsuario = {};
+        }
+
+        const el = document.getElementById('txt_IdUsuario');
+        const id = parseInt((el?.value ?? '').trim(), 10) || 0;
+        modDetalheUsuario.modUsuario.id_Usuario = id;
+
+        const txt_DsNome = document.getElementById('txt_DsNome');
+        modDetalheUsuario.modUsuario.ds_Nome = (txt_DsNome?.value ?? '').trim();
+
+        const txt_DsSenha = document.getElementById('txt_DsSenha');
+        modDetalheUsuario.modUsuario.ds_Senha = txt_DsSenha?.value ?? '';
+
+        const cal_DtInclusao = document.getElementById('dt_Inclusao');
+        // valueAsDate funciona em <input type="date">
+        let dtInclusao = cal_DtInclusao?.value || null;
+
+        // Fallback: parse manual de "YYYY-MM-DD" (evita problemas de fuso/UTC)
+        if (!dtInclusao && cal_DtInclusao?.value) {
+            const [y, m, d] = cal_DtInclusao.value.split('-').map(Number);
+            if (y && m && d) dtInclusao = new Date(y, m - 1, d);
+        }
+        modDetalheUsuario.modUsuario.dt_Inclusao = dtInclusao;
+
+        const sel_DsTipo = document.getElementById('sel_DsTipo');
+        modDetalheUsuario.modUsuario.ds_Tipo = sel_DsTipo?.value ?? '';
+
+        const txt_NmSalario = document.getElementById('txt_NmSalario');
+        let salario = Number.isFinite(txt_NmSalario?.valueAsNumber) ? txt_NmSalario.valueAsNumber : NaN;
+        if (!Number.isFinite(salario)) {
+            let s = String(txt_NmSalario?.value ?? '').trim();
+            if (s) {
+                s = s.replace(/\./g, '').replace(',', '.');
+                const n = Number(s);
+                salario = Number.isFinite(n) ? n : 0;
+            }
+            else {
+                salario = 0;
+            }
+        }
+        modDetalheUsuario.modUsuario.nm_Salario = salario;
+
+        const sel_IdIdiomaPreferido = document.getElementById('sel_IdIdiomaPreferido');
+        modDetalheUsuario.modUsuario.id_IdiomaPreferido = parseInt(sel_IdIdiomaPreferido?.value ?? '0', 10) || 0;
+
+        var modUsuario =
+        {
+            id_Usuario: modDetalheUsuario.modUsuario.id_Usuario,
+            ds_Nome: modDetalheUsuario.modUsuario.ds_Nome,
+            ds_Senha: modDetalheUsuario.modUsuario.ds_Senha,
+            dt_Inclusao: modDetalheUsuario.modUsuario.dt_Inclusao,
+            ds_Tipo: modDetalheUsuario.modUsuario.ds_Tipo,
+            nm_Salario: modDetalheUsuario.modUsuario.nm_Salario,
+            id_IdiomaPreferido: modDetalheUsuario.modUsuario.id_IdiomaPreferido
+        };
+
+        var jsonModUsuario = JSON.stringify({ modUsuario });
+
+        $.ajax({
+            type: "POST",
+            url: "/Seguranca2/butSalvar_Click",
+            data: jsonModUsuario,            // raiz precisa ter o nome do parâmetro do action
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+
+            success: function (response) {
+
+                if (response.Resultado != "OK") {
+                    var msg = '';
+                    for (var i = 0; i < response.Mensagens.length; i++) {
+                        msg = msg + response.Mensagens[i];
+                    }
+
+                    swal({
+                        title: 'Atenção!',
+                        text: msg,
+                        icon: 'error',
+                    });
+                }
+
+                // Perform post Controller actions here
+                //
+
+                // Bootstrap 3/4 (com jQuery)
+                $('#mod_DetalheUsuario').modal('hide');
+
+                if (isWaitClosed == true) $('#waitModal').hide();
+
+                // Função de retorno do Modal na tela chamadora
+                if (typeof mod_DetalheUsuario_Return === 'function') {
+                    mod_DetalheUsuario_Return(response.Retorno);
+                }
+            },
+
+            error: function (response) {
+                var msg = '';
+                for (var i = 0; i < response.Mensagens.length; i++) {
+                    msg = msg + response.Mensagens[i];
+                }
+
+                swal({
+                    title: 'Atenção!',
+                    text: msg,
+                    icon: 'error',
+                });
+
+                if (isWaitClosed == true) $('#waitModal').hide();
+
+            }
+        })
+        
+    }
+
+    // Função para popular o elemento <select> Sel_IdIdiomaPreferido
+    function popularSel_IdIdiomaPreferido(lstListIdiomas) {
+        const selectElement = document.getElementById("sel_IdIdiomaPreferido");
+
+        // Limpa os itens existentes (se houver)
+        selectElement.innerHTML = "";
+
+        // Popula o <select> com os itens de lstRegras
+        if (lstListIdiomas != null) {
+            lstListIdiomas.forEach(item => {
+                const option = document.createElement("option");
+                option.value = item.id_Idioma;   // Define o valor da opção
+                option.text = item.ds_Idioma;  // Define o texto da opção
+                selectElement.appendChild(option);
+            });
+        }
+    }
+
+    function InitializeComponents() {
+
+        // Initialize Select2s
+        $('.js-source-states').select2();
+
+        // fix date validation for chrome
+        jQuery.extend(jQuery.validator.methods, {
+            date: function (value, element) {
+                var isChrome = window.chrome;
+
+                // make correction for chrome
+                if (isChrome) {
+                    var d = new Date();
+                    return this.optional(element) || //$.datepicker.setDefaults($.datepicker.regional["pt-BR"]);
+                        !/Invalid|NaN/.test(new Date(d.toLocaleDateString(value)));
+                }
+                // leave default behavior
+                else {
+                    return this.optional(element) || (/^\d{1,2}[\/-]\d{1,2}[\/-]\d{4}(\s\d{2}:\d{2}(:\d{2})?)?$/.test(value) && !/Invalid|NaN/.test(new Date(value.substr(6, 4) + '-' + value.substr(3, 2) + '-' + value.substr(0, 2))));
+                }
+            }
+        });
+
+        // Initialize datepicker if needed
+        var today = new Date();
+        $(".input-group.date").datepicker(
+            {
+                format: "dd/mm/yyyy",
+                todayBtn: true,
+                language: "pt-BR",
+                autoclose: true,
+                todayHighlight: true,
+                autoUpdateInput: false,
+                allowEmpty: true,
+                enableOnReadonly: false,
+                immediateUpdates: true
+            });
+
+
+        // Aceita: 123, 123,45, 1.234,56, -1.234,56
+        jQuery.extend(jQuery.validator.methods, {
+            number: function (value, element) {
+                if (this.optional(element)) return true;
+                // Remove espaços
+                value = (value + '').trim();
+                // Regex: grupos de milhar com ponto e decimais com vírgula (opcionais)
+                return /^-?(?:\d+|\d{1,3}(?:\.\d{3})+)(?:,\d+)?$/.test(value);
+            }
+        });
+
+        // range
+        function parsePtBr(value) {
+            if (typeof value !== 'string') return NaN;
+            value = value.trim();
+            if (!value) return NaN;
+            // "2.500,00" -> 2500.00
+            return Number(value.replace(/\./g, '').replace(',', '.'));
+        }
+
+        $.validator.methods.range = function (value, element, param) {
+            if (this.optional(element)) return true;
+            const v = parsePtBr(value);
+            const min = +param[0], max = +param[1]; // min/max vêm invariante do MVC
+            return typeof v === "number" && v >= min && v <= max;
+        };
+
+        $(document).on('submit', '#formUsuario', function (e) {
+            e.preventDefault();
+            butSalvar_Click(e);
+        });
+
+    }
+
+    $(document).ready(function() {
+
+        modDetalheUsuario = @Html.Raw(jsonModel);  //Html.Raw(Json.Encode(Model));          //
+        InitializeComponents();
+
+        DetalheUsuario_Load();
+
+    });
+
+</script>

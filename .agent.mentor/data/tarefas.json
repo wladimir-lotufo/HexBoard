@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "descricao": "Definir estrutura inicial do projeto",
+        "status": "Done"
+    },
+    {
+        "id": 2,
+        "descricao": "Implementar autenticação de usuários",
+        "status": "Doing"
+    },
+    {
+        "id": 3,
+        "descricao": "Criar documentação da API",
+        "status": "Todo"
+    },
+    {
+        "id": 4,
+        "descricao": "visualziar board de tarefas",
+        "status": "Todo"
+    }
+]

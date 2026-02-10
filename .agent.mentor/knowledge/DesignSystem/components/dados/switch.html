@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Switch - Design System</title>
+    <link rel="stylesheet" href="../../../../../Vendor/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../../../Vendor/bootstrap/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../../../../../Vendor/animate.css/animate.min.css">
+    <link rel="stylesheet" href="../../../../../Icons/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
+    <link rel="stylesheet" href="../../../../../Content/custom.css">
+    <link rel="stylesheet" href="../../../../../Content/spinner1.css">
+    <link rel="stylesheet" href="../../../../../Vendor/toastr214/build/toastr.css">
+    <link rel="stylesheet" href="../../../../../Content/style.css">
+    <link rel="stylesheet" href="../../../../../Content/style-custom.css">
+    <!-- Switchery -->
+    <link rel="stylesheet" href="../../../../../Vendor/switchery/css/switchery.css" />
+    <style>
+        .ds-component-section {
+            display: block;
+        }
+
+        .ds-content-header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .ds-content-header p {
+            font-size: 16px;
+            color: #676a6c;
+            margin-bottom: 30px;
+        }
+
+        .ds-section {
+            margin-bottom: 40px;
+        }
+
+        .ds-section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #676a6c;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e7eaec;
+            padding-bottom: 10px;
+        }
+
+        .ds-example {
+            background-color: #f9f9f9;
+            border: 1px solid #e7eaec;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .ds-code {
+            background-color: #2b2b2b;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .ds-code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #444;
+        }
+
+        .ds-code-title {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+        }
+
+        .ds-code-copy {
+            background-color: #444;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: background-color 0.2s;
+        }
+
+        .ds-code-copy:hover {
+            background-color: #555;
+        }
+
+        .ds-list {
+            list-style-type: disc;
+            padding-left: 20px;
+            color: #676a6c;
+        }
+
+        .ds-list li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="viw_Component" class="content-full">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="hpanel">
+                    <!-- Header Section -->
+                    <div id="PanelHeader" class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h4 class="font-extra-bold text-primary">Switch</h4>
+                                <small class="text-muted">Campo de seleção booleana estilo toggle switch.</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Section -->
+                    <div id="PanelBody" class="panel-body tooltip-demo">
+
+                        <!-- TabPanel -->
+                        <ul id="pnl_SwitchTabs" class="nav nav-tabs">
+                            <li class="active">
+                                <a data-toggle="tab" href="#tab_Exemplo">
+                                    <i class="fa fa-eye text-primary fa-lg"></i> Exemplo
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#tab_HTML">
+                                    <i class="fa fa-code text-primary fa-lg"></i> HTML
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#tab_Propriedades">
+                                    <i class="fa fa-cog text-primary fa-lg"></i> Propriedades
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <br />
+
+                            <!-- Tab Exemplo -->
+                            <div id="tab_Exemplo" class="tab-pane active">
+                                <!-- Configuration Section -->
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Configuração</h2>
+                                    <div
+                                        style="background-color: #fff; border: 1px solid #e7eaec; border-radius: 4px; padding: 20px; margin: 20px 0;">
+
+                                        <!-- Context Selector -->
+                                        <div class="row"
+                                            style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #e7eaec;">
+                                            <div class="col-md-12">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    <i class="fa fa-lightbulb-o text-warning"></i> Contextos Comuns
+                                                </h4>
+                                                <select id="switch-context-selector" class="form-control"
+                                                    style="max-width: 400px;">
+                                                    <option value="">-- Selecione um contexto --</option>
+                                                    <option value="switch-default">Padrão (Verde, Normal)</option>
+                                                    <option value="switch-checked">Marcado (Checked)</option>
+                                                    <option value="switch-disabled">Desabilitado</option>
+                                                    <option value="switch-primary">Variante Primary (Azul)</option>
+                                                    <option value="switch-danger">Variante Danger (Vermelho)</option>
+                                                </select>
+                                                <small class="text-muted">Selecione um contexto para aplicar a
+                                                    configuração automaticamente</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <!-- Column 1: Cor -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Cor</h4>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-color"
+                                                            value="#62cb31" data-var="CorVerde" checked> Success
+                                                        (CorVerde)</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-color"
+                                                            value="#34495e" data-var="CorPrimary"> Primary
+                                                        (CorPrimary)</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-color"
+                                                            value="#DD2C01" data-var="CorVermelha"> Danger
+                                                        (CorVermelha)</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-color"
+                                                            value="#FFA000" data-var="CorLaranja"> Warning
+                                                        (CorLaranja)</label></div>
+                                            </div>
+
+                                            <!-- Column 2: Estado -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Estado</h4>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-state"
+                                                            value="" checked> Normal</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-state"
+                                                            value="checked"> Checked (Marcado)</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-state"
+                                                            value="disabled"> Disabled</label></div>
+                                            </div>
+
+                                            <!-- Column 3: Tamanho -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Tamanho</h4>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-size"
+                                                            value="" checked> Normal</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-size"
+                                                            value="small"> Pequeno (Small)</label></div>
+                                                <div class="checkbox"><label><input type="checkbox" class="config-size"
+                                                            value="large"> Grande (Large)</label></div>
+                                            </div>
+
+                                            <!-- Column 4: Opções -->
+                                            <div class="col-md-3">
+                                                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">
+                                                    Opções</h4>
+                                                <!-- No specific options for Switchery other than size/color/state -->
+                                                <div class="checkbox"><label><input type="checkbox" class="" disabled>
+                                                        N/A</label></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Exemplo Visual</h2>
+                                    <div class="ds-example">
+                                        <div id="switch-example-container">
+                                            <input id="swi_FlAtivo" type="checkbox"
+                                                class="js-switch form-control input" />
+                                            &nbsp;<span id="switch-label">Ativo</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab HTML -->
+                            <div id="tab_HTML" class="tab-pane">
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Template HTML + JS</h2>
+                                    <div class="ds-code">
+                                        <div class="ds-code-header">
+                                            <span class="ds-code-title">HTML & JavaScript</span>
+                                            <button class="ds-code-copy" onclick="copyCode(this)">Copiar</button>
+                                        </div>
+                                        <pre><code id="switch-html-code"></code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab Propriedades -->
+                            <div id="tab_Propriedades" class="tab-pane">
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Padrão de Nomenclatura</h2>
+                                    <ul class="ds-list">
+                                        <li>ID: `swi_{NomeCampo}` (ex: `swi_FlAtivo`)</li>
+                                        <li>Classe: `js-switch` é obrigatória</li>
+                                        <li>Prefixo `swi_` é obrigatório</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Comportamento</h2>
+                                    <ul class="ds-list">
+                                        <li>Para booleanos de dois estados (Sim/Não, Ativo/Inativo)</li>
+                                        <li>Substitui o checkbox quando se deseja uma metáfora de liga/desliga</li>
+                                    </ul>
+                                </div>
+
+                                <div class="ds-section">
+                                    <h2 class="ds-section-title">Bibliotecas Necessárias</h2>
+                                    <ul class="ds-list">
+                                        <li>Switchery (visual de switch)</li>
+                                        <li><code>Vendor/switchery/css/switchery.css</code></li>
+                                        <li><code>Vendor/switchery/js/switchery.js</code></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- End TabPanel -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../../../../Scripts/jquery-3.6.0.min.js"></script>
+    <script src="../../../../../Vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Switchery -->
+    <script src="../../../../../Vendor/switchery/js/switchery.js"></script>
+    <!-- Cores.js Reference for Design System functionality -->
+    <script src="../../../../../Scripts/Cores.js"></script>
+    <script>
+        function copyCode(btn) {
+            var codeBlock = btn.parentElement.nextElementSibling;
+            var code = codeBlock.innerText;
+            var tempInput = document.createElement("textarea");
+            tempInput.value = code;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            var originalText = btn.innerText;
+            btn.innerText = "Copiado!";
+            setTimeout(function () { btn.innerText = originalText; }, 2000);
+        }
+
+        $(document).ready(function () {
+            // Context presets
+            var contexts = {
+                'switch-default': {
+                    color: '#62cb31',
+                    state: '',
+                    size: ''
+                },
+                'switch-checked': {
+                    color: '#62cb31',
+                    state: 'checked',
+                    size: ''
+                },
+                'switch-disabled': {
+                    color: '#62cb31',
+                    state: 'disabled',
+                    size: ''
+                },
+                'switch-primary': {
+                    color: '#34495e',
+                    state: 'checked',
+                    size: ''
+                },
+                'switch-danger': {
+                    color: '#DD2C01',
+                    state: 'checked',
+                    size: ''
+                }
+            };
+
+            // Context selector handler
+            $('#switch-context-selector').on('change', function () {
+                var contextKey = $(this).val();
+                if (contextKey && contexts[contextKey]) {
+                    applyContext(contexts[contextKey]);
+                }
+            });
+
+            function applyContext(context) {
+                // Apply color
+                $('.config-color').prop('checked', false);
+                $('.config-color[value="' + context.color + '"]').prop('checked', true);
+
+                // Apply state
+                $('.config-state').prop('checked', false);
+                $('.config-state[value="' + context.state + '"]').prop('checked', true);
+
+                // Apply size
+                $('.config-size').prop('checked', false);
+                $('.config-size[value="' + context.size + '"]').prop('checked', true);
+
+                // Update component
+                updateSwitch();
+            }
+
+            // Radio-like behavior
+            $('.config-color').on('change', function () {
+                if (this.checked) {
+                    $('.config-color').not(this).prop('checked', false);
+                }
+                updateSwitch();
+            });
+
+            $('.config-state').on('change', function () {
+                if (this.checked) {
+                    $('.config-state').not(this).prop('checked', false);
+                }
+                updateSwitch();
+            });
+
+            $('.config-size').on('change', function () {
+                if (this.checked) {
+                    $('.config-size').not(this).prop('checked', false);
+                }
+                updateSwitch();
+            });
+
+            function updateSwitch() {
+                var $container = $('#switch-example-container');
+                $container.empty();
+
+                var $input = $('<input id="swi_FlAtivo" type="checkbox" class="js-switch form-control input"/>');
+                $container.append($input);
+                $container.append('&nbsp;<span id="switch-label">Ativo</span>');
+
+                var color = $('.config-color:checked').val() || '#62cb31';
+                var colorVar = $('.config-color:checked').data('var') || 'CorVerde';
+                var state = $('.config-state:checked').val() || '';
+                var size = $('.config-size:checked').val() || '';
+
+                // Apply state attributes
+                if (state === 'checked') {
+                    $input.prop('checked', true);
+                }
+                if (state === 'disabled') {
+                    $input.prop('disabled', true);
+                }
+
+                // Initialize Switchery with config
+                var elem = document.querySelector('.js-switch');
+                if (typeof Switchery !== 'undefined') {
+                    var options = { color: color };
+                    if (size === 'small') options.className = 'switchery switchery-small';
+                    if (size === 'large') options.className = 'switchery switchery-large';
+
+                    if (size) options.size = size;
+
+                    new Switchery(elem, options);
+                }
+
+                // Update HTML Code
+                updateHTMLCode(color, colorVar, state, size);
+            }
+
+            function updateHTMLCode(color, colorVar, state, size) {
+                var attrs = '';
+                if (state === 'checked') {
+                    attrs += ' checked';
+                }
+                if (state === 'disabled') {
+                    attrs += ' disabled';
+                }
+
+                var htmlCode = '&lt;input id="swi_FlAtivo" type="checkbox" class="js-switch form-control input"' + attrs + '/&gt;';
+
+                // Add init script
+                htmlCode += '\n\n&lt;!-- Initialize Switchery --&gt;\n' +
+                    '&lt;script&gt;\n' +
+                    '    var elem = document.querySelector(\'.js-switch\');\n' +
+                    '    var switchery = new Switchery(elem, {\n' +
+                    '        color: ' + colorVar + ', // ' + color + '\n' +
+                    '        secondaryColor: CorCinzaLight';
+
+                if (size) {
+                    htmlCode += ',\n        size: \'' + size + '\'';
+                }
+
+                htmlCode += '\n    });\n' +
+                    '&lt;/script&gt;';
+
+                $('#switch-html-code').html(htmlCode);
+            }
+
+            // Initialize
+            updateSwitch();
+        });
+    </script>
+</body>
+
+</html>
